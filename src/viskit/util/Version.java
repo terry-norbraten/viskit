@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -89,7 +90,7 @@ public class Version {
             if (matcher.find()) {
                 date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(matcher.group());
             }
-        } catch (Throwable t) {
+        } catch (ParseException t) {
             log.error("Problem parsing date string " + dateString + ": " + t);
         }
         return date;
