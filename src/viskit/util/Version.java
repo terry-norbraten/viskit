@@ -37,7 +37,7 @@ public class Version {
 
     protected Date lastModified;
 
-    protected int svnRevisionNumber;
+    protected int gitShaNumber;
 
     public Version(String versionString, String dateString) {
         int[] version = parseVersionString(versionString);
@@ -59,9 +59,9 @@ public class Version {
             patchVersion = version[2];
             String dateString = reader.readLine();
             lastModified = parseDateString(dateString);
-            String revisionString = reader.readLine();
-            svnRevisionNumber = parseRevisionString(revisionString);
-            versionString += "." + svnRevisionNumber;
+            String shaString = reader.readLine();
+            gitShaNumber = parseShaString(shaString);
+            versionString += "." + gitShaNumber;
         } catch (IOException e) {
             log.error("Problem reading " + fileName + ": " + e);
         }
@@ -96,7 +96,7 @@ public class Version {
         return date;
     }
 
-    protected static int parseRevisionString(String revisionString) {
+    protected static int parseShaString(String revisionString) {
         String[] data = revisionString.split("\\D+");
         return Integer.parseInt(data[1]);
     }
@@ -122,7 +122,7 @@ public class Version {
     }
 
     public int getSVNRevisionNumber() {
-        return svnRevisionNumber;
+        return gitShaNumber;
     }
 
     public boolean isSameVersionAs(String otherVersionString) {
