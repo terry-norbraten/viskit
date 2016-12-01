@@ -104,21 +104,20 @@ public class EventGraphAssemblyComboMain {
                 e.printStackTrace();
             }
 
-            URL url = null;
             try {
-                url = new URL("mailto:" + VStatics.VISKIT_MAILING_LIST +
+                URL url = new URL("mailto:" + VStatics.VISKIT_MAILING_LIST +
                         "?subject=Viskit%20startup%20error&body=log%20output:");
+                
+                String msg = "Viskit has experienced a startup glitch.  <br/>Please "
+                        + "navigate to " + ViskitConfig.V_DEBUG_LOG.getPath() + " and "
+                        + "email the log to "
+                        + "<b><a href=\"" + url.toString() + "\">" + VStatics.VISKIT_MAILING_LIST + "</a></b>"
+                        + "<br/><br/>Click the link to open up an email form, then copy and paste the log's contents";
+
+                VStatics.showHyperlinkedDialog(null, e.toString(), url, msg, true);
             } catch (MalformedURLException ex) {
                 LogUtils.getLogger(EventGraphAssemblyComboMain.class).error(ex);
             }
-
-            String msg = "Viskit has experienced a startup glitch.  <br/>Please "
-                    + "navigate to " + ViskitConfig.V_DEBUG_LOG.getPath() + " and "
-                    + "email the log to "
-                    + "<b><a href=\"" + url.toString() + "\">" + VStatics.VISKIT_MAILING_LIST + "</a></b>"
-                    + "<br/><br/>Click the link to open up an email form, then copy and paste the log's contents";
-
-            VStatics.showHyperlinkedDialog(null, e.toString(), url, msg, true);
         }
     }
 
@@ -151,7 +150,7 @@ public class EventGraphAssemblyComboMain {
         }
 
         if (viskit.VStatics.debug) {
-            System.out.println("***Inside EventGraphAssembly main: " + args.length);
+            LogUtils.getLogger(EventGraphAssemblyComboMain.class).info("***Inside EventGraphAssembly main: " + args.length);
         }
         setLandFandFonts();
 
@@ -181,7 +180,7 @@ public class EventGraphAssemblyComboMain {
                 UIManager.setLookAndFeel(s);
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            System.err.println("Error setting Look and Feel to " + s);
+            LogUtils.getLogger(EventGraphAssemblyComboMain.class).error("Error setting Look and Feel to " + s);
         }
     }
 
@@ -204,8 +203,9 @@ public class EventGraphAssemblyComboMain {
                                 Method setHandled = applicationEventClass.getMethod("setHandled", boolean.class);
                                 setHandled.invoke(args[0], true);
                             } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                                System.err.println("Error showing About Box: " + ex);
-                            }   break;
+                                LogUtils.getLogger(EventGraphAssemblyComboMain.class).error("Error showing About Box: " + ex);
+                            }   
+                            break;
                     }
                     return null;
                 }
@@ -222,11 +222,11 @@ public class EventGraphAssemblyComboMain {
                     m = applicationClass.getMethod("setDockIconImage", Image.class);
                     m.invoke(applicationInstance, aboutIcon.getImage());
                 } catch (NoSuchMethodException ex){
-                    System.err.println("Error showing aboutIcon in dock " + ex);
+                    LogUtils.getLogger(EventGraphAssemblyComboMain.class).error("Error showing aboutIcon in dock " + ex);
                 }
             }
         } catch (IllegalArgumentException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | InvocationTargetException ex) {
-            System.err.println("Error defining Apple Quit & About handlers: " + ex);
+            LogUtils.getLogger(EventGraphAssemblyComboMain.class).error("Error defining Apple Quit & About handlers: " + ex);
         }
     }
 
