@@ -82,7 +82,6 @@ import viskit.xsd.bindings.eventgraph.Parameter;
  */
 public class VStatics {
 
-    public static boolean debug = false;
 
     /* Commonly used class names */
     public static final String RANDOM_NUMBER_CLASS = "simkit.random.RandomNumber";
@@ -101,6 +100,8 @@ public class VStatics {
     public static final String OPERATING_SYSTEM = System.getProperty("os.name");
 
     static final Logger LOG = LogUtils.getLogger(VStatics.class);
+    
+    public static boolean debug = false;
 
     /** Utility method to configure a Viskit project
      *
@@ -512,11 +513,11 @@ public class VStatics {
         return c;
     }
 
-    static public String getPathSeparator() {
+    public static String getPathSeparator() {
         return System.getProperty("path.separator");
     }
 
-    static public String getFileSeparator() {
+    public static String getFileSeparator() {
         return System.getProperty("file.separator");
     }
 
@@ -527,7 +528,7 @@ public class VStatics {
      * @param type the EG class name
      * @param p a List of parameter map object arrays
      */
-    static public void putParameterList(String type, List<Object>[] p) {
+    public static void putParameterList(String type, List<Object>[] p) {
         if (debug) {
             System.out.println("Vstatics putting " + type + " " + Arrays.toString(p));
         }
@@ -540,7 +541,7 @@ public class VStatics {
      * @param type the Class type to check
      * @return return a varargs type as an array, or the orig. type
      */
-    static public Class<?> getClassForInstantiatorType(String type) {
+    public static Class<?> getClassForInstantiatorType(String type) {
         Class<?> c;
         if (type.contains("Object...")) {
             c = classForName("java.lang.Object[]");
@@ -556,7 +557,8 @@ public class VStatics {
      * @param type the EG class type to resolve
      * @return a List of parameter map object arrays
      */
-    static public List<Object>[] resolveParameters(Class<?> type) {
+    @SuppressWarnings("unchecked")
+    public static List<Object>[] resolveParameters(Class<?> type) {
         
         // Ben Cheng NPE fix
         Object testResult = parameterMap.get(type.getName());
