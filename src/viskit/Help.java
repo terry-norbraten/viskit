@@ -31,10 +31,10 @@ public class Help {
             "Viskit Assembly Editor" + CR + "   version " + VERSION_STRING + CR
             + VERSION.getLastModified() + CR + CR;
     public static final String SIMKIT_URL = "http://diana.nps.edu/Simkit/";
-    public static final String VISKIT_URL = "http://diana.nps.edu/Viskit/";
+    public static final String VISKIT_URL = "https://gitlab.nps.edu/tdnorbra/viskit/";
     public static final String BUGZILLA_URL = "https://diana.nps.edu/bugzilla/";
     public static final String DEVELOPERS =
-            "Copyright &copy; 2004-2015 under the Lesser GNU License" + CR + CR
+            "Copyright &copy; 2004-2016 under the Lesser GNU License" + CR + CR
             + "<b>Developers:</b>" + CR
             + "&nbsp;&nbsp;&nbsp;Arnold Buss" + CR
             + "&nbsp;&nbsp;&nbsp;Mike Bailey" + CR
