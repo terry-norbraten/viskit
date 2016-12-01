@@ -2,6 +2,7 @@ package viskit.view;
 
 import viskit.model.EventArgument;
 import viskit.model.vEdgeParameter;
+import viskit.model.ViskitElement;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -9,7 +10,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
-import viskit.model.ViskitElement;
 
 /**
  * OPNAV N81 - NPS World Class Modeling (WCM) 2004 Projects
@@ -19,11 +19,11 @@ import viskit.model.ViskitElement;
  * @author Mike Bailey
  * @since Apr 8, 2004
  * @since 8:49:21 AM
- * @version $Id$
+ * @version $Id: EdgeParametersPanel.java 2641 2015-03-01 03:08:08Z tdnorbra $
  */
 public class EdgeParametersPanel extends ViskitTablePanel {
 
-    private String[] mytitles = {"event argument", "value"};
+    private final String[] mytitles = {"event argument", "value"};
     private List<? extends ViskitElement> argList;
 
     public EdgeParametersPanel(int wid) {
@@ -77,7 +77,7 @@ public class EdgeParametersPanel extends ViskitTablePanel {
      */
     @Override
     public void setData(List<? extends ViskitElement> data) {
-        List<ViskitElement> myList = new ArrayList<>(data);
+        List<ViskitElement> myList = (List<ViskitElement>) new ArrayList<>(data);
         int diff = argList.size() - myList.size();
         if (diff == 0) {
             super.setData(data);

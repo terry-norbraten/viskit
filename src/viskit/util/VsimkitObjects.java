@@ -107,10 +107,6 @@ public class VsimkitObjects {
         return new BinomialVariate();
     }
 
-    public static Object get_random_BivariateNormal() {
-        return new BivariateNormal();
-    }
-
     public static Object get_random_Congruential() {
         return new Congruential();
     }
@@ -231,10 +227,6 @@ public class VsimkitObjects {
 
     public static Object get_random_RandomVariate() {
         return get_random_PoissonVariate();
-    }
-
-    public static Object get_random_RandomVector() {
-        return get_random_BivariateNormal();
     }
 
     public static Object get_random_RenewalProcessVariate() {

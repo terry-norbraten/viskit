@@ -991,8 +991,18 @@ public class AssemblyModelImpl extends mvcAbstractModel implements AssemblyModel
             AssemblyNode frNode = getNodeCache().get(jaxbAdapter.getFrom());
             ae.setTo(toNode);
             ae.setFrom(frNode);
-            ae.setSourceEvent(jaxbAdapter.getEventHeard());
-            ae.setTargetEvent(jaxbAdapter.getEventSent());
+
+            // Handle XML names w/ underscores (XML IDREF issue)
+            String event = jaxbAdapter.getEventHeard();
+            if (event.contains("_"))
+                event = event.substring(0, event.indexOf("_"));
+            ae.setSourceEvent(event);
+
+            event = jaxbAdapter.getEventSent();
+            if (event.contains("_"))
+                event = event.substring(0, event.indexOf("_"));
+            ae.setTargetEvent(event);
+
             ae.setName(jaxbAdapter.getName());
             ae.setDescriptionString(jaxbAdapter.getDescription());
             ae.opaqueModelObject = jaxbAdapter;

@@ -72,7 +72,7 @@ import viskit.xsd.translator.eventgraph.SimkitXML2Java;
  * @author Mike Bailey
  * @since May 14, 2004
  * @since 9:26:02 AM
- * @version $Id$
+ * @version $Id: AssemblyControllerImpl.java 2884 2015-09-02 17:21:52Z tdnorbra $
  */
 public class AssemblyControllerImpl extends mvcAbstractController implements AssemblyController, OpenAssembly.AssyChangeListener {
 
@@ -553,7 +553,7 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
     @Override
     public void zipAndMailProject() {
 
-        SwingWorker worker = new SwingWorker<Void, Void>() {
+        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
 
             File projDir;
             File projZip;
@@ -1097,7 +1097,7 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
         return nodeOrEdgeInVector(selectionVector);
     }
 
-    private boolean nodeOrEdgeInVector(Vector v) {
+    private boolean nodeOrEdgeInVector(Vector<Object> v) {
         for (Object o : v) {
             if (o instanceof AssemblyNode) {
                 return true;
@@ -1674,7 +1674,7 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
             }
         }
 
-        SwingWorker worker = new SwingWorker<Void, Void>() {
+        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
 
             @Override
             public Void doInBackground() {

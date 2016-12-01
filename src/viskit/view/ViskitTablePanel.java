@@ -41,8 +41,8 @@ public abstract class ViskitTablePanel extends JPanel {
     // List has no implemented clone method
     private ArrayList<ViskitElement> shadow = new ArrayList<>();
     private ActionListener myEditLis,  myPlusLis,  myMinusLis;
-    private String plusToolTip = "Add a row to this table";
-    private String minusToolTip = "Delete the selected row from this table;";
+    private final String plusToolTip = "Add a row to this table";
+    private final String minusToolTip = "Delete the selected row from this table;";
     private boolean plusMinusEnabled = false;
     private boolean shouldDoAddsAndDeletes = true;
 
@@ -55,7 +55,7 @@ public abstract class ViskitTablePanel extends JPanel {
         this.defaultNumRows = numRows;
     }
 
-    public void init(boolean wantAddDelButts) {
+    protected final void init(boolean wantAddDelButts) {
         plusMinusEnabled = wantAddDelButts;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

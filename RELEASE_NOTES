@@ -2,10 +2,15 @@ Post release fixes / upgrades / issues:
 
   ***** ISSUES:
 
+  SVN R 2900 on 09 DEC 15 is that last known functional commit for Viskit.
+  Too many random refactors have taken place since then in the SVN trunk that
+  break the rigor of this build.  I submit that we fork here and commit this
+  build as the ground truth for Viskit to a separate repository such as GitLab.
+
   Do to the nature of XML to Java translation, any derived class from a super
   type must list the super type's fields in identical order so that type
   matching can verify the super type for correct calls to super from the
-  derived tranlated java source.
+  derived translated java source.
 
   On Mac OS X 10.10.3 (Yosemite) & JDK 1.8.0_45, in the default L&F mode, while
   inputing EG Parameters when the user selects more... to expose RandomVariate
@@ -36,14 +41,14 @@ Post release fixes / upgrades / issues:
 
   At this time, the XML to Java translators cannot handle a super type generic
   container declaration in XML, then instantiate it as a dynamic type, i.e.
-  List<String> list = new ArrayList<>();  The static declaration will match the
+  List<String> list = new ArrayList<>();  The static declaration must match the
   dynamic type accordingly.
 
   Because of the unique nature of XML IDs, we are not able to have similar
   method names, i.e. Arrival, in an EG file even with differing method
   signatures.  As such, subclassing is still possible, but the user will have
   to manually name Events in this manner using an underscore character, i.e.
-  Arrival, Arrival_e, etc.
+  Arrival, Arrival_e (where the "e" hints at the type argument of the event).
 
   If the CNTL key is held down while attempting to drag and edge control point
   a IOOBE will be thrown by JGraph v5.14.0.  This may be fixed in a subsequent

@@ -557,9 +557,14 @@ public class VStatics {
      * @return a List of parameter map object arrays
      */
     static public List<Object>[] resolveParameters(Class<?> type) {
-        List<Object>[] resolved = parameterMap.get(type.getName());
-        if (debug) {
-            if (resolved != null) {
+        
+        // Ben Cheng NPE fix
+        Object testResult = parameterMap.get(type.getName());
+        List<Object>[] resolved = null;
+        if (debug) 
+        {
+            if (testResult != null) {
+                resolved = (List<Object>[]) testResult;
                 System.out.println("parameters already resolved");
             }
         }

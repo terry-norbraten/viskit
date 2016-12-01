@@ -17,11 +17,7 @@
     <!-- in this build.xml file, so, be careful.                                            -->
     <property file="build.properties"/>
 
-    <!-- ID properties (this file) -->
-    <property name="SVNId" value="$Id$"/>
-
     <!-- Project directories -->
-
     <property description="Where the distribution files wind up." location="dist" name="dir.dist"/>
 
     <property description="Where all the JAXB 2.2 extensions are." location="${dir.lib}/jaxb" name="dir.lib.xml"/>
