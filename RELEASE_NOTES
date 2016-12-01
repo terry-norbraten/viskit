@@ -2,11 +2,6 @@ Post release fixes / upgrades / issues:
 
   ***** ISSUES:
 
-  SVN R 2900 on 09 DEC 15 is that last known functional commit for Viskit.
-  Too many random refactors have taken place since then in the SVN trunk that
-  break the rigor of this build.  I submit that we fork here and commit this
-  build as the ground truth for Viskit to a separate repository such as GitLab.
-
   Do to the nature of XML to Java translation, any derived class from a super
   type must list the super type's fields in identical order so that type
   matching can verify the super type for correct calls to super from the
@@ -75,6 +70,14 @@ Post release fixes / upgrades / issues:
 Release: 1.0.15(June 08, 2015)
 -------------------------
 Major changes since 1.0.10:
+
+  Moved codebase to new repository at: https://gitlab.nps.edu/tdnorbra/viskit
+  The codebase was forked at R2900 from the old SVN repository at:
+  https://eos.nps.edu/wcm/Viskit.  Due to the many refactorings that took place
+  since R2900 (09 DEC 2015), R2900 marks the revision that was the last know
+  functional build of Viskit.  Rather than branch at the original SVN site, it
+  was decided to move to a more functional repository for version control w/ 
+  Git.
 
   EventNodes that are similarly named can be achieved using an underscore
   character, i.e. Arrival, Arrival_e.  The "e" would denote an event argument
