@@ -92,7 +92,8 @@ public class MainFrame extends JFrame {
         TAB0_EVENTGRAPH_EDITOR_IDX, 
         TAB0_ASSEMBLY_EDITOR_IDX,
         TAB0_ASSEMBLYRUN_SUBTABS_IDX,
-        TAB0_ANALYST_REPORT_IDX};
+        TAB0_ANALYST_REPORT_IDX
+    };
     private final int TAB1_LOCALRUN_IDX = 0;
     private final int TAB1_DOE_IDX = 1;
     private final int TAB1_CLUSTERUN_IDX = 2;
@@ -108,12 +109,12 @@ public class MainFrame extends JFrame {
         int h = Integer.parseInt(ViskitConfig.instance().getVal(ViskitConfig.APP_MAIN_BOUNDS_KEY + "[@h]"));
 
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation((d.width - w) / 2, (d.height - h) / 2);
-        this.setSize(w, h);
+        MainFrame.this.setLocation((d.width - w) / 2, (d.height - h) / 2);
+        MainFrame.this.setSize(w, h);
 
         // Let the quit handler take care of an exit initiation
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.addWindowListener(new WindowAdapter() {
+        MainFrame.this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        MainFrame.this.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosing(WindowEvent e) {
@@ -121,7 +122,7 @@ public class MainFrame extends JFrame {
             }
         });
         ImageIcon icon = new ImageIcon(VGlobals.instance().getWorkClassLoader().getResource("viskit/images/ViskitSplash2.png"));
-        this.setIconImage(icon.getImage());
+        MainFrame.this.setIconImage(icon.getImage());
     }
 
     /** @return the quit action class for Viskit */
@@ -280,7 +281,8 @@ public class MainFrame extends JFrame {
         // Grid run panel
         if (SettingsDialog.isClusterRunVisible()) {
             runGridComponent = new JobLauncherTab2(doeMain.getController(), null, null, this);
-            doeFrame.getController().setJobLauncher(runGridComponent);
+            if (doeFrame != null)
+                doeFrame.getController().setJobLauncher(runGridComponent);
             runTabbedPane.add(runGridComponent.getContent(), TAB1_CLUSTERUN_IDX);
             runTabbedPane.setTitleAt(TAB1_CLUSTERUN_IDX, "LaunchClusterJob");
             runTabbedPane.setIconAt(TAB1_CLUSTERUN_IDX, new ImageIcon(VGlobals.instance().getWorkClassLoader().getResource("viskit/images/grid.png")));
@@ -531,7 +533,7 @@ public class MainFrame extends JFrame {
         }
     }
 
-    private SysExitHandler nullSysExitHandler = new SysExitHandler() {
+    final SysExitHandler nullSysExitHandler = new SysExitHandler() {
 
         @Override
         public void doSysExit(int status) {
