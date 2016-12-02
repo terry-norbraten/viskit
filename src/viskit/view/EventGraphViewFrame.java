@@ -91,9 +91,6 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
     private JMenuBar myMenuBar;
     private JMenuItem quitMenuItem;
 
-    private String FULLPATH = VStatics.FULL_PATH;
-    private String CLEARPATHFLAG = VStatics.CLEAR_PATH_FLAG;
-
     /**
      * Constructor; lays out initial GUI objects
      * @param ctrl the controller for this frame (MVF)
@@ -552,7 +549,7 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
                 }
                 String nameOnly = fullPath.getName();
                 Action act = new ParameterizedAction(nameOnly);
-                act.putValue(FULLPATH, fullPath);
+                act.putValue(VStatics.FULL_PATH, fullPath);
                 JMenuItem mi = new JMenuItem(act);
                 mi.setToolTipText(fullPath.getPath());
                 openRecentEGMenu.add(mi);
@@ -560,7 +557,7 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
             if (lis.size() > 0) {
                 openRecentEGMenu.add(new JSeparator());
                 Action act = new ParameterizedAction("clear");
-                act.putValue(FULLPATH, CLEARPATHFLAG);  // flag
+                act.putValue(VStatics.FULL_PATH, VStatics.CLEAR_PATH_FLAG);  // flag
                 JMenuItem mi = new JMenuItem(act);
                 mi.setToolTipText("Clear this list");
                 openRecentEGMenu.add(mi);
@@ -585,7 +582,7 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
             else
                 fullPath = (File) obj;
 
-            if (fullPath.getPath().equals(CLEARPATHFLAG)) {
+            if (fullPath.getPath().equals(VStatics.CLEAR_PATH_FLAG)) {
                 vcontroller.clearRecentEGFileSet();
             } else {
                 vcontroller.openRecentEventGraph(fullPath);
@@ -1079,25 +1076,27 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
             // get the node in question from the jGraph
             Object o = getCurrentVgcw().getViskitElementAt(p);
 
-            if (dragger == NODE_DRAG) {
-                Point pp = new Point(
-                        p.x - addEvent.getWidth(),
-                        p.y - addEvent.getHeight());
-                ((EventGraphController) getController()).buildNewNode(pp);
-            } else if (dragger == SELF_REF_CANCEL_DRAG) {
-
-                if (o != null && o instanceof EventNode) {
-                    EventNode en = (EventNode) o;
-                    // We're making a self-referential arc
-                    ((EventGraphController) getController()).buildNewCancelingArc(new Object[]{en.opaqueViewObject, en.opaqueViewObject});
-                }
-            } else {
-
-                if (o != null && o instanceof EventNode) {
-                    EventNode en = (EventNode) o;
-                    // We're making a self-referential arc
-                    ((EventGraphController) getController()).buildNewSchedulingArc(new Object[]{en.opaqueViewObject, en.opaqueViewObject});
-                }
+            switch (dragger) {
+                case NODE_DRAG:
+                    Point pp = new Point(
+                            p.x - addEvent.getWidth(),
+                            p.y - addEvent.getHeight());
+                    ((EventGraphController) getController()).buildNewNode(pp);
+                    break;
+                case SELF_REF_CANCEL_DRAG:
+                    if (o != null && o instanceof EventNode) {
+                        EventNode en = (EventNode) o;
+                        // We're making a self-referential arc
+                        ((EventGraphController) getController()).buildNewCancelingArc(new Object[]{en.opaqueViewObject, en.opaqueViewObject});
+                    }   
+                    break;
+                default:
+                    if (o != null && o instanceof EventNode) {
+                        EventNode en = (EventNode) o;
+                        // We're making a self-referential arc
+                        ((EventGraphController) getController()).buildNewSchedulingArc(new Object[]{en.opaqueViewObject, en.opaqueViewObject});
+                    }   
+                    break;
             }
         }
     }
