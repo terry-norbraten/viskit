@@ -46,8 +46,8 @@
     <PropertyChangeListener name="simplePropertyDumper" type="simkit.util.SimplePropertyDumper" meanStatistics="false" countStatistics="true">
         <Coordinate x="280.0" y="290.0"/>
     </PropertyChangeListener>
-    <PropertyChangeListenerConnection listener="numInQueueStat" source="server"/>
-    <PropertyChangeListenerConnection listener="numAvailServersStat" source="server"/>
+    <PropertyChangeListenerConnection property="numberInQueue" listener="numInQueueStat" source="server" description=""/>
+    <PropertyChangeListenerConnection property="numberAvailableServers" listener="numAvailServersStat" source="server" description=""/>
     <PropertyChangeListenerConnection listener="simplePropertyDumper" source="server"/>
     <Adapter name="adptr_3" eventHeard="Arrival" eventSent="Arrival" from="arrival" to="server"/>
     <Output entity="arrival"/>
