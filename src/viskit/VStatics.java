@@ -82,7 +82,6 @@ import viskit.xsd.bindings.eventgraph.Parameter;
  */
 public class VStatics {
 
-
     /* Commonly used class names */
     public static final String RANDOM_NUMBER_CLASS = "simkit.random.RandomNumber";
     public static final String RANDOM_VARIATE_CLASS = "simkit.random.RandomVariate";
