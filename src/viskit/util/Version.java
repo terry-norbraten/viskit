@@ -5,9 +5,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
@@ -25,17 +22,17 @@ import viskit.VGlobals;
  */
 public class Version {
 
-    static Logger log = LogUtils.getLogger(Version.class);
+    static Logger LOG = LogUtils.getLogger(Version.class);
 
     protected String versionString;
+
+    protected String lastModified;
 
     protected int majorVersion;
 
     protected int minorVersion;
 
     protected int patchVersion;
-
-    protected Date lastModified;
 
     protected int gitShaNumber;
 
@@ -63,7 +60,7 @@ public class Version {
             gitShaNumber = parseShaString(shaString);
             versionString += "." + gitShaNumber;
         } catch (IOException e) {
-            log.error("Problem reading " + fileName + ": " + e);
+            LOG.error("Problem reading " + fileName + ": " + e);
         }
     }
 
@@ -81,17 +78,13 @@ public class Version {
         return versionNumber;
     }
 
-    protected static Date parseDateString(String dateString) {
-        Date date = null;
-        try {
-            Pattern pattern =
-                    Pattern.compile("\\d\\d\\d\\d\\-\\d\\d\\-\\d\\d \\d\\d:\\d\\d:\\d\\d");
-            Matcher matcher = pattern.matcher(dateString);
-            if (matcher.find()) {
-                date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(matcher.group());
-            }
-        } catch (ParseException t) {
-            log.error("Problem parsing date string " + dateString + ": " + t);
+    protected static String parseDateString(String dateString) {
+        String date = null;
+        Pattern pattern =
+                Pattern.compile("\\w{3}\\s\\w{3}\\s\\d+\\s\\d\\d:\\d\\d:\\d\\d\\s\\d{4}\\s-\\d{4}");
+        Matcher matcher = pattern.matcher(dateString);
+        if (matcher.find()) {
+            date = matcher.group();
         }
         return date;
     }
@@ -105,7 +98,7 @@ public class Version {
         return versionString;
     }
 
-    public Date getLastModified() {
+    public String getLastModified() {
         return lastModified;
     }
 
