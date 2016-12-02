@@ -633,20 +633,20 @@ public class VGlobals {
     /* Dynamic variable type list processing.  Build Type combo boxes and manage
      * user-typed object types.
      */
-    private String moreTypesString = "more...";
-    private String[] defaultTypeStrings = {
+    private final String moreTypesString = "more...";
+    private final String[] defaultTypeStrings = {
             "int",
             "double",
             "Integer",
             "Double",
             "String",
             moreTypesString};
-    private String[] morePackages = {"primitives", "java.lang", "java.util", "simkit.random", "cancel"};
+    private final String[] morePackages = {"primitives", "java.lang", "java.util", "simkit.random", "cancel"};
 
     // these are for the moreClasses array
     private final int PRIMITIVES_INDEX = 0;
 
-    private String[][] moreClasses =
+    private final String[][] moreClasses =
             {{"boolean", "byte", "char", "double", "float", "int", "long", "short"},
             {"Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short", "String", "StringBuilder"},
             {"HashMap<K,V>", "HashSet<E>", "LinkedList<E>", "Properties", "Random", "TreeMap<K,V>", "TreeSet<E>", "Vector<E>"},
