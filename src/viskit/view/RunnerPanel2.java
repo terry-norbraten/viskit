@@ -216,7 +216,7 @@ public class RunnerPanel2 extends JPanel {
 
         /* DIFF between OA3302 branch and trunk */
         analystReportCB = new JCheckBox("Enable Analyst Reports");
-        analystReportCB.setSelected(true);
+        analystReportCB.setSelected(false);
         analystReportCB.setEnabled(aRPanelVisible);
         flowPan.add(analystReportCB);
 
