@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.configuration.*;
+import org.apache.commons.configuration.tree.ConfigurationNode;
 import org.apache.log4j.Logger;
 import org.jdom.Document;
 import org.jdom.output.Format;
@@ -78,8 +79,8 @@ public class ViskitConfig {
 
     static final Logger LOG = LogUtils.getLogger(ViskitConfig.class);
 
-    private Map<String, XMLConfiguration> xmlConfigurations;
-    private Map<String, String> sessionHM;
+    private final Map<String, XMLConfiguration> xmlConfigurations;
+    private final Map<String, String> sessionHM;
     private CombinedConfiguration cc;
     private DefaultConfigurationBuilder builder;
     private XMLConfiguration projectXMLConifg = null;
@@ -149,7 +150,7 @@ public class ViskitConfig {
                 xc.setAutoSave(true);
                 HierarchicalConfiguration.Node n = xc.getRoot();
                 for (Object o : n.getChildren()) {
-                    xmlConfigurations.put(((HierarchicalConfiguration.Node) o).getName(), xc);
+                    xmlConfigurations.put(((ConfigurationNode) o).getName(), xc);
                 }
             }
         } catch (Exception e) {
