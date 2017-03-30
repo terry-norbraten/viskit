@@ -145,7 +145,6 @@ public class StatsGraph extends JPanel {
         chartPanel.setDomainZoomable(true);
         chartPanel.setRangeZoomable(true);
 
-        NumberAxis numAx = new NumberAxis("Value of " + name);
         CategoryItemLabelGenerator generator = new StandardCategoryItemLabelGenerator();
         CategoryItemRenderer renderer;
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
@@ -155,7 +154,7 @@ public class StatsGraph extends JPanel {
         ((BarRenderer) renderer).setItemMargin(.27d);
         renderer.setBaseItemLabelsVisible(true);
         renderer.setBaseItemLabelGenerator(generator);
-        numAx = new NumberAxis("Value of "+name);
+        NumberAxis numAx = new NumberAxis("Value of "+name);
         numAx.setAutoRange(true);
         numAx.setAutoRangeIncludesZero(false);
         plot.setRangeAxis(numAx);
