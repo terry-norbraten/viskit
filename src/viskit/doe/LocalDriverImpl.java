@@ -158,7 +158,7 @@ public class LocalDriverImpl implements DoeRunDriver {
             List queue = (List) methods.get("getTaskQueue").invoke(runner,new Object[]{});
             List<Object> cloneQueue = new ArrayList<>();
             for (Object queue1 : queue) {
-                cloneQueue.add(((Boolean) queue1));
+                cloneQueue.add(queue1);
             }
             return cloneQueue;
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
