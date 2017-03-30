@@ -49,6 +49,7 @@ import viskit.xsd.bindings.assembly.ValueRange;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -105,7 +106,7 @@ public class DoeFileModel {
 
                 //eg.getContent().add(0,src.trim());
                 lis.add(eg);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.err.println("IOException inserting into GRID file " + f.getName() + " :" + e.getMessage());
             }
         }
