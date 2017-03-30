@@ -122,34 +122,7 @@ public class SessionManager /* compliments DoeSessionDriver*/ {
                     return "BAD-LOGIN";
                 }
             }
-        } catch (FileNotFoundException e) {
-            LOG.error(e);
-            return LOGIN_ERROR;
-        } catch (JAXBException e) {
-            LOG.error(e);
-            return LOGIN_ERROR;
-        } catch (NoSuchAlgorithmException e) {
-            LOG.error(e);
-            return LOGIN_ERROR;
-        } catch (InvalidKeySpecException e) {
-            LOG.error(e);
-            return LOGIN_ERROR;
-        } catch (NoSuchPaddingException e) {
-            LOG.error(e);
-            return LOGIN_ERROR;
-        } catch (InvalidKeyException e) {
-            LOG.error(e);
-            return LOGIN_ERROR;
-        } catch (InvalidAlgorithmParameterException e) {
-            LOG.error(e);
-            return LOGIN_ERROR;
-        } catch (UnsupportedEncodingException e) {
-            LOG.error(e);
-            return LOGIN_ERROR;
-        } catch (IllegalBlockSizeException e) {
-            LOG.error(e);
-            return LOGIN_ERROR;
-        } catch (BadPaddingException e) {
+        } catch (FileNotFoundException | JAXBException | NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException | UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
             LOG.error(e);
             return LOGIN_ERROR;
         }
@@ -245,31 +218,7 @@ public class SessionManager /* compliments DoeSessionDriver*/ {
                     LOG.warn("Add existing user failed for "+newUser);
                     return Boolean.FALSE;
                 }
-            } catch (JAXBException e) {
-                LOG.error(e);
-                return Boolean.FALSE;
-            } catch (IOException e) {
-                LOG.error(e);
-                return Boolean.FALSE;
-            } catch (NoSuchAlgorithmException e) {
-                LOG.error(e);
-                return Boolean.FALSE;
-            } catch (InvalidKeySpecException e) {
-                LOG.error(e);
-                return Boolean.FALSE;
-            } catch (NoSuchPaddingException e) {
-                LOG.error(e);
-                return Boolean.FALSE;
-            } catch (InvalidKeyException e) {
-                LOG.error(e);
-                return Boolean.FALSE;
-            } catch (InvalidAlgorithmParameterException e) {
-                LOG.error(e);
-                return Boolean.FALSE;
-            } catch (IllegalBlockSizeException e) {
-                LOG.error(e);
-                return Boolean.FALSE;
-            } catch (BadPaddingException e) {
+            } catch (JAXBException | IOException | NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
                 LOG.error(e);
                 return Boolean.FALSE;
             }
