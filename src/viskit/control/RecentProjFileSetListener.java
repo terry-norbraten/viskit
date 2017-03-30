@@ -45,8 +45,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import viskit.VGlobals;
 import viskit.VStatics;
+import viskit.mvc.mvcAbstractJFrameView;
+import viskit.mvc.mvcController;
 import viskit.mvc.mvcRecentFileListener;
-import viskit.view.AssemblyViewFrame;
 
 /** Utility class to help facilitate menu actions for recently opened Viskit
  * projects.
@@ -126,7 +127,7 @@ public class RecentProjFileSetListener implements mvcRecentFileListener {
                 acontroller.doProjectCleanup();
                 acontroller.openProject(fullPath);
 
-                ((AssemblyViewFrame) ((AssemblyControllerImpl) acontroller).getView()).showProjectName();
+                ((mvcAbstractJFrameView) ((mvcController) acontroller).getView()).showProjectName();
             }
         }
     }
