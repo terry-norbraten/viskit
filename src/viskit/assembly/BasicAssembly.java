@@ -49,6 +49,7 @@ import java.util.*;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import simkit.BasicSimEntity;
+import simkit.Named;
 import simkit.Schedule;
 import simkit.SimEntity;
 import simkit.SimEvent;
@@ -98,9 +99,9 @@ public abstract class BasicAssembly extends BasicSimEntity implements Runnable {
     /** A checkbox is user enabled from the Analyst Report Panel */
     private boolean enableAnalystReports = true;
 
-    private ReportStatisticsConfig statsConfig;
+    private final ReportStatisticsConfig statsConfig;
     private int designPointID;
-    private DecimalFormat form;
+    private final DecimalFormat form;
     private List<String> entitiesWithStats;
     private PrintWriter printWriter;
     private int verboseReplicationNumber;
@@ -177,18 +178,19 @@ public abstract class BasicAssembly extends BasicSimEntity implements Runnable {
         hookupsCalled = true;
     }
 
-    /**
+    /** <p>
      * Receives the replicationStatistics LinkedHashMap from ViskitAssembly. This
      * method extracts the key values and passes them to ReportStatisticsConfig. The
      * key set is in the order of the replication statistics object in this class.
      * The goal of this and related methods is to aid ReportStatisticsConfig in
      * exporting statistical results sorted by SimEntity
-     * <p/>
+     * </p>
+     * <p>
      * NOTE: Requires that the Listeners in the assembly use the following naming
      * convention SimEntityName_PropertyName (e.g. RHIB_reportedContacts).
      * ReportStatistics config uses the underscore to extract the entity name
      * from the key values of the LinkedHashMap.
-     * <p/>
+     * </p>
      * TODO: Remove the naming convention requirement and have the SimEntity name be
      * an automated key value
      * @param repStatistics a map containing collected stats on a SimEntity's state variables
@@ -437,7 +439,7 @@ public abstract class BasicAssembly extends BasicSimEntity implements Runnable {
         int id = -1;
         int repStatsLength = getReplicationStats().length;
         for (int i = 0; i < repStatsLength; i++) {
-            if (((SampleStatistics) getReplicationStats()[i]).getName().equals(state)) {
+            if (((Named) getReplicationStats()[i]).getName().equals(state)) {
                 id = i;
                 break;
             }
@@ -616,21 +618,20 @@ public abstract class BasicAssembly extends BasicSimEntity implements Runnable {
 
             LOG.error(t);
 
-            URL url = null;
             try {
-                url = new URL("mailto:" + VStatics.VISKIT_MAILING_LIST
+                URL url = new URL("mailto:" + VStatics.VISKIT_MAILING_LIST
                         + "?subject=Assembly%20Run%20Error&body=log%20output:");
-            } catch (MalformedURLException ex) {
-                LOG.error(ex);
-            }
-
-            String msg = "Assembly run aborted.  <br/>Please "
+                
+                String msg = "Assembly run aborted.  <br/>Please "
                     + "navigate to " + ViskitConfig.V_DEBUG_LOG.getPath() + " and "
                     + "email the log to "
                     + "<b><a href=\"" + url.toString() + "\">" + VStatics.VISKIT_MAILING_LIST + "</a></b>"
                     + "<br/><br/>Click the link to open up an email form, then copy and paste the log's contents";
 
-            VStatics.showHyperlinkedDialog(null, t.toString(), url, msg, true);
+                VStatics.showHyperlinkedDialog(null, t.toString(), url, msg, true);
+            } catch (MalformedURLException ex) {
+                LOG.error(ex);
+            }
 
             // Comment in to see what the matter is
 //            t.printStackTrace();
