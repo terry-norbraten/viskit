@@ -143,7 +143,7 @@ public class ViskitAssembly extends BasicAssembly {
                 }
             }
         } else if (debug) {
-            log.info("No external designPointListeners to add");
+            LOG.info("No external designPointListeners to add");
         }
     }
 
@@ -157,7 +157,7 @@ public class ViskitAssembly extends BasicAssembly {
                     connectPropertyChangeListener(listener, pc);
                 }
             } else if (debug) {
-                log.info("No propertyConnectors");
+                LOG.info("No propertyConnectors");
             }
         }
     }
