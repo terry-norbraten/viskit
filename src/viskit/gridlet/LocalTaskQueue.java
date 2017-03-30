@@ -114,24 +114,12 @@ public class LocalTaskQueue extends ArrayList<Object> {
                 // so send as Object
                 //task.setGridRunner(gridRunner);
                 mthd = gridletz.getMethod("setGridRunner",Object.class);
-                mthd.invoke(task,(Object)gridRunner);
+                mthd.invoke(task, gridRunner);
 
                 super.set(i, task);
                 ((Thread) task).start();
 
-            } catch (NoSuchMethodException e) {
-                log.error(e);
-            } catch (SecurityException e) {
-                log.error(e);
-            } catch (IllegalAccessException e) {
-                log.error(e);
-            } catch (IllegalArgumentException e) {
-                log.error(e);
-            } catch (InvocationTargetException e) {
-                log.error(e);
-            } catch (InstantiationException e) {
-                log.error(e);
-            } catch (ClassNotFoundException e) {
+            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException | ClassNotFoundException e) {
                 log.error(e);
             }
         }
