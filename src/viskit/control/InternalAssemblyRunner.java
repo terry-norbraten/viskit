@@ -163,7 +163,7 @@ public class InternalAssemblyRunner implements PropertyChangeListener {
         try {
             fillRepWidgetsFromPreRunAssy(defaultVerbose, defaultStopTime);
         } catch (Throwable throwable) {
-            ((AssemblyControllerImpl)VGlobals.instance().getAssemblyController()).messageUser(
+            ((AssemblyController)VGlobals.instance().getAssemblyController()).messageUser(
                     JOptionPane.ERROR_MESSAGE,
                     "Java Error",
                     "Error initializing Assembly:\n" + throwable.getMessage());
@@ -198,7 +198,7 @@ public class InternalAssemblyRunner implements PropertyChangeListener {
         Method setStopTime = assemblyClass.getMethod("setStopTime", double.class);
         Method getStopTime = assemblyClass.getMethod("getStopTime");
 
-        runPanel.numRepsTF.setText("" + (Integer) getNumberReplications.invoke(assemblyInstance));
+        runPanel.numRepsTF.setText("" + getNumberReplications.invoke(assemblyInstance));
         runPanel.saveRepDataCB.setSelected((Boolean) isSaveReplicationData.invoke(assemblyInstance));
         runPanel.printRepReportsCB.setSelected((Boolean) isPrintReplicationReports.invoke(assemblyInstance));
         runPanel.printSummReportsCB.setSelected((Boolean) isPrintSummaryReport.invoke(assemblyInstance));
@@ -207,7 +207,7 @@ public class InternalAssemblyRunner implements PropertyChangeListener {
         setVerbose.invoke(assemblyInstance, verbose);
         runPanel.vcrVerbose.setSelected((Boolean) isVerbose.invoke(assemblyInstance));
         setStopTime.invoke(assemblyInstance, stopTime);
-        runPanel.vcrStopTime.setText("" + (Double) getStopTime.invoke(assemblyInstance));
+        runPanel.vcrStopTime.setText("" + getStopTime.invoke(assemblyInstance));
     }
 
     File tmpFile;
@@ -446,7 +446,7 @@ public class InternalAssemblyRunner implements PropertyChangeListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (assembly == null) {return;}
-            assembly.setVerbose(((JCheckBox) e.getSource()).isSelected());
+            assembly.setVerbose(((AbstractButton) e.getSource()).isSelected());
         }
     }
 
