@@ -8,6 +8,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 import java.util.Map;
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.undo.UndoManager;
 import org.jgraph.JGraph;
 import org.jgraph.event.GraphModelEvent;
@@ -41,32 +42,32 @@ public class vGraphAssemblyComponent extends JGraph implements GraphModelListene
         vGraphAssemblyComponent instance = this;
         ToolTipManager.sharedInstance().registerComponent(instance);
         this.vGAModel = model;
-        this.setSizeable(false);
-        this.setGridVisible(true);
-        this.setGridMode(JGraph.LINE_GRID_MODE);
-        this.setGridColor(new Color(0xcc, 0xcc, 0xff)); // default on Mac, makes Windows look better
-        this.setGridEnabled(true); // means snap
-        this.setGridSize(10);
-        this.setMarqueeHandler(new vGraphMarqueeHandler(instance));
-        this.setAntiAliased(true);
-        this.setLockedHandleColor(Color.red);
-        this.setHighlightColor(Color.red);
+        vGraphAssemblyComponent.this.setSizeable(false);
+        vGraphAssemblyComponent.this.setGridVisible(true);
+        vGraphAssemblyComponent.this.setGridMode(JGraph.LINE_GRID_MODE);
+        vGraphAssemblyComponent.this.setGridColor(new Color(0xcc, 0xcc, 0xff)); // default on Mac, makes Windows look better
+        vGraphAssemblyComponent.this.setGridEnabled(true); // means snap
+        vGraphAssemblyComponent.this.setGridSize(10);
+        vGraphAssemblyComponent.this.setMarqueeHandler(new vGraphMarqueeHandler(instance));
+        vGraphAssemblyComponent.this.setAntiAliased(true);
+        vGraphAssemblyComponent.this.setLockedHandleColor(Color.red);
+        vGraphAssemblyComponent.this.setHighlightColor(Color.red);
 
         // Set the Tolerance to 2 Pixel
-        setTolerance(2);
+        vGraphAssemblyComponent.this.setTolerance(2);
 
         // Jump to default port on connect
-        setJumpToDefaultPort(true);
+        vGraphAssemblyComponent.this.setJumpToDefaultPort(true);
 
          // Set up the cut/remove/paste/copy/undo/redo actions
         undoManager = new vGraphUndoManager(parent.getController());
-        addGraphSelectionListener((GraphSelectionListener) undoManager);
+        vGraphAssemblyComponent.this.addGraphSelectionListener((GraphSelectionListener) undoManager);
         model.addUndoableEditListener(undoManager);
         model.addGraphModelListener(instance);
 
         // As of JGraph-5.2, custom cell rendering is
         // accomplished via this convention
-        getGraphLayoutCache().setFactory(new DefaultCellViewFactory() {
+        vGraphAssemblyComponent.this.getGraphLayoutCache().setFactory(new DefaultCellViewFactory() {
 
             // To use circles, from the tutorial
             @Override
@@ -87,7 +88,7 @@ public class vGraphAssemblyComponent extends JGraph implements GraphModelListene
             protected EdgeView createEdgeView(Object e) {
                 EdgeView view = null;
                 if (e instanceof vAssemblyEdgeCell) {
-                    Object o = ((vAssemblyEdgeCell) e).getUserObject();
+                    Object o = ((DefaultMutableTreeNode) e).getUserObject();
                     if (o instanceof PropChangeEdge) {
                         view = new vAssyPclEdgeView(e);
                     }
@@ -378,7 +379,7 @@ public class vGraphAssemblyComponent extends JGraph implements GraphModelListene
             AssemblyCircleCell cc = (AssemblyCircleCell) view.getCell();
             Object en = cc.getUserObject();
             if (en instanceof EvGraphNode) {
-                return ((EvGraphNode) en).getName();
+                return ((ViskitElement) en).getName();
             }    // label name is actually gotten in paintComponent
         }
         return null;
@@ -540,7 +541,7 @@ class vAssemblyPortView extends PortView {
 
     public vAssemblyPortView(Object o) {
         super(o);
-        setPortSize(mysize);
+        vAssemblyPortView.this.setPortSize(mysize);
     }
 }
 
