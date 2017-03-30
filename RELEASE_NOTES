@@ -74,7 +74,7 @@ Major changes since 1.0.10:
   Moved codebase to new repository at: https://gitlab.nps.edu/tdnorbra/viskit
   The codebase was forked at R2900 from the old SVN repository at:
   https://eos.nps.edu/wcm/Viskit.  Due to the many refactorings that took place
-  since R2900 (09 DEC 2015), R2900 marks the revision that was the last know
+  since R2900 (09 DEC 2015), R2900 marks the revision that was the last known
   functional build of Viskit.  Rather than branch at the original SVN site, it
   was decided to move to a more functional repository for version control w/ 
   Git.
