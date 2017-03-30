@@ -591,31 +591,29 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
                     // Waits for the zip process to finish
                     get();
 
-                    URL url = null;
                     try {
-                        url = new URL("mailto:" + VStatics.VISKIT_MAILING_LIST
+                        URL url = new URL("mailto:" + VStatics.VISKIT_MAILING_LIST
                                 + "?subject=Viskit%20Project%20Submission%20for%20"
                                 + projDir.getName() + "&body=see%20attachment");
+                        String msg = "Please navigate to<br/>"
+                                + projZip.getParent()
+                                + "<br/>and email the " + projZip.getName()
+                                + " file to "
+                                + "<b><a href=\"" + url.toString() + "\">"
+                                + VStatics.VISKIT_MAILING_LIST + "</a></b>"
+                                + "<br/><br/>Click the link to open up an email "
+                                + "form, then attach the zip file";
+                        VStatics.showHyperlinkedDialog((Component) getView(), "Viskit Project: " + projDir.getName(), url, msg, false);
+
                     } catch (MalformedURLException e) {
                         LOG.error(e);
                     }
-
-                    String msg = "Please navigate to<br/>"
-                            + projZip.getParent()
-                            + "<br/>and email the " + projZip.getName()
-                            + " file to "
-                            + "<b><a href=\"" + url.toString() + "\">"
-                            + VStatics.VISKIT_MAILING_LIST + "</a></b>"
-                            + "<br/><br/>Click the link to open up an email "
-                            + "form, then attach the zip file";
 
                     try {
                         Desktop.getDesktop().open(projZip.getParentFile());
                     } catch (IOException e) {
                         LOG.error(e);
                     }
-
-                    VStatics.showHyperlinkedDialog((Component) getView(), "Viskit Project: " + projDir.getName(), url, msg, false);
 
                 } catch (InterruptedException | ExecutionException e) {
                     LOG.error(e);
