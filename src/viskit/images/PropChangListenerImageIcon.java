@@ -44,7 +44,7 @@ public class PropChangListenerImageIcon extends ImageIcon {
         Graphics2D g2 = (Graphics2D) g;
         Insets ins = new Insets(0, 0, 0, 0);
         if (c instanceof JComponent) {
-            ins = ((JComponent) c).getInsets();
+            ins = ((Container) c).getInsets();
         }
         g2.translate(ins.left + x, ins.top + y);
 
