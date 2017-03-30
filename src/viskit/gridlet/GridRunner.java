@@ -988,16 +988,14 @@ public class GridRunner /* compliments DoeRunDriver*/ {
 
     void iterate(Map<TerminalParameter, Object> values, int depth) {
 
-        Object[] terms = ((values.keySet()).toArray());
-        Object params = (values.get((TerminalParameter)(terms[depth])));
+        TerminalParameter[] terms = (TerminalParameter[]) values.keySet().toArray();
+        Object params = values.get(terms[depth]);
         Object[] paramValues = (Object[])params;
         for (Object paramValue : paramValues) {
-            TerminalParameter tp = (TerminalParameter)(terms[depth]);
+            TerminalParameter tp = terms[depth];
             tp.setValue(paramValue.toString());
-            if ( depth > 0) {
-
+            if (depth > 0) {
                 iterate(values, depth - 1);
-
             } else {
 
                 Experiment experiment = root.getExperiment();
