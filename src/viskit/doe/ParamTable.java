@@ -39,6 +39,7 @@ import java.awt.event.ItemListener;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -193,7 +194,7 @@ public class ParamTable extends JTable {
                     ListSelectionModel lsm = ParamTable.this.getSelectionModel();
                     if (!lsm.isSelectionEmpty()) {
                         int selectedRow = lsm.getMinSelectionIndex();
-                        ((DefaultTableModel) ParamTable.this.getModel()).fireTableRowsUpdated(selectedRow, selectedRow);
+                        ((AbstractTableModel) ParamTable.this.getModel()).fireTableRowsUpdated(selectedRow, selectedRow);
                     }
                 }
             });
