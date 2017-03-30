@@ -18,7 +18,7 @@ installer           Configuration files for the iZpack installer API
 lib                 3rd-party libraries needed to compile and run Viskit
 license             3rd-party and Viskit license information
 nbproject           NetBeans IDE specific project files
-src                 Source code used to build Viksit and associated applications,
+src                 Source code used to build Viskit and associated applications,
                     such as the installers
 test                JUnit tests for the main codebase
 
