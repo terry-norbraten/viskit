@@ -35,10 +35,11 @@ package viskit.jgraph;
 
 import java.util.Vector;
 import javax.swing.event.UndoableEditEvent;
+import javax.swing.tree.DefaultMutableTreeNode;
 import org.jgraph.event.GraphSelectionEvent;
 import org.jgraph.event.GraphSelectionListener;
-import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.GraphUndoManager;
+import viskit.control.AssemblyController;
 import viskit.control.AssemblyControllerImpl;
 import viskit.control.EventGraphController;
 import viskit.control.EventGraphControllerImpl;
@@ -89,17 +90,17 @@ public class vGraphUndoManager extends GraphUndoManager implements GraphSelectio
             if (e.isAddedCell(o)) {
 
                 // Prevent dups
-                if (!selected.contains(((DefaultGraphCell) o).getUserObject()))
-                    selected.add(((DefaultGraphCell) o).getUserObject());
+                if (!selected.contains(((DefaultMutableTreeNode) o).getUserObject()))
+                    selected.add(((DefaultMutableTreeNode) o).getUserObject());
             } else {
-                selected.remove(((DefaultGraphCell) o).getUserObject());
+                selected.remove(((DefaultMutableTreeNode) o).getUserObject());
             }
         }
 
         if (controller instanceof EventGraphControllerImpl)
             ((EventGraphController) controller).selectNodeOrEdge(selected);
         else
-            ((AssemblyControllerImpl) controller).selectNodeOrEdge(selected);
+            ((AssemblyController) controller).selectNodeOrEdge(selected);
     }
 
 } // end class file vGraphUndoManager.java
