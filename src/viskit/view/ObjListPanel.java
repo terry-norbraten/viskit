@@ -215,7 +215,7 @@ public class ObjListPanel extends JPanel implements ActionListener, CaretListene
             // Special case for Object... (varargs)
             if (inst instanceof VInstantiator.FreeF) {
                 List<Object> l = new ArrayList<>();
-                l.add((VInstantiator.FreeF) inst);
+                l.add(inst);
                 ai.setData(l);
             } else {
                 ai.setData(((VInstantiator.Array) inst).getInstantiators());

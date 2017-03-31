@@ -15,7 +15,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import viskit.VGlobals;
 import viskit.VStatics;
-import viskit.control.EventGraphControllerImpl;
+import viskit.control.EventGraphController;
 
 import viskit.model.EventStateTransition;
 import viskit.model.ViskitElement;
@@ -257,7 +257,7 @@ public class EventStateTransitionDialog extends JDialog {
 
         // to start off:
         if (stateVarsCB.getItemCount() > 0) {
-            descriptionField.setText(((vStateVariable) stateVarsCB.getItemAt(0)).getComment());
+            descriptionField.setText(stateVarsCB.getItemAt(0).getComment());
         } else {
             descriptionField.setText("");
         }
@@ -369,7 +369,7 @@ public class EventStateTransitionDialog extends JDialog {
             type = VStatics.classForName(typ);
 
             if (type == null) {
-                ((EventGraphControllerImpl) VGlobals.instance().getEventGraphController()).messageUser(
+                ((EventGraphController) VGlobals.instance().getEventGraphController()).messageUser(
                         JOptionPane.WARNING_MESSAGE,
                         typ + " not found on the Classpath",
                         "Please make sure you are using fully qualified java "
@@ -424,7 +424,7 @@ public class EventStateTransitionDialog extends JDialog {
 
         if (param != null) {
             if (stateVarsCB.getItemCount() > 0) {
-                descriptionField.setText(((vStateVariable) stateVarsCB.getSelectedItem()).getComment());
+                descriptionField.setText(((ViskitElement) stateVarsCB.getSelectedItem()).getComment());
             } else {
                 descriptionField.setText("");
             }
@@ -476,7 +476,7 @@ public class EventStateTransitionDialog extends JDialog {
         }
 
         // We have an indexing argument already set
-        String typ = ((vStateVariable) stateVarsCB.getSelectedItem()).getType();
+        String typ = ((ViskitElement) stateVarsCB.getSelectedItem()).getType();
         indexPanel.setVisible(VGlobals.instance().isArray(typ));
         localAssignmentPanel.setVisible(opOn.isSelected());
     }
@@ -572,8 +572,8 @@ public class EventStateTransitionDialog extends JDialog {
             else
                 param.setLocalVariableAssignment("");
 
-            param.setName(((vStateVariable) stateVarsCB.getSelectedItem()).getName());
-            param.setType(((vStateVariable) stateVarsCB.getSelectedItem()).getType());
+            param.setName(((ViskitElement) stateVarsCB.getSelectedItem()).getName());
+            param.setType(((ViskitElement) stateVarsCB.getSelectedItem()).getType());
             param.setIndexingExpression(arrayIndexField.getText().trim());
 
             String arg = actionField.getText().trim();
@@ -595,7 +595,7 @@ public class EventStateTransitionDialog extends JDialog {
             if (!localInvocationField.getText().isEmpty())
                 param.setLocalVariableInvocation(localInvocationField.getText().trim()
                         + "."
-                        + (String) localVarMethodsCB.getSelectedItem());
+                        + localVarMethodsCB.getSelectedItem());
         }
     }
 
@@ -626,9 +626,9 @@ public class EventStateTransitionDialog extends JDialog {
                 actionLab1.setText("=");
                 actionLab2.setText("");
             } else if (opOn.isSelected()) {
-                String ty = ((vStateVariable) stateVarsCB.getSelectedItem()).getType();
+                String ty = ((ViskitElement) stateVarsCB.getSelectedItem()).getType();
                 if (VGlobals.instance().isPrimitive(ty)) {
-                    ((EventGraphControllerImpl)VGlobals.instance().getEventGraphController()).messageUser(
+                    ((EventGraphController)VGlobals.instance().getEventGraphController()).messageUser(
                             JOptionPane.ERROR_MESSAGE,
                             "Java Language Error",
                             "A method may not be invoked on a primitive type.");
@@ -652,7 +652,7 @@ public class EventStateTransitionDialog extends JDialog {
         public void actionPerformed(ActionEvent event) {
             if (modified) {
                 // check for array index
-                String typ = ((vStateVariable) stateVarsCB.getSelectedItem()).getType();
+                String typ = ((ViskitElement) stateVarsCB.getSelectedItem()).getType();
                 if (VGlobals.instance().isArray(typ)) {
                     if (arrayIndexField.getText().trim().isEmpty()) {
                         int ret = JOptionPane.showConfirmDialog(EventStateTransitionDialog.this,

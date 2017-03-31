@@ -10,7 +10,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import viskit.VGlobals;
-import viskit.control.EventGraphControllerImpl;
+import viskit.control.EventGraphController;
 import viskit.model.EventStateTransition;
 import viskit.model.ViskitElement;
 
@@ -197,7 +197,7 @@ public class TransitionsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             if (VGlobals.instance().getStateVarsCBModel().getSize() <= 0) {
-                ((EventGraphControllerImpl)VGlobals.instance().getEventGraphController()).messageUser(
+                ((EventGraphController)VGlobals.instance().getEventGraphController()).messageUser(
                     JOptionPane.ERROR_MESSAGE,
                     "Alert",
                     "No state variables have been defined," +

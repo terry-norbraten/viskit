@@ -603,7 +603,7 @@ public class InstantiationPanel extends JPanel implements ActionListener, CaretL
                     return;
                 }
 
-                Method m = hm.get((String) ret);
+                Method m = hm.get(ret);
                 Vector<Object> vc = VInstantiator.buildDummyInstantiators(m);
                 addObjListPanel(vc, true);
 

@@ -239,20 +239,20 @@ public class AssemblyModelImpl extends mvcAbstractModel implements AssemblyModel
     public void externalClassesChanged(Vector<String> v) {
 
     }
-    private char[] hdigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+    public static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
-    private String _fourHexDigits(int i) {
+    public static String _fourHexDigits(int i) {
         char[] ca = new char[4];
         for (int j = 3; j >= 0; j--) {
             int idx = i & 0xF;
             i >>= 4;
-            ca[j] = hdigits[idx];
+            ca[j] = HEX_DIGITS[idx];
         }
         return new String(ca);
     }
-    Random mangleRandom = new Random();
+    static Random mangleRandom = new Random();
 
-    private String mangleName(String name) {
+    public static String mangleName(String name) {
         int nxt = mangleRandom.nextInt(0x1_0000); // 4 hex digits
         StringBuilder sb = new StringBuilder(name);
         if (sb.charAt(sb.length() - 1) == '_') {
@@ -266,7 +266,7 @@ public class AssemblyModelImpl extends mvcAbstractModel implements AssemblyModel
 
     private void mangleName(ViskitElement node) {
         do {
-            node.setName(AssemblyModelImpl.this.mangleName(node.getName()));
+            node.setName(mangleName(node.getName()));
         } while (!nameCheck());
     }
 

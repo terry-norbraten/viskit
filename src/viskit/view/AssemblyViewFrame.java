@@ -74,6 +74,7 @@ import viskit.jgraph.vGraphAssemblyModel;
 import viskit.model.*;
 import viskit.mvc.mvcAbstractJFrameView;
 import viskit.mvc.mvcController;
+import viskit.mvc.mvcModel;
 import viskit.mvc.mvcModelEvent;
 import viskit.mvc.mvcRecentFileListener;
 import viskit.util.AssemblyFileFilter;
@@ -224,7 +225,7 @@ public class AssemblyViewFrame extends mvcAbstractJFrameView implements Assembly
             // Key to getting the LEGOs tree panel in each tab view
             myVgacw.drawingSplitPane.setLeftComponent(myVgacw.trees);
 
-            setModel((AssemblyModelImpl) myVgacw.assyModel); // hold on locally
+            setModel((mvcModel) myVgacw.assyModel); // hold on locally
             getController().setModel(getModel()); // tell controller
             AssemblyModelImpl mod = (AssemblyModelImpl) getModel();
 

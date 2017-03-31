@@ -337,16 +337,16 @@ public class EventInspectorDialog extends JDialog {
                 if (ve instanceof SchedulingEdge) {
 
                     // and, this SchedulingEdge is going to this node
-                    if (((SchedulingEdge) ve).to.getName().equals(en.getName())) {
+                    if (((Edge) ve).to.getName().equals(en.getName())) {
                         LogUtils.getLogger(EventInspectorDialog.class).debug("Found the SE's 'to' Node that matches this EventNode");
 
                         // The lower key values signal when it was connected to
                         // to this event node.  We're interested in the first
                         // SchedulingEdge to this EventNode
-                        LogUtils.getLogger(EventInspectorDialog.class).debug("SE ID is: " + ((SchedulingEdge) ve).getModelKey());
+                        LogUtils.getLogger(EventInspectorDialog.class).debug("SE ID is: " + ve.getModelKey());
 
                         // If this isn't the first time, then skip over this edge
-                        if (!((SchedulingEdge) ve).parameters.isEmpty()) {continue;}
+                        if (!((Edge) ve).parameters.isEmpty()) {continue;}
 
                         // We match EventArgument count to EdgeParameter count
                         // here.
@@ -355,7 +355,7 @@ public class EventInspectorDialog extends JDialog {
                             // The user will be able to change any values from
                             // the EdgeInspectorDialog.  Right now, values are
                             // defaulted to zeros.
-                            ((SchedulingEdge) ve).parameters.add(new vEdgeParameter(v.getValue()));
+                            ((Edge) ve).parameters.add(new vEdgeParameter(v.getValue()));
                         }
                     }
                 }

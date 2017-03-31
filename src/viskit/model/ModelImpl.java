@@ -75,8 +75,7 @@ public class ModelImpl extends mvcAbstractModel implements Model {
             controller.messageUser(JOptionPane.ERROR_MESSAGE,
                     "XML Error",
                     "Exception on JAXBContext instantiation" +
-                    "\n" + e.getMessage()
-                    );
+                    "\n" + e.getMessage());
         }
     }
 
@@ -284,34 +283,10 @@ public class ModelImpl extends mvcAbstractModel implements Model {
         }
         return sb.toString().trim();
     }
-    private char[] hdigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-
-    private String _fourHexDigits(int i) {
-        char[] ca = new char[4];
-        for (int j = 3; j >= 0; j--) {
-            int idx = i & 0xF;
-            i >>= 4;
-            ca[j] = hdigits[idx];
-        }
-        return new String(ca);
-    }
-    Random mangleRandom = new Random();
-
-    private String mangleName(String name) {
-        int nxt = mangleRandom.nextInt(0x1_0000); // 4 hex digits
-        StringBuilder sb = new StringBuilder(name);
-        if (sb.charAt(sb.length() - 1) == '_') {
-            sb.setLength(sb.length() - 6);
-        }
-        sb.append('_');
-        sb.append(_fourHexDigits(nxt));
-        sb.append('_');
-        return sb.toString();
-    }
 
     private void mangleName(ViskitElement node) {
         do {
-            node.setName(ModelImpl.this.mangleName(node.getName()));
+            node.setName(AssemblyModelImpl.mangleName(node.getName()));
         } while (!nameCheck());
     }
 

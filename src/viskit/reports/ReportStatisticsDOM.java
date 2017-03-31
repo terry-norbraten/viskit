@@ -45,7 +45,7 @@ public class ReportStatisticsDOM {
     public ReportStatisticsDOM() {
         reportStatistics = new Document();
         rootElement = new Element("ReportStatistics");
-        entities = new HashMap<String, SimEntityRecord>();
+        entities = new HashMap<>();
         reportStatistics.setRootElement(rootElement);
     }
 
@@ -123,7 +123,7 @@ public class ReportStatisticsDOM {
         String entityName;
         String property;
         Element simEntity, sumReport;
-        Map<String, Element> dataPointMap = new HashMap<String, Element>();
+        Map<String, Element> dataPointMap = new HashMap<>();
 
         SimEntityRecord(String entityName) {
             //Initialize the default layout

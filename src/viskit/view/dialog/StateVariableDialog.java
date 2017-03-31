@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import viskit.VGlobals;
 import viskit.ViskitConfig;
-import viskit.control.EventGraphControllerImpl;
+import viskit.control.EventGraphController;
 
 /**
  * OPNAV N81 - NPS World Class Modeling (WCM) 2004 Projects
@@ -297,7 +297,7 @@ public class StateVariableDialog extends ViskitSmallDialog {
                 if (nam.length() <= 0 ||
                         typ.length() <= 0 ||
                         (VGlobals.instance().isArray(typ) && arsz.length() <= 0)) {
-                    ((EventGraphControllerImpl)VGlobals.instance().getEventGraphController()).messageUser(
+                    ((EventGraphController)VGlobals.instance().getEventGraphController()).messageUser(
                             JOptionPane.ERROR_MESSAGE,
                             "Data entry error",
                             "Name, type and (if array) array size must be entered.");
@@ -305,13 +305,13 @@ public class StateVariableDialog extends ViskitSmallDialog {
                     arraySizeField.requestFocus();
                     return;
                 } else if (VGlobals.instance().isArray(typ) && !isGoodArray(typ)) {
-                    ((EventGraphControllerImpl)VGlobals.instance().getEventGraphController()).messageUser(
+                    ((EventGraphController)VGlobals.instance().getEventGraphController()).messageUser(
                             JOptionPane.ERROR_MESSAGE,
                             "Data entry error",
                             "Use a single trailing pair of empty square brackets\nto signify a one-dimensional array.");
                     return;
                 } else if (isGeneric(typ)) {
-                    ((EventGraphControllerImpl)VGlobals.instance().getEventGraphController()).messageUser(
+                    ((EventGraphController)VGlobals.instance().getEventGraphController()).messageUser(
                             JOptionPane.ERROR_MESSAGE,
                             "Data entry error",
                             "Actual Keys, Values or Element types must replace " +

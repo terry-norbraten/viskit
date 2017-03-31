@@ -21,7 +21,7 @@ import java.util.Collections;
 import simkit.Priority;
 import viskit.VGlobals;
 import viskit.VStatics;
-import viskit.control.EventGraphControllerImpl;
+import viskit.control.EventGraphController;
 import viskit.model.Edge;
 import viskit.model.EventLocalVariable;
 import viskit.model.SchedulingEdge;
@@ -364,14 +364,14 @@ public class EdgeInspectorDialog extends JDialog {
         ComboBoxModel<ViskitElement> m = VGlobals.instance().getSimParamsCBModel();
 
         // First item should be empty to allow for default zero delay
-        ((DefaultComboBoxModel<ViskitElement>)m).insertElementAt(new EventLocalVariable("", "", ""), 0);
+        ((MutableComboBoxModel<ViskitElement>)m).insertElementAt(new EventLocalVariable("", "", ""), 0);
         cb.setModel(m);
 
         java.util.List<ViskitElement> vars = new ArrayList<>(edge.from.getLocalVariables());
         vars.addAll(edge.from.getArguments());
 
         for (ViskitElement e : vars) {
-            ((DefaultComboBoxModel<ViskitElement>)m).addElement(e);
+            ((MutableComboBoxModel<ViskitElement>)m).addElement(e);
         }
 
         return cb;
@@ -400,7 +400,7 @@ public class EdgeInspectorDialog extends JDialog {
             type = VStatics.classForName(typ);
 
             if (type == null) {
-                ((EventGraphControllerImpl) VGlobals.instance().getEventGraphController()).messageUser(
+                ((EventGraphController) VGlobals.instance().getEventGraphController()).messageUser(
                         JOptionPane.WARNING_MESSAGE,
                         typ + " not found on the Classpath",
                         "Please make sure you are using fully qualified java "
@@ -429,7 +429,7 @@ public class EdgeInspectorDialog extends JDialog {
         cb.setEditable(true);
 
         // First item should be empty
-        ((DefaultComboBoxModel<String>)m).insertElementAt("", 0);
+        ((MutableComboBoxModel<String>)m).insertElementAt("", 0);
         cb.setModel(m);
         return cb;
     }
@@ -627,7 +627,7 @@ public class EdgeInspectorDialog extends JDialog {
         if (delaySt == null || delaySt.trim().isEmpty())
             delaySt = (String) timeDelayMethodsCB.getSelectedItem();
         else
-            delaySt += ("." + (String) timeDelayMethodsCB.getSelectedItem());
+            delaySt += ("." + timeDelayMethodsCB.getSelectedItem());
 
         edge.delay = delaySt;
 

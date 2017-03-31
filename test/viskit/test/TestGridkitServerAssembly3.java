@@ -320,7 +320,7 @@ public class TestGridkitServerAssembly3 extends Thread {
                 for ( int i = 0; i < queue.size(); i ++ ) {
                     // trick: any change between queries indicates a transition at
                     // taskID = i (well i+1 really, taskID's in SGE start at 1)
-                    if ( !((Boolean) lastQueue.get(i)).equals(((Boolean) queue.get(i))) ) {
+                    if (!lastQueue.get(i).equals(queue.get(i)) ) {
                         int sampleIndex = i / 3; // number of designPoints chosed in this experiemnt was 3
                         int designPtIndex = i % 3; // can also just use getResultByTaskID(int)
                         args.clear();
@@ -366,11 +366,7 @@ public class TestGridkitServerAssembly3 extends Thread {
 
             System.out.println("Test complete!");
 
-        } catch (IOException e) {
-            log.error(e);
-        } catch (NumberFormatException e) {
-            log.error(e);
-        } catch (XmlRpcException e) {
+        } catch (IOException | NumberFormatException | XmlRpcException e) {
             log.error(e);
         }
     }

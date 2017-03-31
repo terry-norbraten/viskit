@@ -216,7 +216,7 @@ public class Launcher extends Thread implements Runnable {
         m = jclz.getDeclaredMethod("getPackage", new Class<?>[]{});
         assemblyName = (String) m.invoke(assemblyJaxb, new Object[]{});
         m = jclz.getDeclaredMethod("getName", new Class<?>[]{});
-        assemblyName += "." + (String) m.invoke(assemblyJaxb, new Object[]{});
+        assemblyName += "." + m.invoke(assemblyJaxb, new Object[]{});
 
     }
 
@@ -456,7 +456,7 @@ public class Launcher extends Thread implements Runnable {
         bshcm = m.invoke(bsh, new Object[]{});
         m = bshcmz.getDeclaredMethod("classExists", new Class<?>[]{String.class});
         out = m.invoke(bshcm, new Object[]{"viskit.xsd.translator.assembly.BasicAssembly"});
-        log.debug("Checking if viskit.assembly.BasicAssembly exists... " + ((Boolean) out).toString());
+        log.debug("Checking if viskit.assembly.BasicAssembly exists... " + out.toString());
 
         try {
             Enumeration<String> e = eventGraphs.keys();
@@ -485,7 +485,7 @@ public class Launcher extends Thread implements Runnable {
                 // sanity check bsh if eventGraph class exists
                 m = bshcmz.getDeclaredMethod("classExists", new Class<?>[]{String.class});
                 out = m.invoke(bshcm, new Object[]{eventGraphName});
-                System.out.println("Checking if " + eventGraphName + " exists... " + ((Boolean) out).toString());
+                System.out.println("Checking if " + eventGraphName + " exists... " + out.toString());
             }
 
             // unmarshal assembly xml
@@ -511,9 +511,9 @@ public class Launcher extends Thread implements Runnable {
             // sanity check the bsh class loaders if assembly exists
             m = bshcmz.getDeclaredMethod("classExists", new Class<?>[]{String.class});
             out = m.invoke(bshcm, new Object[]{assemblyName});
-            log.debug("Checking if " + assemblyName + " exists... " + ((Boolean) out).toString());
+            log.debug("Checking if " + assemblyName + " exists... " + out.toString());
             out = m.invoke(bshcm, new Object[]{VStatics.RANDOM_VARIATE_FACTORY_CLASS});
-            log.debug("Checking if simkit.random.RandomVariateFactory exists... " + ((Boolean) out).toString());
+            log.debug("Checking if simkit.random.RandomVariateFactory exists... " + out.toString());
 
             // get the assembly class, create instance and thread it
             m = bshcmz.getDeclaredMethod("classForName", new Class<?>[]{String.class});

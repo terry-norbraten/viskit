@@ -70,6 +70,7 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.DomainInfo;
 import org.jfree.data.function.Function2D;
 import org.jfree.data.function.LineFunction2D;
 import org.jfree.data.general.DatasetUtilities;
@@ -166,8 +167,8 @@ public class LinearRegressionChart {
         Function2D curve = new LineFunction2D(coefficients[0], coefficients[1]);
         XYDataset regressionData = DatasetUtilities.sampleFunction2D(
                 curve,
-                ((XYSeriesCollection) dataset).getDomainLowerBound(true),
-                ((XYSeriesCollection) dataset).getDomainUpperBound(true),
+                ((DomainInfo) dataset).getDomainLowerBound(true),
+                ((DomainInfo) dataset).getDomainUpperBound(true),
                 dataset.getItemCount(0),
                 "Fitted Regression Line");
 

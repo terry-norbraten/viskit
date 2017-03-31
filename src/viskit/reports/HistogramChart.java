@@ -66,7 +66,7 @@ public class HistogramChart {
         double min = dataCopy[0];
 
         // From: http://www.isixsigma.com/library/forum/c031022_number_bins_histogram.asp
-        double result = 1 + (3.3 * Math.log((double) dataCopy.length));
+        double result = 1 + (3.3 * Math.log(dataCopy.length));
         int binNum = (int) Math.rint(result);
 
         dataset.addSeries(label, data, binNum, min, max);

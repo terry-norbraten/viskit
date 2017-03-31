@@ -248,7 +248,8 @@ public class ReportStatisticsConfig {
             return null;
         } finally {
             try {
-                writer.close();
+                if (writer != null)
+                    writer.close();
             } catch (IOException ioe) {}
         }
     }

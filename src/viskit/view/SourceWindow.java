@@ -180,7 +180,7 @@ public class SourceWindow extends JFrame {
                         SourceWindow.this.jta.setCaretPosition(startOffset);
                     }
 
-                } catch (Exception ex) {
+                } catch (BadLocationException ex) {
                     LOGGER.error(ex);
                 }
 

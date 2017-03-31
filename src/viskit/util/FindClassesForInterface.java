@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -75,7 +76,7 @@ public class FindClassesForInterface {
         private File f;
         private ByteBuffer buffer;
         private RandomAccessFile classFile;
-        private Hashtable<String, Class<?>> found = new Hashtable<>();
+        private Map<String, Class<?>> found = new Hashtable<>();
 
         Class<?> buildIt(File fil) throws java.lang.Throwable {
             f = fil;

@@ -102,9 +102,7 @@ public class Boot extends URLClassLoader implements Runnable {
 
                 }
 
-            } catch (IllegalArgumentException e) {
-                log.error(e);
-            } catch (MalformedURLException e) {
+            } catch (IllegalArgumentException | MalformedURLException e) {
                 log.error(e);
             }
         }

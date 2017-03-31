@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.JTextComponent;
 import viskit.control.EventGraphController;
 import viskit.Help;
 import viskit.model.ModelEvent;
@@ -31,6 +32,7 @@ import viskit.jgraph.vGraphModel;
 import viskit.model.*;
 import viskit.mvc.mvcAbstractJFrameView;
 import viskit.mvc.mvcController;
+import viskit.mvc.mvcModel;
 import viskit.mvc.mvcModelEvent;
 import viskit.mvc.mvcRecentFileListener;
 import viskit.util.EventGraphFileFilter;
@@ -218,7 +220,7 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
 //                ((EventGraphController)getController()).save();
 //            }
 
-            setModel((ModelImpl) myVgcw.model);    // hold on locally
+            setModel((mvcModel) myVgcw.model);    // hold on locally
             getController().setModel(getModel());  // tell controller
 
             adjustMenus((Model) getModel()); // enable/disable menu items based on new EG
@@ -258,7 +260,7 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
 
         // Wire handlers for stateVariable adds, deletes and edits and tell it we'll be doing adds and deletes
         vp.doAddsAndDeletes(false);
-        vp.addPlusListener(ActionIntrospector.getAction((EventGraphController) getController(), "newStateVariable"));
+        vp.addPlusListener(ActionIntrospector.getAction(getController(), "newStateVariable"));
 
         // Introspector can't handle a param to the method....?
         vp.addMinusListener(new ActionListener() {
@@ -321,7 +323,7 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
 
         // Wire handlers for parameter adds, deletes and edits and tell it we'll be doing adds and deletes
         pp.doAddsAndDeletes(false);
-        pp.addPlusListener(ActionIntrospector.getAction((EventGraphController) getController(), "newSimParameter"));
+        pp.addPlusListener(ActionIntrospector.getAction(getController(), "newSimParameter"));
 
         // Introspector can't handle a param to the method....?
         pp.addMinusListener(new ActionListener() {
@@ -412,7 +414,7 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
         for (Component c : components) {
             if (c instanceof JScrollPane) {
                 c = ((JScrollPane) c).getViewport().getComponent(0);
-                ((JTextArea) c).setText(description);
+                ((JTextComponent) c).setText(description);
             }
         }
     }

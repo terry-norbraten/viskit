@@ -65,7 +65,7 @@ public abstract class ViskitTablePanel extends JPanel {
         p.add(Box.createHorizontalGlue());
         JLabel instructions = new JLabel("Double click a row to ");
         int bigSz = instructions.getFont().getSize();
-        instructions.setFont(getFont().deriveFont(Font.ITALIC, (float) (bigSz - 2)));
+        instructions.setFont(getFont().deriveFont(Font.ITALIC, (bigSz - 2)));
         p.add(instructions);
         edButt = new JButton("edit.");
         edButt.setFont(instructions.getFont()); //.deriveFont(Font.ITALIC, (float) (bigSz - 2)));

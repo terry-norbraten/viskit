@@ -181,9 +181,7 @@ public class TestGridkitLogin extends Thread {
                 chunks--;
             }
 
-        } catch (XmlRpcException e) {
-            LOG.error(e);
-        } catch (IOException e) {
+        } catch (XmlRpcException | IOException e) {
             LOG.error(e);
         }
 

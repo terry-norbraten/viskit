@@ -253,7 +253,7 @@ public class EventGraphCache {
             } else {
 
                 localRootElement = assemblyDocument.getRootElement();
-                simEntityList = (List<Element>) localRootElement.getChildren("SimEntity");
+                simEntityList = localRootElement.getChildren("SimEntity");
 
                 // Check all names against the simEntityList obtained from the Assembly
                 for (Element entity : simEntityList) {

@@ -711,7 +711,7 @@ public abstract class VInstantiator {
                     vi = (VInstantiator) o;
                     lis.add(vi.vcopy());
                 } else if (o instanceof String) {
-                    lis.add((String) o);
+                    lis.add(o);
                 }
             }
             VInstantiator rv = new VInstantiator.Factory(getType(), getFactoryClass(), getMethod(), lis);

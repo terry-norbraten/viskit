@@ -34,7 +34,7 @@ public class TestGridkitQstat extends Thread {
 
     @Override
     public void run() {
-        Vector<Object> params = new Vector<Object>();
+        Vector<Object> params = new Vector<>();
         String user = "newbie";
         String passwd = "newpass";
         String usid;
@@ -69,9 +69,7 @@ public class TestGridkitQstat extends Thread {
             ret = xmlrpc.execute("gridkit.logout", params);
             System.out.println("logged out");
 
-        } catch (IOException e) {
-            log.error(e);
-        } catch (XmlRpcException e) {
+        } catch (IOException | XmlRpcException e) {
             log.error(e);
         }
 

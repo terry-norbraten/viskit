@@ -59,6 +59,7 @@ import viskit.doe.JobLauncherTab2;
 import viskit.model.Model;
 import viskit.mvc.mvcAbstractJFrameView;
 import viskit.mvc.mvcModel;
+import viskit.util.OpenAssembly;
 import viskit.view.dialog.SettingsDialog;
 
 /**
@@ -229,12 +230,12 @@ public class MainFrame extends JFrame {
             if (getJMenuBar() == null) {
                 setJMenuBar(menuBar);
             }
-            ((AnalystReportFrame)reportPanel).setTitleListener(myTitleListener, idx);
+            reportPanel.setTitleListener(myTitleListener, idx);
             jamQuitHandler(null, myQuitAction, menuBar);
             tabIndices[TAB0_ANALYST_REPORT_IDX] = idx;
             AnalystReportController cntlr = (AnalystReportController) reportPanel.getController();
             cntlr.setMainTabbedPane(tabbedPane, idx);
-            assyCntlr.addAssemblyFileListener((AnalystReportFrame) reportPanel);
+            assyCntlr.addAssemblyFileListener((OpenAssembly.AssyChangeListener) reportPanel);
         } else {
             tabIndices[TAB0_ANALYST_REPORT_IDX] = -1;
         }

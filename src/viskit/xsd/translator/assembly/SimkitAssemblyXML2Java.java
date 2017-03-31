@@ -123,7 +123,7 @@ public class SimkitAssemblyXML2Java {
             return (javax.xml.bind.Element) u.unmarshal(fileInputStream);
         } catch (JAXBException e) {
             jaxbCtx = oldCtx;
-            return (javax.xml.bind.Element) null;
+            return null;
         }
     }
 
