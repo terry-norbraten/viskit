@@ -1,6 +1,7 @@
 package viskit.jgraph;
 
 import java.awt.event.MouseEvent;
+import javax.swing.tree.DefaultMutableTreeNode;
 import org.jgraph.plaf.basic.BasicGraphUI;
 import viskit.VGlobals;
 import viskit.control.EventGraphController;
@@ -51,7 +52,7 @@ public class vGraphUI extends BasicGraphUI {
 
         EventGraphController cntl = (EventGraphController) VGlobals.instance().getEventGraphController();
         if (cell instanceof vEdgeCell) {
-            Edge e = (Edge) ((vEdgeCell) cell).getUserObject();
+            Edge e = (Edge) ((DefaultMutableTreeNode) cell).getUserObject();
             if (e instanceof SchedulingEdge) {
                 cntl.schedulingArcEdit(e);
             } else
@@ -59,7 +60,7 @@ public class vGraphUI extends BasicGraphUI {
                 cntl.cancellingArcEdit(e);
             }
         } else if (cell instanceof CircleCell) {
-            EventNode en = (EventNode) ((CircleCell) cell).getUserObject();
+            EventNode en = (EventNode) ((DefaultMutableTreeNode) cell).getUserObject();
             cntl.nodeEdit(en);
         }
     }
