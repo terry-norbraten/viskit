@@ -192,7 +192,7 @@ public class vEdgeRenderer extends EdgeRenderer {
                 // shared path and memory
                 view.lineShape = view.sharedPath;
             } else {
-                view.lineShape = (GeneralPath) view.sharedPath.clone();
+                view.lineShape = (Shape) view.sharedPath.clone();
                 if (view.endShape != null) {
                     view.sharedPath.append(view.endShape, true);
                 }

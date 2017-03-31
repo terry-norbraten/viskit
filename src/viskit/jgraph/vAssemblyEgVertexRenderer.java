@@ -9,7 +9,7 @@ import java.util.Vector;
 import javax.swing.*;
 import org.jgraph.JGraph;
 import org.jgraph.graph.*;
-import viskit.model.AssemblyNode;
+import viskit.model.ViskitElement;
 
 /**
  * OPNAV N81-NPS World-Class-Modeling (WCM) 2004 Projects
@@ -236,7 +236,7 @@ public class vAssemblyEgVertexRenderer
         DefaultGraphCell cell = (DefaultGraphCell) view.getCell();
 
         // Use the getName method instead of toString
-        String nm = ((AssemblyNode) cell.getUserObject()).getName();
+        String nm = ((ViskitElement) cell.getUserObject()).getName();
         FontMetrics metrics = g2.getFontMetrics();
         nm = breakName(nm, 50, metrics);
         String[] lns = nm.split("\n");       // handle multi-line titles

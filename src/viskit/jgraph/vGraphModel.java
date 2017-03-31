@@ -3,6 +3,7 @@ package viskit.jgraph;
 import java.awt.Color;
 import java.util.Hashtable;
 import java.util.Map;
+import javax.swing.tree.DefaultMutableTreeNode;
 import org.jgraph.JGraph;
 import org.jgraph.graph.*;
 import viskit.model.Edge;
@@ -112,7 +113,7 @@ public class vGraphModel extends DefaultGraphModel {
         for (Object localRoot : localRoots) {
             if (localRoot instanceof CircleCell) {
                 Object[] child = new Object[1];
-                child[0] = ((CircleCell) localRoot).getFirstChild();
+                child[0] = ((DefaultMutableTreeNode) localRoot).getFirstChild();
                 jGraph.getGraphLayoutCache().remove(child);
             }
         }

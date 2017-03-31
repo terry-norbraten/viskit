@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.undo.UndoManager;
 import org.jgraph.JGraph;
 import org.jgraph.event.GraphModelEvent;
@@ -127,7 +128,7 @@ public class vGraphComponent extends JGraph implements GraphModelListener {
     public ViskitElement getViskitElementAt(Point p) {
         Object cell = vGraphComponent.this.getFirstCellForLocation(p.x, p.y);
         if (cell != null && cell instanceof CircleCell) {
-            return (ViskitElement) ((CircleCell) cell).getUserObject();
+            return (ViskitElement) ((DefaultMutableTreeNode) cell).getUserObject();
         }
         return null;
     }
@@ -465,7 +466,7 @@ public class vGraphComponent extends JGraph implements GraphModelListener {
             Object en = cc.getUserObject();
             if (en instanceof EventNode) // should always be, except for our prototype examples
             {
-                return ((EventNode) en).getName();
+                return ((ViskitElement) en).getName();
             }
         } else if (view instanceof vEdgeView) {
             vEdgeCell cc = (vEdgeCell) view.getCell();

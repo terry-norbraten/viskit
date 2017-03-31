@@ -3,6 +3,7 @@ package viskit.jgraph;
 import java.awt.Color;
 import java.util.Hashtable;
 import java.util.Map;
+import javax.swing.tree.DefaultMutableTreeNode;
 import org.jgraph.JGraph;
 import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.ConnectionSet;
@@ -100,7 +101,7 @@ public class vGraphAssemblyModel extends DefaultGraphModel {
         for (Object localRoot : localRoots) {
             if (localRoot instanceof AssemblyCircleCell || localRoot instanceof AssemblyPropListCell) {
                 Object[] child = new Object[1];
-                child[0] = ((DefaultGraphCell) localRoot).getFirstChild();
+                child[0] = ((DefaultMutableTreeNode) localRoot).getFirstChild();
                 jGraph.getGraphLayoutCache().remove(child);
             }
         }
@@ -127,8 +128,8 @@ public class vGraphAssemblyModel extends DefaultGraphModel {
         Object frO = ae.getFrom();
         Object toO = ae.getTo();
         DefaultGraphCell from, to;
-        from = (DefaultGraphCell) ((AssemblyNode) frO).opaqueViewObject;
-        to = (DefaultGraphCell) ((AssemblyNode) toO).opaqueViewObject;
+        from = (DefaultGraphCell) ((ViskitElement) frO).opaqueViewObject;
+        to = (DefaultGraphCell) ((ViskitElement) toO).opaqueViewObject;
 
         vAssemblyEdgeCell edge = new vAssemblyEdgeCell();
         ae.opaqueViewObject = edge;
@@ -177,8 +178,8 @@ public class vGraphAssemblyModel extends DefaultGraphModel {
         Object frO = sele.getFrom();
         Object toO = sele.getTo();
         DefaultGraphCell from, to;
-        from = (DefaultGraphCell) ((AssemblyNode) frO).opaqueViewObject;
-        to = (DefaultGraphCell) ((AssemblyNode) toO).opaqueViewObject;
+        from = (DefaultGraphCell) ((ViskitElement) frO).opaqueViewObject;
+        to = (DefaultGraphCell) ((ViskitElement) toO).opaqueViewObject;
 
         vAssemblyEdgeCell edge = new vAssemblyEdgeCell();
         sele.opaqueViewObject = edge;
