@@ -39,13 +39,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import org.jgraph.graph.CellView;
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.EdgeView;
 import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.PortView;
-import viskit.model.AssemblyEdge;
-import viskit.model.Edge;
 import viskit.model.EvGraphNode;
 import viskit.model.EventNode;
 import viskit.model.PropChangeListenerNode;
@@ -125,8 +124,8 @@ public class vRouting implements org.jgraph.graph.DefaultEdge.Routing {
         Object ed = edge.getSource();
         vPortCell vCell = null;
         if (ed instanceof PortView) {
-            if (((PortView) ed).getCell() instanceof vPortCell) {
-                vCell = (vPortCell) ((PortView) ed).getCell();
+            if (((CellView) ed).getCell() instanceof vPortCell) {
+                vCell = (vPortCell) ((CellView) ed).getCell();
 
                 // If we have more than two edges to/from this node, then bias
                 // the parabolic control points
@@ -233,11 +232,11 @@ public class vRouting implements org.jgraph.graph.DefaultEdge.Routing {
         DefaultEdge vec;
         ViskitElement edg = null;
         if (ev.getCell() instanceof vEdgeCell) {
-            vec = (vEdgeCell) ev.getCell();
-            edg = (Edge) vec.getUserObject();
+            vec = (DefaultEdge) ev.getCell();
+            edg = (ViskitElement) vec.getUserObject();
         } else if (ev.getCell() instanceof vAssemblyEdgeCell) {
-            vec = (vAssemblyEdgeCell) ev.getCell();
-            edg = (AssemblyEdge) vec.getUserObject();
+            vec = (DefaultEdge) ev.getCell();
+            edg = (ViskitElement) vec.getUserObject();
         }
         return edg;
     }
