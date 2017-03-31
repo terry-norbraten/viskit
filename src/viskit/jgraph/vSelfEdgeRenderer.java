@@ -103,7 +103,7 @@ class vSelfEdgeRenderer extends vEdgeRenderer {
             view.lineShape = view.sharedPath;
         } else {
 
-            view.lineShape = (GeneralPath) view.sharedPath.clone();
+            view.lineShape = (Shape) view.sharedPath.clone();
 
             if (view.endShape != null) {
                 view.sharedPath.append(view.endShape, true);
