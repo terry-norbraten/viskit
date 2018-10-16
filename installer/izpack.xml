@@ -36,7 +36,7 @@
         <summarylogfilepath>$INSTALL_PATH/InstallSummary.htm</summarylogfilepath>
         <!-- Hopefully helps with Win Vista/7 installs -->
         <!-- No setting available for Win8 in izPack v4.3.5 -->
-        <run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
+        <run-privileged uninstaller="yes" condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
     </info>
 
     <guiprefs height="600" width="800" resizable="yes">
