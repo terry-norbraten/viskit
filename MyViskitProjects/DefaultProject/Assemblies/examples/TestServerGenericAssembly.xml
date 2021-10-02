@@ -4,23 +4,19 @@
         <TerminalParameter name="totalNumberServers" value="1" type="int"/>
         <FactoryParameter factory="simkit.random.RandomVariateFactory" type="simkit.random.RandomVariate">
             <TerminalParameter name="" value="Constant" type="java.lang.String"/>
-            <MultiParameter type="java.lang.Object[]">
-                <TerminalParameter name="" value="1.1" type="java.lang.Object"/>
-            </MultiParameter>
+            <TerminalParameter name="" value="1.1" type="double"/>
         </FactoryParameter>
-        <Coordinate x="390" y="200"/>
+        <Coordinate x="390.0" y="200.0"/>
     </SimEntity>
     <SimEntity name="ArrivalProcess_1" type="examples.ArrivalProcess" description="">
         <FactoryParameter factory="simkit.random.RandomVariateFactory" type="simkit.random.RandomVariate">
             <TerminalParameter name="" value="Exponential" type="java.lang.String"/>
-            <MultiParameter type="java.lang.Object[]">
-                <TerminalParameter name="" value="1.2" type="java.lang.Object"/>
-            </MultiParameter>
+            <TerminalParameter name="" value="1.2" type="double"/>
         </FactoryParameter>
         <Coordinate x="140.0" y="200.0"/>
     </SimEntity>
     <SimEntity name="EntityCreator_2" type="examples.EntityCreator" description="">
-        <Coordinate x="260" y="200"/>
+        <Coordinate x="260.0" y="200.0"/>
     </SimEntity>
     <SimEventListenerConnection listener="EntityCreator_2" source="ArrivalProcess_1"/>
     <Adapter name="adptr_3" eventHeard="EntityArrival" eventSent="Arrival" from="EntityCreator_2" to="ServerGeneric_0" description=""/>

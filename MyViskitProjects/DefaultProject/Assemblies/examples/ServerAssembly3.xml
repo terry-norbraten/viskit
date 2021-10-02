@@ -12,25 +12,15 @@
     <SimEntity name="arrival" type="examples.ArrivalProcess" description="">
         <FactoryParameter factory="simkit.random.RandomVariateFactory" type="simkit.random.RandomVariate">
             <TerminalParameter name="" value="Exponential" type="java.lang.String"/>
-            <MultiParameter type="java.lang.Object[]">
-                <MultiParameter type="java.lang.Double">
-                    <TerminalParameter name="p[0] : " value="1.7" type="double"/>
-                </MultiParameter>
-            </MultiParameter>
+            <TerminalParameter name="p[0] : " value="1.7" type="double"/>
         </FactoryParameter>
         <Coordinate x="90.0" y="90.0"/>
     </SimEntity>
     <SimEntity name="server" type="examples.SimpleServer" description="">
         <FactoryParameter factory="simkit.random.RandomVariateFactory" type="simkit.random.RandomVariate">
             <TerminalParameter name="" value="Gamma" type="java.lang.String"/>
-            <MultiParameter type="java.lang.Object[]">
-                <MultiParameter type="java.lang.Double">
-                    <TerminalParameter name="p[0] : " value="2.1" type="double"/>
-                </MultiParameter>
-                <MultiParameter type="java.lang.Double">
-                    <TerminalParameter name="p[0] : " value="1.6" type="double"/>
-                </MultiParameter>
-            </MultiParameter>
+            <TerminalParameter name="p[0] : " value="2.1" type="double"/>
+            <TerminalParameter name="p[0] : " value="1.6" type="double"/>
         </FactoryParameter>
         <TerminalParameter name="totalNumberServers" value="2" type="int"/>
         <Coordinate x="280.0" y="90.0"/>

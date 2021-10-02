@@ -91,9 +91,9 @@ public class VGlobals {
     static final Logger LOG = LogUtils.getLogger(VGlobals.class);
     private static VGlobals me;
     private Interpreter interpreter;
-    private DefaultComboBoxModel<String> cbMod;
+    private final DefaultComboBoxModel<String> cbMod;
     private JPopupMenu popup;
-    private myTypeListener myListener;
+    private final myTypeListener myListener;
     private JFrame mainAppWindow;
 
     private ViskitProject currentViskitProject;
@@ -536,7 +536,7 @@ public class VGlobals {
                         if (isArr) {
                             o = Array.newInstance(c, 1);
                         } else {
-                            o = c.newInstance();
+                            o = c.getDeclaredConstructor().newInstance();
                         }
                     }
                 }
@@ -871,62 +871,57 @@ public class VGlobals {
         return sb.toString();
     }
 
-    private SysExitHandler sysexithandler = new SysExitHandler() {
-
-        @Override
-        public void doSysExit(int status) {
-
-            LOG.debug("Viskit is exiting with status: " + status);
-
-            /* If an application launched a JVM, and is still running, this will
-             * only make Viskit disappear.  If Viskit is running standalone,
-             * then then all JFrames created by Viskit will dispose, and the JVM
-             * will then cease.
-             * @see http://java.sun.com/docs/books/jvms/second_edition/html/Concepts.doc.html#19152
-             * @see http://72.5.124.55/javase/6/docs/api/java/awt/doc-files/AWTThreadIssues.html
-             */
-            Frame[] frames = Frame.getFrames();
-            int count = 0;
-            for (Frame f : frames) {
-                LOG.debug("Frame count in Viskit: " + (++count));
-
-                /* Prevent non-viskit created components from disposing if
-                 * launched from another application.  SwingUtilities is a
-                 * little "ify" though as it's not Viskit specific.  Viskit,
-                 * however, spawns a lot of anonymous Runnables with
-                 * SwingUtilities
-                 */
-                if (f.toString().toLowerCase().contains("viskit")) {
-                    LOG.debug("Frame is: " + f);
-                    f.dispose();
-                }
-                if (f.toString().contains("SwingUtilities")) {
-                    LOG.debug("Frame is: " + f);
-                    f.dispose();
-                }
-
-                // Case for XMLTree JFrames
-                if (f.getTitle().contains("xml")) {
-                    LOG.debug("Frame is: " + f);
-                    f.dispose();
-                }
+    private SysExitHandler sysexithandler = (int status) -> {
+        LOG.debug("Viskit is exiting with status: " + status);
+        
+        /* If an application launched a JVM, and is still running, this will
+        * only make Viskit disappear.  If Viskit is running standalone,
+        * then then all JFrames created by Viskit will dispose, and the JVM
+        * will then cease.
+        * @see http://java.sun.com/docs/books/jvms/second_edition/html/Concepts.doc.html#19152
+        * @see http://72.5.124.55/javase/6/docs/api/java/awt/doc-files/AWTThreadIssues.html
+        */
+        Frame[] frames = Frame.getFrames();
+        int count = 0;
+        for (Frame f : frames) {
+            LOG.debug("Frame count in Viskit: " + (++count));
+            
+            /* Prevent non-viskit created components from disposing if
+            * launched from another application.  SwingUtilities is a
+            * little "ify" though as it's not Viskit specific.  Viskit,
+            * however, spawns a lot of anonymous Runnables with
+            * SwingUtilities
+            */
+            if (f.toString().toLowerCase().contains("viskit")) {
+                LOG.debug("Frame is: " + f);
+                f.dispose();
             }
-
-            /* The SwingWorker Thread is active when the assembly runner is
-             * running and will subsequently block a JVM exit due to its "wait"
-             * state.  Must interrupt it in order to cause the JVM to exit
-             * @see docs/technotes/guides/concurrency/threadPrimitiveDeprecation.html
-             */
-            Thread[] threads = new Thread[Thread.activeCount()];
-            Thread.enumerate(threads);
-            for (Thread t : threads) {
-                LOG.debug("Thread is: " + t);
-                if (t.getName().contains("SwingWorker")) {
-                    t.interrupt();
-                }
-                // Now attempt to release the URLClassLoader's file lock on open JARs
-                t.setContextClassLoader(ClassLoader.getSystemClassLoader());
+            if (f.toString().contains("SwingUtilities")) {
+                LOG.debug("Frame is: " + f);
+                f.dispose();
             }
+            
+            // Case for XMLTree JFrames
+            if (f.getTitle().contains("xml")) {
+                LOG.debug("Frame is: " + f);
+                f.dispose();
+            }
+        }
+        
+        /* The SwingWorker Thread is active when the assembly runner is
+        * running and will subsequently block a JVM exit due to its "wait"
+        * state.  Must interrupt it in order to cause the JVM to exit
+        * @see docs/technotes/guides/concurrency/threadPrimitiveDeprecation.html
+        */
+        Thread[] threads = new Thread[Thread.activeCount()];
+        Thread.enumerate(threads);
+        for (Thread t : threads) {
+            LOG.debug("Thread is: " + t);
+            if (t.getName().contains("SwingWorker")) {
+                t.interrupt();
+            }
+            // Now attempt to release the URLClassLoader's file lock on open JARs
+            t.setContextClassLoader(ClassLoader.getSystemClassLoader());
         }
     };
 
@@ -984,7 +979,7 @@ public class VGlobals {
     @SuppressWarnings("serial")
     class MyJMenuItem extends JMenuItem {
 
-        private String fullName;
+        private final String fullName;
 
         MyJMenuItem(String nm, String fullName) {
             super(nm);
@@ -1014,13 +1009,9 @@ public class VGlobals {
                 if (cb.getSelectedItem().toString().equals(moreTypesString)) {
 
                     // NOTE: was getting an IllegalComponentStateException for component not showing
-                    Runnable r = new Runnable() {
-
-                        @Override
-                        public void run() {
-                            if (cb.isShowing())
-                                popup.show(cb, 0, 0);
-                        }
+                    Runnable r = () -> {
+                        if (cb.isShowing())
+                            popup.show(cb, 0, 0);
                     };
 
                     if (SwingUtilities.isEventDispatchThread()) {
@@ -1035,9 +1026,9 @@ public class VGlobals {
                 }
             } else {
                 MyJMenuItem mi = (MyJMenuItem) o;
-                if (!mi.getText().equals("cancel")) {
+                if (mi != null && !mi.getText().equals("cancel")) {
                     pending.setSelectedItem(mi.getFullName());
-                } //mi.getText());
+                }
                 else {
                     pending.setSelectedItem(lastSelected);
                 }

@@ -180,7 +180,7 @@ public class InternalAssemblyRunner implements PropertyChangeListener {
         if (assemblyClass == null) {
             throw new ClassNotFoundException();
         }
-        assemblyInstance = assemblyClass.newInstance();
+        assemblyInstance = assemblyClass.getDeclaredConstructor().newInstance();
 
         /* in order to resolve the assy as a BasicAssembly, it must be
          * loaded using the the same ClassLoader as the one used to compile
@@ -237,7 +237,7 @@ public class InternalAssemblyRunner implements PropertyChangeListener {
             // Now we are in the pure classloader realm where each assy run can
             // be independent of any other
             assemblyClass = lastLoaderWithReset.loadClass(assemblyClass.getName());
-            assemblyInstance = assemblyClass.newInstance();
+            assemblyInstance = assemblyClass.getDeclaredConstructor().newInstance();
 
             Method setOutputStream = assemblyClass.getMethod("setOutputStream", OutputStream.class);
             Method setNumberReplications = assemblyClass.getMethod("setNumberReplications", int.class);

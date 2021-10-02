@@ -33,23 +33,32 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 package viskit.assembly;
 
-import viskit.reports.ReportStatisticsConfig;
 import edu.nps.util.GenericConversion;
 import edu.nps.util.LogUtils;
 import edu.nps.util.TempFileManager;
+
 import java.beans.PropertyChangeListener;
+
 import java.io.*;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import java.text.DecimalFormat;
+
 import java.util.*;
+
 import javax.swing.JOptionPane;
+
 import org.apache.log4j.Logger;
+
 import simkit.BasicSimEntity;
 import simkit.Named;
+import simkit.ReRunnable;
 import simkit.Schedule;
 import simkit.SimEntity;
 import simkit.SimEvent;
@@ -57,10 +66,14 @@ import simkit.random.RandomVariateFactory;
 import simkit.stat.SampleStatistics;
 import simkit.stat.SavedStats;
 import simkit.stat.SimpleStatsTally;
+
 import viskit.VGlobals;
 import viskit.VStatics;
 import viskit.ViskitConfig;
+
 import viskit.model.AssemblyNode;
+
+import viskit.reports.ReportStatisticsConfig;
 
 /**
  * Base class for creating Simkit scenarios.
@@ -80,7 +93,7 @@ public abstract class BasicAssembly extends BasicSimEntity implements Runnable {
     protected boolean hookupsCalled;
     protected boolean stopRun;
     protected int startRepNumber = 0;
-    protected Set<SimEntity> runEntities;
+    protected Set<ReRunnable> runEntities;
     protected long seed;
 
     private double stopTime;
@@ -198,11 +211,11 @@ public abstract class BasicAssembly extends BasicSimEntity implements Runnable {
     protected void setStatisticsKeyValues(Map<String, PropertyChangeListener> repStatistics) {
         Set<Map.Entry<String, PropertyChangeListener>> entrySet = repStatistics.entrySet();
         entitiesWithStats = new LinkedList<>();
-        for (Map.Entry<String, PropertyChangeListener> entry : entrySet) {
+        entrySet.forEach(entry -> {
             String ent = entry.getKey();
             LOG.debug("Entry is: " + entry);
             entitiesWithStats.add(ent);
-        }
+        });
     }
 
     /** to be called after all entities have been added as a super()
@@ -662,7 +675,7 @@ public abstract class BasicAssembly extends BasicSimEntity implements Runnable {
             replicationData.clear();
             int repStatsLength = getReplicationStats().length;
             for (int i = 0; i < repStatsLength; i++) {
-                replicationData.put(i, new ArrayList<SavedStats>());
+                replicationData.put(i, new ArrayList<>());
             }
         }
 
@@ -670,12 +683,12 @@ public abstract class BasicAssembly extends BasicSimEntity implements Runnable {
         // directly modify entities. One possible way is to enforce
         // packages that wish to take advantage of exposed controls
         // all agree to be dependent on, i.e. viskit.simulation.Interface
-        SimEntity scenarioManager;
+        ReRunnable scenarioManager;
 
         runEntities = Schedule.getReruns();
 
         // Convenience for Diskit if on the classpath
-        for (SimEntity entity : runEntities) {
+        for (ReRunnable entity : runEntities) {
 
             // access the SM's numberOfReplications parameter setter for user
             // dynamic input to override the XML value
@@ -745,9 +758,9 @@ public abstract class BasicAssembly extends BasicSimEntity implements Runnable {
 
                     Schedule.stopSimulation();
                     Schedule.clearRerun();
-                    for (SimEntity entity : runEntities) {
+                    runEntities.forEach(entity -> {
                         Schedule.addRerun(entity);
-                    }
+                    });
                 }
 
                 Schedule.startSimulation();

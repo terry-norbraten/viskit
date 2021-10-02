@@ -46,8 +46,8 @@
         </FactoryParameter>
         <FactoryParameter factory="simkit.random.RandomVariateFactory" type="simkit.random.RandomVariate">
             <TerminalParameter name="" value="Uniform" type="java.lang.String"/>
-            <TerminalParameter name="" value="4" type="integer"/>
-            <TerminalParameter name="" value="6" type="integer"/>
+            <TerminalParameter name="" value="4" type="int"/>
+            <TerminalParameter name="" value="6" type="int"/>
         </FactoryParameter>
         <Coordinate x="350.0" y="140.0"/>
     </SimEntity>
