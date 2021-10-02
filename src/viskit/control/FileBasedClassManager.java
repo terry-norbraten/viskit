@@ -2,23 +2,35 @@ package viskit.control;
 
 import edu.nps.util.GenericConversion;
 import edu.nps.util.LogUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.math.BigInteger;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
 import java.util.*;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+
 import org.apache.commons.configuration.XMLConfiguration;
+
 import org.apache.log4j.Logger;
+
 import viskit.util.FileBasedAssyNode;
 import viskit.util.FindClassesForInterface;
+
 import viskit.VGlobals;
+
 import viskit.ViskitConfig;
+
 import viskit.VStatics;
+
 import viskit.xsd.bindings.eventgraph.SimEntity;
 import viskit.xsd.translator.eventgraph.SimkitXML2Java;
 
@@ -92,7 +104,7 @@ public class FileBasedClassManager {
     /** Known path for EventGraph Compilation
      *
      * @param f an event graph to compile
-     * @param implementsClass to test for extention of simkit.BasicSimEntity
+     * @param implementsClass to test for extension of simkit.BasicSimEntity
      * @return a node tree for viewing in the Assembly Editor
      * @throws java.lang.Throwable for a problem finding a class
      */

@@ -10,7 +10,7 @@
         </StateTransition>
         <Schedule delay="0.0" event="CustomerArrival" condition="true" priority="DEFAULT">
             <Comment></Comment>
-            <EdgeParameter value="new Integer(nextID)"/>
+            <EdgeParameter value="nextID"/>
         </Schedule>
         <Code></Code>
         <Coordinate x="30.0" y="120.0"/>

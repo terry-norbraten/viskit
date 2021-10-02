@@ -34,16 +34,24 @@ POSSIBILITY OF SUCH DAMAGE.
 package viskit;
 
 import edu.nps.util.LogUtils;
+import java.awt.Desktop;
+
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.Taskbar;
+
 import java.io.File;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import javax.swing.*;
+
 import viskit.view.MainFrame;
 import viskit.view.dialog.SettingsDialog;
 
@@ -70,20 +78,12 @@ public class EventGraphAssemblyComboMain {
 //            throw new InvocationTargetException(new Throwable("mail this error"));
 
             if (!EventQueue.isDispatchThread()) {
-                SwingUtilities.invokeAndWait(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        createGUI(args);
-                    }
+                SwingUtilities.invokeAndWait(() -> {
+                    createGUI(args);
                 });
             } else {
-                SwingUtilities.invokeLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        createGUI(args);
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    createGUI(args);
                 });
             }
 
@@ -185,49 +185,14 @@ public class EventGraphAssemblyComboMain {
     }
 
     private static void setupMacGUI() {
-        try {
-            Class<?> applicationListener = VStatics.classForName("com.apple.eawt.ApplicationListener");
-            Object proxy = Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), new Class[] { applicationListener }, new InvocationHandler() {
-
-                @Override
-                public Object invoke(Object proxy, Method method, Object[] args) {
-                    switch (method.getName()) {
-                        case "handleQuit":
-                            ((MainFrame)VGlobals.instance().getMainAppWindow()).myQuitAction.actionPerformed(null);
-                            break;
-                        case "handleAbout":
-                            try {
-                                Help help = VGlobals.instance().getHelp();
-                                help.aboutEventGraphEditor();
-                                Class<?> applicationEventClass = VStatics.classForName("com.apple.eawt.ApplicationEvent");
-                                Method setHandled = applicationEventClass.getMethod("setHandled", boolean.class);
-                                setHandled.invoke(args[0], true);
-                            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                                LogUtils.getLogger(EventGraphAssemblyComboMain.class).error("Error showing About Box: " + ex);
-                            }   
-                            break;
-                    }
-                    return null;
-                }
-            });
-
-            Class<?> applicationClass = VStatics.classForName("com.apple.eawt.Application");
-            Object applicationInstance = applicationClass.newInstance();
-
-            Method m = applicationClass.getMethod("addApplicationListener", applicationListener);
-            m.invoke(applicationInstance, proxy);
-
-            if (aboutIcon != null) {
-                try {
-                    m = applicationClass.getMethod("setDockIconImage", Image.class);
-                    m.invoke(applicationInstance, aboutIcon.getImage());
-                } catch (NoSuchMethodException ex){
-                    LogUtils.getLogger(EventGraphAssemblyComboMain.class).error("Error showing aboutIcon in dock " + ex);
-                }
-            }
-        } catch (IllegalArgumentException | InstantiationException | IllegalAccessException | NoSuchMethodException | SecurityException | InvocationTargetException ex) {
-            LogUtils.getLogger(EventGraphAssemblyComboMain.class).error("Error defining Apple Quit & About handlers: " + ex);
-        }
+        
+        Desktop.getDesktop().setAboutHandler(e -> {
+            Help help = VGlobals.instance().getHelp();
+            help.aboutEventGraphEditor();
+        });
+        
+        if (aboutIcon != null)
+            Taskbar.getTaskbar().setIconImage(aboutIcon.getImage());
     }
 
 } // end class file EventGraphAssemblyComboMain.java

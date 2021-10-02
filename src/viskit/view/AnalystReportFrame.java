@@ -534,7 +534,7 @@ public class AnalystReportFrame extends mvcAbstractJFrameView implements OpenAss
             Vector<Vector<String>> tableVector = new Vector<>();
             String nm = (String) oa[0];
             Vector<Object[]> v0 = (Vector) oa[1];
-            for (Object[] oa0 : v0) {
+            v0.forEach(oa0 -> {
                 // Rows here
                 String nm0 = (String) oa0[0];
                 Vector<String> rowVect = new Vector<>(3);
@@ -550,7 +550,7 @@ public class AnalystReportFrame extends mvcAbstractJFrameView implements OpenAss
                     rowVect.add(sa[1]); // description
                     tableVector.add(rowVect);
                 }
-            }
+            });
 
             entityParamTabs.add(nm, new JScrollPane(new EntityParamTable(tableVector, colNames)));
         }
@@ -854,7 +854,7 @@ public class AnalystReportFrame extends mvcAbstractJFrameView implements OpenAss
 
         AnalystReportController controller = (AnalystReportController) getController();
 
-        int accelMod = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int accelMod = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
 
         // Setup the File Menu
         myMenuBar = new JMenuBar();

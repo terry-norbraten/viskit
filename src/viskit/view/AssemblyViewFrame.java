@@ -249,17 +249,16 @@ public class AssemblyViewFrame extends mvcAbstractJFrameView implements Assembly
             AssemblyController acontroller = (AssemblyController) getController();
             Set<File> lis = acontroller.getRecentAssyFileSet();
             openRecentAssyMenu.removeAll();
-            for (File fullPath : lis) {
-                if (!fullPath.exists()) {
-                    continue;
-                }
+            lis.stream().filter(fullPath -> !(!fullPath.exists())).map(fullPath -> {
                 String nameOnly = fullPath.getName();
                 Action act = new ParameterizedAssyAction(nameOnly);
                 act.putValue(FULLPATH, fullPath);
                 JMenuItem mi = new JMenuItem(act);
                 mi.setToolTipText(fullPath.getPath());
+                return mi;
+            }).forEachOrdered(mi -> {
                 openRecentAssyMenu.add(mi);
-            }
+            });
             if (lis.size() > 0) {
                 openRecentAssyMenu.add(new JSeparator());
                 Action act = new ParameterizedAssyAction("clear");
@@ -301,16 +300,16 @@ public class AssemblyViewFrame extends mvcAbstractJFrameView implements Assembly
 
         controller.addRecentAssyFileSetListener(new RecentAssyFileListener());
 
-        int accelMod = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int accelMod = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
 
         // Set up file menu
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
 
         fileMenu.add(buildMenuItem(controller, "newProject", "New Viskit Project", KeyEvent.VK_V,
-                KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.ALT_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.ALT_DOWN_MASK)));
         fileMenu.add(buildMenuItem(controller, "zipAndMailProject", "Zip/Mail Viskit Project", KeyEvent.VK_Z,
-                KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.ALT_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.ALT_DOWN_MASK)));
         fileMenu.add(buildMenuItem(controller, "newAssembly", "New Assembly", KeyEvent.VK_N,
                 KeyStroke.getKeyStroke(KeyEvent.VK_N, accelMod)));
         fileMenu.addSeparator();
@@ -342,7 +341,7 @@ public class AssemblyViewFrame extends mvcAbstractJFrameView implements Assembly
         fileMenu.add(buildMenuItem(controller, "captureWindow", "Save Screen Image", KeyEvent.VK_I,
                 KeyStroke.getKeyStroke(KeyEvent.VK_I, accelMod)));
         fileMenu.add(buildMenuItem(controller, "compileAssemblyAndPrepSimRunner", "Initialize Assembly", KeyEvent.VK_C,
-                KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK)));
 
         // TODO: Unknown as to what this does exactly
         fileMenu.add(buildMenuItem(controller, "export2grid", "Export to Cluster Format", KeyEvent.VK_C, null));
@@ -527,19 +526,11 @@ public class AssemblyViewFrame extends mvcAbstractJFrameView implements Assembly
         // Let the opening of Assembliess make this visible
         getToolBar().setVisible(false);
 
-        zoomIn.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getCurrentVgacw().setScale(getCurrentVgacw().getScale() + 0.1d);
-            }
+        zoomIn.addActionListener((ActionEvent e) -> {
+            getCurrentVgacw().setScale(getCurrentVgacw().getScale() + 0.1d);
         });
-        zoomOut.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getCurrentVgacw().setScale(Math.max(getCurrentVgacw().getScale() - 0.1d, 0.1d));
-            }
+        zoomOut.addActionListener((ActionEvent e) -> {
+            getCurrentVgacw().setScale(Math.max(getCurrentVgacw().getScale() - 0.1d, 0.1d));
         });
 
         // These buttons perform operations that are internal to our view class, and therefore their operations are
@@ -647,11 +638,8 @@ public class AssemblyViewFrame extends mvcAbstractJFrameView implements Assembly
         tabbedPane.setSelectedComponent(graphPane.drawingSplitPane); // bring to front
 
         // Now expose the Assembly toolbar
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                getToolBar().setVisible(true);
-            }
+        Runnable r = () -> {
+            getToolBar().setVisible(true);
         };
         SwingUtilities.invokeLater(r);
     }
@@ -670,11 +658,8 @@ public class AssemblyViewFrame extends mvcAbstractJFrameView implements Assembly
 
                 // Don't allow operation of tools with no Assembly tab in view (NPEs)
                 if (tabbedPane.getTabCount() == 0) {
-                    Runnable r = new Runnable() {
-                        @Override
-                        public void run() {
-                            getToolBar().setVisible(false);
-                        }
+                    Runnable r = () -> {
+                        getToolBar().setVisible(false);
                     };
                     SwingUtilities.invokeLater(r);
                 }
@@ -1083,12 +1068,8 @@ public class AssemblyViewFrame extends mvcAbstractJFrameView implements Assembly
         final JFrame f = new SourceWindow(this, className, s);
         f.setTitle("Generated source from " + fileName);
 
-        Runnable r = new Runnable() {
-
-            @Override
-            public void run() {
-                f.setVisible(true);
-            }
+        Runnable r = () -> {
+            f.setVisible(true);
         };
         SwingUtilities.invokeLater(r);
     }
@@ -1125,29 +1106,16 @@ public class AssemblyViewFrame extends mvcAbstractJFrameView implements Assembly
         jf.setSize(475, 500);
         jf.setLocationRelativeTo(this);
 
-        Runnable r = new Runnable() {
-
-            @Override
-            public void run() {
-                jf.setVisible(true);
-            }
+        Runnable r = () -> {
+            jf.setVisible(true);
         };
         SwingUtilities.invokeLater(r);
 
-        closeButt.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                Runnable r = new Runnable() {
-
-                    @Override
-                    public void run() {
-                        jf.dispose();
-                    }
-                };
-                SwingUtilities.invokeLater(r);
-            }
+        closeButt.addActionListener((ActionEvent e) -> {
+            Runnable r1 = () -> {
+                jf.dispose();
+            };
+            SwingUtilities.invokeLater(r1);
         });
     }
 

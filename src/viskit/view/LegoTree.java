@@ -342,7 +342,7 @@ public class LegoTree extends JTree implements DragGestureListener, DragSourceLi
             } catch (Throwable t) {
 
                 // Uncomment to reveal common reason for Exceptions
-//                t.printStackTrace();
+                t.printStackTrace();
                 LOG.error(t);
             }
         } // directory
@@ -398,20 +398,20 @@ public class LegoTree extends JTree implements DragGestureListener, DragSourceLi
         // and in a project's /lib directory.  We don't need to expose multiple
         // libs of the same name because they happen to be in two different
         // places
-        Enumeration<DefaultMutableTreeNode> e = rootNode.children();
+        Enumeration<TreeNode> e = rootNode.children();
         String jarName = jarFile.getName().substring(jarFile.getName().lastIndexOf(File.separator) + 1);
         DefaultMutableTreeNode tn;
         while (e.hasMoreElements()) {
-            tn = e.nextElement();
+            tn = (DefaultMutableTreeNode) e.nextElement();
             if (tn.getUserObject().toString().contains(jarName)) {
                 return;
             }
         }
 
         List<Class<?>> list = FindClassesForInterface.findClasses(jarFile, targetClass);
-        for (Class<?> c : list) {
+        list.forEach(c -> {
             VStatics.resolveParameters(c);
-        }
+        });
 
         // Shorten long path names
         if (jarFile.getName().contains(userDir)) {
@@ -424,7 +424,7 @@ public class LegoTree extends JTree implements DragGestureListener, DragSourceLi
             name = jarFile.getName();
         }
 
-        if (list == null || list.isEmpty()) {
+        if (list.isEmpty()) {
             LOG.warn("No classes of type " + targetClassName + " found in " + name);
             LOG.info(name + " will not be listed in the Assembly Editor's Event Graphs SimEntity node tree\n");
         } else {
@@ -432,9 +432,9 @@ public class LegoTree extends JTree implements DragGestureListener, DragSourceLi
             DefaultMutableTreeNode localRoot = new DefaultMutableTreeNode(name);
             mod.insertNodeInto(localRoot, rootNode, 0);
 
-            for (Class<?> c : list) {
+            list.forEach(c -> {
                 hookToParent(c, localRoot);
-            }
+            });
         }
     }
 

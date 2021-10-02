@@ -299,18 +299,12 @@ public class MainFrame extends JFrame {
 
         // let the event graph controller establish the Viskit classpath and open
         // EventGraphs first
-        runLater(0L, new Runnable() {
-            @Override
-            public void run() {
-                egCntlr.begin();
-            }
+        runLater(0L, () -> {
+            egCntlr.begin();
         });
 
-        runLater(500L, new Runnable() {
-            @Override
-            public void run() {
-                assyCntlr.begin();
-            }
+        runLater(500L, () -> {
+            assyCntlr.begin();
         });
 
         // Swing:
@@ -424,12 +418,8 @@ public class MainFrame extends JFrame {
         }
     }
 
-    ActionListener mySettingsHandler = new ActionListener() {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            SettingsDialog.showDialog(MainFrame.this);
-        }
+    ActionListener mySettingsHandler = (ActionEvent e) -> {
+        SettingsDialog.showDialog(MainFrame.this);
     };
 
     private void jamQuitHandler(JMenuItem mi, Action qa, JMenuBar mb) {
@@ -441,7 +431,7 @@ public class MainFrame extends JFrame {
             }
             m.addSeparator();
             mi = new JMenuItem("Exit");
-            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
+            mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_DOWN_MASK));
             m.add(mi);
         }
 
@@ -534,12 +524,8 @@ public class MainFrame extends JFrame {
         }
     }
 
-    final SysExitHandler nullSysExitHandler = new SysExitHandler() {
-
-        @Override
-        public void doSysExit(int status) {
-            // do nothing
-        }
+    final SysExitHandler nullSysExitHandler = (int status) -> {
+        // do nothing
     };
 
     /** Prepares the Assy with a fresh class loader free of static artifacts for

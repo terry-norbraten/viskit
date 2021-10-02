@@ -20,7 +20,7 @@
     <!-- Project directories -->
     <property description="Where the distribution files wind up." location="dist" name="dir.dist"/>
 
-    <property description="Where all the JAXB 2.2 extensions are." location="${dir.lib}/jaxb" name="dir.lib.xml"/>
+    <property description="Where all the JAXB extensions are." location="${dir.lib}/jaxb" name="dir.lib.xml"/>
 
     <property description="Runtime module extension libraries." location="${dir.lib}/ext" name="dir.lib.ext"/>
 
@@ -54,11 +54,11 @@
     <property environment="env"/>
 
     <path id="jaxb.compile.path">
-        <fileset dir="${dir.lib.xml}" includes="jaxb-xjc.jar jaxb-core.jar"/>
+        <fileset dir="${dir.lib.xml}" includes="jaxb-xjc.jar istack-commons-tools.jar jaxb-api.jar jaxb-runtime.jar codemodel.jar istack-commons-runtime.jar xsom.jar relaxng-datatype.jar rngom.jar"/>
     </path>
 
     <path id="jaxb.runtime.path">
-        <fileset dir="${dir.lib.xml}" includes="**/*.jar" excludes="jaxb-xjc.jar" id="jaxb.classes"/>
+        <fileset dir="${dir.lib.xml}" includes="jaxb-runtime.jar javax.activation-api.jar istack-commons-runtime.jar" id="jaxb.classes"/>
     </path>
 
     <path id="runtime.extension.classes.path">
@@ -67,6 +67,7 @@
 
     <path id="compile.classpath">
         <pathelement location="${dir.lib}/bsh-2.0b4.jar"/>
+        <pathelement location="${jaxb-api.jar}"/>
         <pathelement location="${dir.lib}/jdom.jar"/>
         <pathelement location="${dir.lib}/jgraph.jar"/>
         <pathelement location="${dir.lib}/actions.jar"/>
@@ -630,6 +631,7 @@ their descpritions.
             <jvmarg value="-Xdock:name=${product.shortname}"/>
             <jvmarg value="-Dapple.awt.graphics.UseQuartz=true"/>
             <jvmarg value="-Dapple.laf.useScreenMenuBar=true"/>
+            <jvmarg line="--add-exports java.desktop/com.apple.eawt=ALL-UNNAMED"/>
             <arg value="${main.class}"/>
         </java>
     </target>
@@ -678,6 +680,10 @@ their descpritions.
             <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
 
             <jvmarg line="${common.run.args}"/>
+            <jvmarg value="-Xdock:name=${product.shortname}"/>
+            <jvmarg value="-Dapple.awt.graphics.UseQuartz=true"/>
+            <jvmarg value="-Dapple.laf.useScreenMenuBar=true"/>
+            <jvmarg line="--add-exports java.desktop/com.apple.eawt=ALL-UNNAMED"/>
 
             <!-- Any debug args can go here -->
             <!--arg value="localhost" />

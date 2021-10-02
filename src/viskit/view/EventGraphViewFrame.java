@@ -599,16 +599,16 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
 
         controller.addRecentEgFileListener(new RecentEgFileListener());
 
-        int accelMod = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int accelMod = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
 
         // Set up file menu
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
 
         fileMenu.add(buildMenuItem(controller, "newProject", "New Viskit Project", KeyEvent.VK_V,
-                KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.ALT_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.ALT_DOWN_MASK)));
         fileMenu.add(buildMenuItem(controller, "zipAndMailProject", "Zip/Mail Viskit Project", KeyEvent.VK_Z,
-                KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.ALT_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.ALT_DOWN_MASK)));
         fileMenu.add(buildMenuItem(controller, "newEventGraph", "New Event Graph", KeyEvent.VK_N,
                 KeyStroke.getKeyStroke(KeyEvent.VK_N, accelMod)));
         fileMenu.addSeparator();
@@ -676,11 +676,11 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
         editMenu.addSeparator();
 
         editMenu.add(buildMenuItem(controller, "newNode", "Add Event Node", KeyEvent.VK_N,
-                KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.ALT_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.ALT_DOWN_MASK)));
         editMenu.add(buildMenuItem(controller, "newSimParameter", "Add Simulation Parameter...", KeyEvent.VK_S,
-                KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK)));
         editMenu.add(buildMenuItem(controller, "newStateVariable", "Add State Variable...", KeyEvent.VK_V,
-                KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.ALT_MASK)));
+                KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.ALT_DOWN_MASK)));
         editMenu.add(buildMenuItem(controller, "newSelfRefSchedulingEdge", "Add Self-Referential Scheduling Edge...", null, null));
         editMenu.add(buildMenuItem(controller, "newSelfRefCancelingEdge", "Add Self-Refenential Canceling Edge...", null, null));
 

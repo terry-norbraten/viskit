@@ -968,13 +968,13 @@ public class GridRunner /* compliments DoeRunDriver*/ {
             Object returns;
             if (range.getName().toString().contains("DoubleRange")) {
                 returns = new Double[] {
-                    new Double(range.getValue().getLowValue()),
-                    new Double(range.getValue().getHighValue())
+                    Double.valueOf(range.getValue().getLowValue()),
+                    Double.valueOf(range.getValue().getHighValue())
                 };
             } else {
                 returns = new Integer[] {
-                    new Integer(range.getValue().getLowValue()),
-                    new Integer(range.getValue().getHighValue())
+                    Integer.valueOf(range.getValue().getLowValue()),
+                    Integer.valueOf(range.getValue().getHighValue())
                 };
             }
 
@@ -1104,15 +1104,15 @@ public class GridRunner /* compliments DoeRunDriver*/ {
                     if (dp.getType().equals("double")) {
 
                         range = new Double[]{
-                            new Double(dp.getValueRange().getValue().getLowValue()),
-                            new Double(dp.getValueRange().getValue().getHighValue())
+                            Double.valueOf(dp.getValueRange().getValue().getLowValue()),
+                            Double.valueOf(dp.getValueRange().getValue().getHighValue())
                         };
 
                     } else {
 
                         range = new Integer[]{
-                            new Integer(dp.getValueRange().getValue().getLowValue()),
-                            new Integer(dp.getValueRange().getValue().getHighValue())
+                            Integer.valueOf(dp.getValueRange().getValue().getLowValue()),
+                            Integer.valueOf(dp.getValueRange().getValue().getHighValue())
                         };
 
                     }

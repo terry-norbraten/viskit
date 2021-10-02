@@ -67,19 +67,11 @@ public class SourceWindow extends JFrame {
         tb.addSeparator();
         tb.add(searchButt);
         tb.add(againButt);
-        fontPlus.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jta.setFont(jta.getFont().deriveFont(jta.getFont().getSize2D() + 1.0f));
-            }
+        fontPlus.addActionListener((ActionEvent e) -> {
+            jta.setFont(jta.getFont().deriveFont(jta.getFont().getSize2D() + 1.0f));
         });
-        fontMinus.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jta.setFont(jta.getFont().deriveFont(Math.max(jta.getFont().getSize2D() - 1.0f, 1.0f)));
-            }
+        fontMinus.addActionListener((ActionEvent e) -> {
+            jta.setFont(jta.getFont().deriveFont(Math.max(jta.getFont().getSize2D() - 1.0f, 1.0f)));
         });
 
         printB.setEnabled(false); // todo
@@ -138,12 +130,8 @@ public class SourceWindow extends JFrame {
             }
         });
 
-        closeButt.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SourceWindow.this.dispose();
-            }
+        closeButt.addActionListener((ActionEvent e) -> {
+            SourceWindow.this.dispose();
         });
 
         compileButt.addActionListener(new ActionListener() {
@@ -189,37 +177,33 @@ public class SourceWindow extends JFrame {
             }
         });
 
-        saveButt.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String fn = getFileName();
-                saveChooser.setSelectedFile(new File(saveChooser.getCurrentDirectory(), fn));
-                int ret = saveChooser.showSaveDialog(SourceWindow.this);
-                if (ret != JFileChooser.APPROVE_OPTION) {
+        saveButt.addActionListener((ActionEvent e) -> {
+            String fn = getFileName();
+            saveChooser.setSelectedFile(new File(saveChooser.getCurrentDirectory(), fn));
+            int ret = saveChooser.showSaveDialog(SourceWindow.this);
+            if (ret != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            File f = saveChooser.getSelectedFile();
+            
+            if (f.exists()) {
+                int r = JOptionPane.showConfirmDialog(SourceWindow.this, "File exists.  Overwrite?", "Confirm",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (r != JOptionPane.YES_OPTION) {
                     return;
                 }
-                File f = saveChooser.getSelectedFile();
-
-                if (f.exists()) {
-                    int r = JOptionPane.showConfirmDialog(SourceWindow.this, "File exists.  Overwrite?", "Confirm",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if (r != JOptionPane.YES_OPTION) {
-                        return;
-                    }
+            }
+            
+            try {
+                try (FileWriter fw = new FileWriter(f)) {
+                    fw.write(src);
                 }
-
-                try {
-                    try (FileWriter fw = new FileWriter(f)) {
-                        fw.write(src);
-                    }
-                    SourceWindow.this.dispose();
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Exception on source file write" +
-                            "\n" + f.getName() +
-                            "\n" + ex.getMessage(),
-                            "File I/O Error", JOptionPane.ERROR_MESSAGE);
-                }
+                SourceWindow.this.dispose();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Exception on source file write" +
+                        "\n" + f.getName() +
+                        "\n" + ex.getMessage(),
+                        "File I/O Error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -314,7 +298,7 @@ public class SourceWindow extends JFrame {
         InputMap iMap = jta/*contentPane*/.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         ActionMap aMap = jta/*contentPane*/.getActionMap();
 
-        int cntlKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int cntlKeyMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
         KeyStroke key = KeyStroke.getKeyStroke(KeyEvent.VK_F, cntlKeyMask);
         iMap.put(key, startSearchHandle);
         aMap.put(startSearchHandle, startAct);

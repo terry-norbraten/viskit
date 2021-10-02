@@ -12,8 +12,8 @@
     <TerminalParameter name="serverWithReneges_2_1_1" link="serverWithReneges_2_1_1" value="Gamma" type="java.lang.String">
         <DoubleRange lowValue="Gamma" highValue="Gamma"/>
     </TerminalParameter>
-    <TerminalParameter name="serverWithReneges_2_2_1_1" link="serverWithReneges_2_2_1_1" value="new Double(2.5)" type="java.lang.Object">
-        <DoubleRange lowValue="new Double(2.5)" highValue="new Double(2.5)"/>
+    <TerminalParameter name="serverWithReneges_2_2_1_1" link="serverWithReneges_2_2_1_1" value="2.5" type="java.lang.Object">
+        <DoubleRange lowValue="2.5" highValue="2.5"/>
     </TerminalParameter>
     <TerminalParameter name="serverWithReneges_2_2_2_1_1" link="serverWithReneges_2_2_2_1_1" value="1.2" type="double">
         <DoubleRange lowValue="1.2" highValue="1.2"/>
@@ -21,20 +21,16 @@
     <TerminalParameter name="serverWithReneges_3_1_1" link="serverWithReneges_3_1_1" value="Uniform" type="java.lang.String">
         <DoubleRange lowValue="Uniform" highValue="Uniform"/>
     </TerminalParameter>
-    <TerminalParameter name="serverWithReneges_3_2_1_1" link="serverWithReneges_3_2_1_1" value="new Integer(4)" type="java.lang.Object">
-        <DoubleRange lowValue="new Integer(4)" highValue="new Integer(4)"/>
+    <TerminalParameter name="serverWithReneges_3_2_1_1" link="serverWithReneges_3_2_1_1" value="4" type="java.lang.Object">
+        <DoubleRange lowValue="4" highValue="4"/>
     </TerminalParameter>
-    <TerminalParameter name="serverWithReneges_3_2_2_1" link="serverWithReneges_3_2_2_1" value="new Integer(6)" type="java.lang.Object">
-        <DoubleRange lowValue="new Integer(6)" highValue="new Integer(6)"/>
+    <TerminalParameter name="serverWithReneges_3_2_2_1" link="serverWithReneges_3_2_2_1" value="6" type="java.lang.Object">
+        <DoubleRange lowValue="6" highValue="6"/>
     </TerminalParameter>
     <SimEntity name="arrivalProcess" type="examples.ArrivalProcess">
         <FactoryParameter factory="simkit.random.RandomVariateFactory" type="simkit.random.RandomVariate">
             <TerminalParameter name="" value="Exponential" type="java.lang.String"/>
-            <MultiParameter type="java.lang.Object[]">
-                <MultiParameter type="java.lang.Double">
-                    <TerminalParameter name="p[0] : " value="1.5" type="double"/>
-                </MultiParameter>
-            </MultiParameter>
+            <TerminalParameter name="" value="1.5" type="double"/>
         </FactoryParameter>
         <Coordinate x="40.0" y="140.0"/>
     </SimEntity>
@@ -45,19 +41,13 @@
         <TerminalParameter name="numberServers" value="2" type="int"/>
         <FactoryParameter factory="simkit.random.RandomVariateFactory" type="simkit.random.RandomVariate">
             <TerminalParameter name="" value="Gamma" type="java.lang.String"/>
-            <MultiParameter type="java.lang.Object[]">
-                <TerminalParameter name="" value="new Double(2.5)" type="java.lang.Object"/>
-                <MultiParameter type="java.lang.Double">
-                    <TerminalParameter name="p[0] : " value="1.2" type="double"/>
-                </MultiParameter>
-            </MultiParameter>
+            <TerminalParameter name="" value="2.5" type="double"/>
+            <TerminalParameter name="" value="1.2" type="double"/>
         </FactoryParameter>
         <FactoryParameter factory="simkit.random.RandomVariateFactory" type="simkit.random.RandomVariate">
             <TerminalParameter name="" value="Uniform" type="java.lang.String"/>
-            <MultiParameter type="java.lang.Object[]">
-                <TerminalParameter name="" value="new Integer(4)" type="java.lang.Object"/>
-                <TerminalParameter name="" value="new Integer(6)" type="java.lang.Object"/>
-            </MultiParameter>
+            <TerminalParameter name="" value="4" type="integer"/>
+            <TerminalParameter name="" value="6" type="integer"/>
         </FactoryParameter>
         <Coordinate x="350.0" y="140.0"/>
     </SimEntity>
@@ -91,6 +81,6 @@
     <Output entity="creator"/>
     <Output entity="arrivalProcess"/>
     <Output entity="serverWithReneges"/>
-    <Schedule stopTime="10000.0" verbose="true"/>
+    <Schedule stopTime="100.0" verbose="true"/>
     <Experiment replicationsPerDesignPoint="1" totalSamples="1" timeout="5000"/>
 </SimkitAssembly>
