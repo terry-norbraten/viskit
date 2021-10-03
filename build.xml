@@ -631,6 +631,7 @@ their descpritions.
             <jvmarg value="-Xdock:name=${product.shortname}"/>
             <jvmarg value="-Dapple.awt.graphics.UseQuartz=true"/>
             <jvmarg value="-Dapple.laf.useScreenMenuBar=true"/>
+            <jvmarg value="-Dapple.awt.brushMetalLook=true "/>
             <arg value="${main.class}"/>
         </java>
     </target>
