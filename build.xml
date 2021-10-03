@@ -631,7 +631,6 @@ their descpritions.
             <jvmarg value="-Xdock:name=${product.shortname}"/>
             <jvmarg value="-Dapple.awt.graphics.UseQuartz=true"/>
             <jvmarg value="-Dapple.laf.useScreenMenuBar=true"/>
-            <jvmarg line="--add-exports java.desktop/com.apple.eawt=ALL-UNNAMED"/>
             <arg value="${main.class}"/>
         </java>
     </target>
