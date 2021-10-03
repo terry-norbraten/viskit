@@ -742,10 +742,10 @@ public abstract class BasicAssembly extends BasicSimEntity implements Runnable {
                     System.out.println("Already running.");
                 }
                 seed = RandomVariateFactory.getDefaultRandomNumber().getSeed();
-                System.out.println("Starting Replication #" + (replication + 1) + " with RNG seed state of: " + seed);
+                LOG.info("Starting Replication #" + (replication + 1) + " with RNG seed state of: " + seed);
                 try {
                     Schedule.reset();
-                } catch (java.util.ConcurrentModificationException cme) {
+                } catch (ConcurrentModificationException cme) {
                     JOptionPane.showMessageDialog(null,
                             cme + "\nSimulation will terminate",
                             "Assembly Run Error",
