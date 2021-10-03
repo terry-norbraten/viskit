@@ -135,12 +135,8 @@ public class Splash2 extends JFrame {
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
         spl.setLocation((d.width - spl.getWidth()) / 2, (d.height - spl.getHeight()) / 2);
 
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                spl.setVisible(true);
-            }
+        SwingUtilities.invokeLater(() -> {
+            spl.setVisible(true);
         });
 
         // This is for the launch4j executable for Win & executable jar for Unix
@@ -166,7 +162,7 @@ public class Splash2 extends JFrame {
 
             // Call the main() method of the application using reflection
             Object[] arguments = new Object[] {newArgs};
-            Class[] parameterTypes = new Class[] {newArgs.getClass()};
+            Class<?>[] parameterTypes = new Class[] {newArgs.getClass()};
 
             Class<?> mainClass = VStatics.classForName(target);
 
@@ -177,12 +173,8 @@ public class Splash2 extends JFrame {
         }
         progressBar.setString("Complete");
 
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                spl.dispose();
-            }
+        SwingUtilities.invokeLater(() -> {
+            spl.dispose();
         });
     }
 
