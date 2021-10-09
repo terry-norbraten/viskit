@@ -8,7 +8,7 @@ Post release fixes / upgrades / issues:
   derived translated java source.
 
   On Mac OS X 10.10.3 (Yosemite) & JDK 1.8.0_45, in the default L&F mode, while
-  inputing EG Parameters when the user selects more... to expose RandomVariate
+  inputting EG Parameters when the user selects more... to expose RandomVariate
   types, a NPE will be thrown:
 
     at com.apple.laf.AquaMenuPainter.paintSelectedMenuItemBackground(AquaMenuPainter.java:153)
@@ -18,7 +18,7 @@ Post release fixes / upgrades / issues:
   quite quirky.  The default L&F for Win machines is recommended.
 
   On Mac OS X 10.10.3 & JDK 1.8.0_45, the cancel and scheduling cursors on the
-  JGraph pallete will revert back to the select cursor (arrow) when a node or
+  JGraph palette will revert back to the select cursor (arrow) when a node or
   edge inspector pops up.  If the user selects cancel or schedule mode again,
   the cursor will not change (remains in select) mode until the user moves the
   cursor out of the JPanel containing the JGraph component and menu bar up to
