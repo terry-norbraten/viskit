@@ -940,7 +940,7 @@ class WrappingTextArea extends JTextArea {
 
 class ROTable extends JTable {
 
-    ROTable(Vector v, Vector c) {
+    ROTable(Vector<? extends Vector> v, Vector<?> c) {
         super(v, c);
     }
 
@@ -958,7 +958,7 @@ class EntityParamTable extends ROTable implements TableCellRenderer {
 
     TableCellRenderer defRenderer;
 
-    EntityParamTable(Vector v, Vector c) {
+    EntityParamTable(Vector<? extends Vector> v, Vector<?> c) {
         super(v, c);
         defRenderer = new DefaultTableCellRenderer();
 

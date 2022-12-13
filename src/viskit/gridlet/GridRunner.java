@@ -96,7 +96,6 @@ public class GridRunner /* compliments DoeRunDriver*/ {
     // same synchronized way.
     SimkitAssembly root;
     viskit.xsd.bindings.assembly.ObjectFactory assemblyFactory;
-    viskit.xsd.bindings.eventgraph.ObjectFactory eventGraphFactory; //?
     // running total number of tasks done
     int tasksCompleted;
     // count of DesignPoints per Sample
@@ -107,8 +106,6 @@ public class GridRunner /* compliments DoeRunDriver*/ {
     int totalSamples;
     // numberOfStats used to synchronize access to getDesignPointStats
     int numberOfStats = Integer.MAX_VALUE;
-    // timeout in ms for any synchronized requests
-    long timeout;
     // list of Booleans in order
     // indicating if a taskID is in the queue
     // True: in queue
@@ -124,15 +121,11 @@ public class GridRunner /* compliments DoeRunDriver*/ {
     List<Boolean> resultsNotifiers;
     List<String> status;
 
-    LocalBootLoader loader = null;
-    ClassLoader initLoader = null;
-
     public GridRunner() {
         this.eventGraphs = new Vector<>();
         this.thirdPartyJars = new Hashtable<>();
         try {
             assemblyFactory = new viskit.xsd.bindings.assembly.ObjectFactory();
-            eventGraphFactory = new viskit.xsd.bindings.eventgraph.ObjectFactory(); //?
         } catch (Exception e) {
             log.error(e);
         }
@@ -153,9 +146,7 @@ public class GridRunner /* compliments DoeRunDriver*/ {
     }
 
     public GridRunner(LocalBootLoader loader) {
-        this("LOCAL-RUN",0);
-        this.loader = loader;
-        //Thread.currentThread().setContextClassLoader(loader);
+        this("LOCAL-RUN", 0);
     }
 
     /**
@@ -192,8 +183,6 @@ public class GridRunner /* compliments DoeRunDriver*/ {
         // and         designPtIndex = taskID % designPointCount;
         this.designPointCount = root.getDesignParameters().size();
         // timeout for synchronized calls as set by Experiment tag, or not means indefinite wait
-        String to = root.getExperiment().getTimeout();
-        this.timeout = parseLong(to==null?"0":to);
         this.queue = new ArrayList<>();
         this.designPointStatsNotifiers = new ArrayList<>();
         this.replicationStatsNotifiers = new ArrayList<>();

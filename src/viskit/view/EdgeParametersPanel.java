@@ -77,7 +77,7 @@ public class EdgeParametersPanel extends ViskitTablePanel {
      */
     @Override
     public void setData(List<? extends ViskitElement> data) {
-        List<ViskitElement> myList = (List<ViskitElement>) new ArrayList<>(data);
+        List<ViskitElement> myList = new ArrayList<>(data);
         int diff = argList.size() - myList.size();
         if (diff == 0) {
             super.setData(data);
@@ -98,8 +98,6 @@ public class EdgeParametersPanel extends ViskitTablePanel {
     }
 
     class DifferentTableColumnBackgroundRenderer extends DefaultTableCellRenderer {
-
-        Color c;
 
         public DifferentTableColumnBackgroundRenderer(Color c) {
             super();
