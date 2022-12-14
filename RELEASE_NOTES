@@ -45,7 +45,7 @@ Post release fixes / upgrades / issues:
   to manually name Events in this manner using an underscore character, i.e.
   Arrival, Arrival_e (where the "e" hints at the type argument of the event).
 
-  If the CNTL key is held down while attempting to drag and edge control point
+  If the CNTL key is held down while attempting to drag an edge control point
   a IOOBE will be thrown by JGraph v5.14.0.  This may be fixed in a subsequent
   release of JGraphX (new code base name) should we decide to upgrade to v6+.
 
