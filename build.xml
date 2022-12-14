@@ -707,16 +707,20 @@ their descpritions.
 
     </target>
 
-    <target name="test" depends="test-code-format" description="run all working tests">
+    <target name="test" depends="test.code.format,test.var.args" description="run all working tests">
         <!-- TODO add other test targets and other tests when ready -->
     </target>
 
-    <target name="test-code-format" depends="compile.test" description="TestCodeFormat runner">
+    <target name="test.code.format" depends="compile.test" description="TestCodeFormat runner">
         <echo message="viskit.test.TestCodeFormat test/ArrayTester.xml"/>
         <!-- TODO improve output formatting -->
         <java classname="viskit.test.TestCodeFormat" classpathref="runtime.test.classpath" fork="true" failonerror="true">
             <arg value="test/ArrayTester.xml"/>
         </java>
+    </target>
+    <target name="test.var.args" depends="compile.test" description="TestVarArgs runner">
+        <echo message="viskit.test.TestVarArgs"/>
+        <java classname="viskit.test.TestVarArgs" classpathref="runtime.test.classpath" fork="true" failonerror="true"/>
     </target>
 
     <!-- For the following test targets set up a server, first run the ant gridkit-jar target,

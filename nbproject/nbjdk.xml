@@ -16,8 +16,11 @@
     <target depends="-jdk-init" name="quick.run">
         <ant inheritall="false" target="quick.run"/>
     </target>
-    <target depends="-jdk-init" name="test-code-format">
-        <ant inheritall="false" target="test-code-format"/>
+    <target depends="-jdk-init" name="test.code.format">
+        <ant inheritall="false" target="test.code.format"/>
+    </target>
+    <target depends="-jdk-init" name="test.var.args">
+        <ant inheritall="false" target="test.var.args"/>
     </target>
     <target depends="-jdk-init,-jdk-presetdef-nbjpdastart" name="quick.debug">
         <ant inheritall="false" target="quick.debug"/>

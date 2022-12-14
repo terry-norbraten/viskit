@@ -49,7 +49,8 @@
                 </action>
                 <action name="test">
                     <script>nbproject/nbjdk.xml</script>
-                    <target>test-code-format</target>
+                    <target>test.code.format</target>
+                    <target>test.var.args</target>
                 </action>
                 <action name="rebuild">
                     <script>nbproject/nbjdk.xml</script>
