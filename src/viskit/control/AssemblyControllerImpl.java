@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -1491,7 +1492,7 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
             fw.write(src);
 
             // An error stream to write additional error info out to
-            ByteArrayOutputStream baosOut = new ByteArrayOutputStream();
+            OutputStream baosOut = new ByteArrayOutputStream();
             Compiler.setOutPutStream(baosOut);
 
             File classesDir = viskitProj.getClassesDir();
