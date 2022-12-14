@@ -21,20 +21,20 @@ import viskit.util.Version;
  */
 public class Help {
 
-    public static final Version VERSION = new Version("viskit/version.txt");
+    public static final Version VERSION = new Version("version.txt");
     public static final String VERSION_STRING = VERSION.getVersionString();
     public static final String CR = "<br>";
     public static final String ABOUT_EG_STRING =
             "Viskit Event Graph Editor" + CR + "   version " + VERSION_STRING + CR
-            + VERSION.getLastModified() + CR + CR;
+            + "last modified: " + VERSION.getLastModified() + CR + CR;
     public static final String ABOUT_ASSEMBLY_STRING =
             "Viskit Assembly Editor" + CR + "   version " + VERSION_STRING + CR
-            + VERSION.getLastModified() + CR + CR;
-    public static final String SIMKIT_URL = "http://diana.nps.edu/Simkit/";
+            + "last modified: " + VERSION.getLastModified() + CR + CR;
+    public static final String SIMKIT_URL = "https://github.com/ahbuss/Simkit/";
     public static final String VISKIT_URL = "https://gitlab.nps.edu/tdnorbra/viskit/";
     public static final String BUGZILLA_URL = "https://diana.nps.edu/bugzilla/";
     public static final String DEVELOPERS =
-            "Copyright &copy; 2004-2016 under the Lesser GNU License" + CR + CR
+            "Copyright &copy; 2004-2022 under the Lesser GNU Public License (LGPL)" + CR + CR
             + "<b>Developers:</b>" + CR
             + "&nbsp;&nbsp;&nbsp;Arnold Buss" + CR
             + "&nbsp;&nbsp;&nbsp;Mike Bailey" + CR
@@ -103,7 +103,7 @@ public class Help {
         aboutEGEditorPane.setContentType("text/html");
         aboutEGEditorPane.setEditable(false);
         aboutEGEditorPane.setText(ABOUT_EG_STRING
-                + DEVELOPERS + CR + VISKIT_PAGE + BUGZILLA_PAGE
+                + DEVELOPERS + CR + VISKIT_PAGE //+ BUGZILLA_PAGE
                 + SIMKIT_PAGE + VERSIONS);
 
         aboutAssemblyEditorPane = new JEditorPane();
@@ -111,7 +111,7 @@ public class Help {
         aboutAssemblyEditorPane.setContentType("text/html");
         aboutAssemblyEditorPane.setEditable(false);
         aboutAssemblyEditorPane.setText(ABOUT_ASSEMBLY_STRING
-                + DEVELOPERS + CR + VISKIT_PAGE + BUGZILLA_PAGE
+                + DEVELOPERS + CR + VISKIT_PAGE //+ BUGZILLA_PAGE
                 + SIMKIT_PAGE);
     }
 

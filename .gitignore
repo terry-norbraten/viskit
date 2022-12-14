@@ -1,3 +1,6 @@
+/MyViskitProjects/DefaultProject/AnalystReports/
+/MyViskitProjects/DefaultProject/build/
+/MyViskitProjects/DefaultProject/lib/
 /MyViskitProjects/SimkitComponents/
 /MyViskitProjects/2007Seguin/
 /MyViskitProjects/NabilThesis/
@@ -9,6 +12,4 @@
 /doc/Viskit testing notes 2015-04-30.docx
 /build
 /src/viskit/xsd/bindings/
-/MyViskitProjects/DefaultProject/AnalystReports/
-/MyViskitProjects/DefaultProject/build/
-/MyViskitProjects/DefaultProject/lib/
+/nbproject/private
