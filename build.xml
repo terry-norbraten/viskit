@@ -108,7 +108,7 @@
     <fileset file="${dist.exe.jar}" id="runtime.viskit.exe"/>
 
     <!-- The following filesets are used for the IzPack installer routine -->
-    <fileset dir="${dir.lib}" id="runtime.lib" >
+    <fileset dir="${dir.lib}" id="runtime.lib">
         <!-- could use restrictions in current runtime.classpath -->
         <include name="**/*.jar"/>
         <exclude name="izpack/**"/>
