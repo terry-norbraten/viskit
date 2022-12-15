@@ -94,7 +94,7 @@ public class LogUtils {
                 LOG.error(e);
             }
 
-            LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
+            LoggerContext context = (LoggerContext) LogManager.getContext(false);
             File file = new File(configFileFname);
 
 
