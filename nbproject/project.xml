@@ -32,37 +32,37 @@
             </folders>
             <ide-actions>
                 <action name="build">
-                    <script>nbproject/nbjdk.xml</script>
+                    <script>${ant.script}</script>
                     <target>compile</target>
                 </action>
                 <action name="clean">
-                    <script>nbproject/nbjdk.xml</script>
+                    <script>${ant.script}</script>
                     <target>clean</target>
                 </action>
                 <action name="javadoc">
-                    <script>nbproject/nbjdk.xml</script>
+                    <script>${ant.script}</script>
                     <target>doc</target>
                 </action>
                 <action name="run">
-                    <script>nbproject/nbjdk.xml</script>
+                    <script>${ant.script}</script>
                     <target>quick.run</target>
                 </action>
                 <action name="test">
-                    <script>nbproject/nbjdk.xml</script>
+                    <script>${ant.script}</script>
                     <target>test.code.format</target>
                     <target>test.var.args</target>
                 </action>
                 <action name="rebuild">
-                    <script>nbproject/nbjdk.xml</script>
+                    <script>${ant.script}</script>
                     <target>clean</target>
                     <target>compile</target>
                 </action>
                 <action name="debug">
-                    <script>nbproject/nbjdk.xml</script>
+                    <script>${ant.script}</script>
                     <target>quick.debug</target>
                 </action>
                 <action name="compile.single">
-                    <script>nbproject/nbjdk.xml</script>
+                    <script>nbproject/ide-file-targets.xml</script>
                     <target>compile-selected-files-in-src</target>
                     <context>
                         <property>files</property>
@@ -75,7 +75,7 @@
                     </context>
                 </action>
                 <action name="run.single">
-                    <script>nbproject/nbjdk.xml</script>
+                    <script>nbproject/ide-file-targets.xml</script>
                     <target>run-selected-file-in-src</target>
                     <context>
                         <property>run.class</property>
@@ -88,7 +88,7 @@
                     </context>
                 </action>
                 <action name="debug.single">
-                    <script>nbproject/nbjdk.xml</script>
+                    <script>nbproject/ide-file-targets.xml</script>
                     <target>debug-selected-file-in-src</target>
                     <context>
                         <property>debug.class</property>
@@ -101,7 +101,7 @@
                     </context>
                 </action>
                 <action name="run.single">
-                    <script>nbproject/nbjdk.xml</script>
+                    <script>nbproject/ide-file-targets.xml</script>
                     <target>run-selected-file-in-test</target>
                     <context>
                         <property>run.class</property>
@@ -117,13 +117,13 @@
             <export>
                 <type>folder</type>
                 <location>build/classes</location>
-                <script>nbproject/nbjdk.xml</script>
+                <script>${ant.script}</script>
                 <build-target>compile</build-target>
             </export>
             <export>
                 <type>folder</type>
                 <location>build/classes</location>
-                <script>nbproject/nbjdk.xml</script>
+                <script>${ant.script}</script>
                 <build-target>compile</build-target>
             </export>
             <view>
