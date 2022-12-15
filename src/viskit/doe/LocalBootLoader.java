@@ -14,7 +14,7 @@ import java.net.URLClassLoader;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import viskit.VGlobals;
 import viskit.VStatics;
 
@@ -81,7 +81,7 @@ import viskit.VStatics;
  */
 public class LocalBootLoader extends URLClassLoader {
 
-    private final static Logger LOG = Logger.getLogger(LocalBootLoader.class);
+    private final static Logger LOG = LogUtils.getLogger(LocalBootLoader.class);
     String[] classPath;
     LocalBootLoader stage1;
     File workDir;
@@ -98,7 +98,7 @@ public class LocalBootLoader extends URLClassLoader {
         super(new URL[] {}, parent);
         extUrls = classes;
         this.workDir = workDir;
-        LogUtils.getLogger(LocalBootLoader.class).debug(VGlobals.instance().printCallerLog());
+        LOG.debug(VGlobals.instance().printCallerLog());
     }
 
     /** Create a context with viskit's libs along with the generated

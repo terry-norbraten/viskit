@@ -10,7 +10,7 @@ package viskit.test;
 import edu.nps.util.LogUtils;
 import java.io.IOException;
 import java.util.Vector;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcClientLite;
 import org.apache.xmlrpc.XmlRpcException;
 

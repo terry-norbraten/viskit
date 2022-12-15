@@ -39,7 +39,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import simkit.random.MersenneTwister;
 import viskit.doe.DoeException;

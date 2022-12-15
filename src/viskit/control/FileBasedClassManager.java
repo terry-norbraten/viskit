@@ -20,7 +20,7 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.configuration.XMLConfiguration;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import viskit.util.FileBasedAssyNode;
 import viskit.util.FindClassesForInterface;

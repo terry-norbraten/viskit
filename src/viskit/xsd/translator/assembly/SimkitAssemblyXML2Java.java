@@ -12,7 +12,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import viskit.control.AssemblyControllerImpl;
 import viskit.VGlobals;
 import viskit.VStatics;

@@ -59,7 +59,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import viskit.util.OpenAssembly;
 import viskit.control.AnalystReportController;
 import viskit.mvc.mvcAbstractJFrameView;

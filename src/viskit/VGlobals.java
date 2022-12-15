@@ -63,7 +63,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import viskit.control.AnalystReportController;
 import viskit.doe.LocalBootLoader;
 import viskit.model.AnalystReportModel;

@@ -11,7 +11,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import viskit.util.Compiler;
 import viskit.VGlobals;
 import viskit.VStatics;

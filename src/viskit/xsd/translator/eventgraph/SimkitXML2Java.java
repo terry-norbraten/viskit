@@ -8,7 +8,7 @@ import java.util.*;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import viskit.control.AssemblyControllerImpl;
 import viskit.VGlobals;
 import viskit.VStatics;
@@ -216,7 +216,7 @@ public class SimkitXML2Java {
         pw.println("// Application specific imports");
 
         // For debugging only
-//        pw.println("import org.apache.log4j.Logger;");
+//        pw.println("import org.apache.logging.log4j.Logger;");
         pw.println("import simkit.*;");
         pw.println("import simkit.random.*;");
         pw.println();

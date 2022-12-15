@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import viskit.VGlobals;
 import viskit.VStatics;
 import viskit.xsd.translator.assembly.SimkitAssemblyXML2Java;

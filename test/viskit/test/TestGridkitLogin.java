@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Vector;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcClientLite;
 import org.apache.xmlrpc.XmlRpcException;
 import viskit.VGlobals;

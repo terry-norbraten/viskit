@@ -62,7 +62,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import viskit.control.EventGraphController;
 import viskit.control.FileBasedClassManager;
 import viskit.doe.LocalBootLoader;

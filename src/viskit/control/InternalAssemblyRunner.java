@@ -48,7 +48,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 import javax.swing.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import simkit.Schedule;
 import viskit.util.TitleListener;
 import viskit.VGlobals;

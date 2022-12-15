@@ -26,7 +26,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.jgraph.graph.DefaultGraphCell;
 import viskit.VGlobals;
 import viskit.ViskitConfig;

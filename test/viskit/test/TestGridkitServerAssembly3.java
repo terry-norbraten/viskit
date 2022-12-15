@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Vector;
 import javax.xml.bind.JAXBElement;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import viskit.xsd.translator.assembly.SimkitAssemblyXML2Java;
 import viskit.xsd.bindings.assembly.*;
 import org.apache.xmlrpc.XmlRpcClientLite;
