@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<SimkitAssembly name="ServerWithRenegesAssembly" version="1.0" package="examples" xsi:noNamespaceSchemaLocation="http://diana.nps.edu/Simkit/assembly.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SimkitAssembly name="ServerWithRenegesAssembly" version="1.0" package="examples" extend="viskit.assembly.ViskitAssembly" description="TODO add description" xsi:noNamespaceSchemaLocation="http://diana.nps.edu/Simkit/assembly.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <TerminalParameter name="arrivalProcess_1_1_1" link="arrivalProcess_1_1_1" value="Exponential" type="java.lang.String">
         <DoubleRange lowValue="Exponential" highValue="Exponential"/>
     </TerminalParameter>
