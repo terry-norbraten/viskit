@@ -100,7 +100,7 @@ public class MainFrame extends JFrame {
     private final int TAB1_CLUSTERUN_IDX = 2;
 
     public MainFrame(String initialFile) {
-        super("Viskit");
+        super(ViskitConfig.VISKIT_FULL_APPLICATION_NAME);
 
         this.initialFile = initialFile;
 
@@ -542,7 +542,6 @@ public class MainFrame extends JFrame {
                 // toggles a tab change listener
                 tabbedPane.setSelectedIndex(tabIndices[TAB0_ASSEMBLYRUN_SUBTABS_IDX]);
                 runTabbedPane.setSelectedIndex(TAB1_LOCALRUN_IDX);
-
 
                 // initializes a fresh class loader
                 assyRunComponent.preInitRun(execStrings);

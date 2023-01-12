@@ -60,7 +60,6 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.logging.log4j.Logger;
 import viskit.control.EventGraphController;
@@ -794,20 +793,16 @@ public class VStatics {
                 + msg + "</body></html>");
 
         // handle link events to bring up mail client and debug.log
-        ep.addHyperlinkListener(new HyperlinkListener() {
-
-            @Override
-            public void hyperlinkUpdate(HyperlinkEvent e) {
-                try {
-                    if (e.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
-                        Desktop.getDesktop().mail(url.toURI());
-
-                        if (showLog)
-                            Desktop.getDesktop().browse(ViskitConfig.V_DEBUG_LOG.toURI());
-                    }
-                } catch (IOException | URISyntaxException ex) {
-                    LOG.error(ex);
+        ep.addHyperlinkListener((HyperlinkEvent e) -> {
+            try {
+                if (e.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
+                    Desktop.getDesktop().mail(url.toURI());
+                    
+                    if (showLog)
+                        Desktop.getDesktop().browse(ViskitConfig.V_DEBUG_LOG.toURI());
                 }
+            } catch (IOException | URISyntaxException ex) {
+                LOG.error(ex);
             }
         });
         ep.setEditable(false);

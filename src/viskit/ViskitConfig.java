@@ -26,6 +26,9 @@ import viskit.doe.FileHandler;
  * @version $Id$
  */
 public class ViskitConfig {
+    
+    public static final String VISKIT_SHORT_APPLICATION_NAME = "Visual Simkit";
+    public static final String VISKIT_FULL_APPLICATION_NAME  = "Visual Simkit (Viskit) Analyst Tool for Discrete Event Simulation (DES)";
 
     public static final File VISKIT_CONFIG_DIR = new File(System.getProperty("user.home"), ".viskit");
     public static final File V_CONFIG_FILE = new File(VISKIT_CONFIG_DIR, "vconfig.xml");
@@ -131,8 +134,7 @@ public class ViskitConfig {
     /** Builds, or rebuilds a default configuration */
     private void setDefaultConfig() {
         try {
-            builder = new DefaultConfigurationBuilder();
-            builder.setFile(V_CONFIG_FILE);
+            builder = new DefaultConfigurationBuilder(V_CONFIG_FILE);
             try {
                 cc = builder.getConfiguration(true);
             } catch (ConfigurationException e) {
@@ -141,14 +143,17 @@ public class ViskitConfig {
 
             // Save off the indiv XML config for each prefix so we can write back
             int numConfigs = cc.getNumberOfConfigurations();
+            Object obj;
+            XMLConfiguration xc;
+            HierarchicalConfiguration.Node n;
             for (int i = 0; i < numConfigs; i++) {
-                Object obj = cc.getConfiguration(i);
+                obj = cc.getConfiguration(i);
                 if (!(obj instanceof XMLConfiguration)) {
                     continue;
                 }
-                XMLConfiguration xc = (XMLConfiguration) obj;
+                xc = (XMLConfiguration) obj;
                 xc.setAutoSave(true);
-                HierarchicalConfiguration.Node n = xc.getRoot();
+                n = xc.getRoot();
                 for (Object o : n.getChildren()) {
                     xmlConfigurations.put(((ConfigurationNode) o).getName(), xc);
                 }

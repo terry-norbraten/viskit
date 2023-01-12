@@ -158,7 +158,7 @@ public class SettingsDialog extends JDialog {
     private void buildWidgets() {
         JPanel classpathP = new JPanel();
         classpathP.setLayout(new BoxLayout(classpathP, BoxLayout.Y_AXIS));
-        classPathJlist = new JList<>(new DefaultListModel<String>());
+        classPathJlist = new JList<>(new DefaultListModel<>());
         JScrollPane jsp = new JScrollPane(classPathJlist);
         jsp.setPreferredSize(new Dimension(70, 70));  // don't want it to control size of dialog
         classpathP.add(jsp);

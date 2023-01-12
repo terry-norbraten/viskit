@@ -142,7 +142,7 @@ public class InternalAssemblyRunner implements PropertyChangeListener {
     }
 
     /**
-     * Pre-initialization this runner for a sim run
+     * Pre-initialize this runner for a sim run
      * @param params arguments to initialize the Assembly runner
      */
     public void preInitRun(String[] params) {
@@ -280,7 +280,7 @@ public class InternalAssemblyRunner implements PropertyChangeListener {
             textAreaOutputStream = new JTextAreaOutputStream(runPanel.soutTA, 16*1024);
 
             setOutputStream.invoke(assemblyInstance, textAreaOutputStream);
-            setNumberReplications.invoke(assemblyInstance, Integer.parseInt(runPanel.numRepsTF.getText().trim()));
+            setNumberReplications.invoke(assemblyInstance, Integer.valueOf(runPanel.numRepsTF.getText().trim()));
             setSaveReplicationData.invoke(assemblyInstance, runPanel.saveRepDataCB.isSelected());
             setPrintReplicationReports.invoke(assemblyInstance, runPanel.printRepReportsCB.isSelected());
             setPrintSummaryReport.invoke(assemblyInstance, runPanel.printSummReportsCB.isSelected());
@@ -303,7 +303,7 @@ public class InternalAssemblyRunner implements PropertyChangeListener {
             new SimThreadMonitor(simRunner).start();
 
             // Restore Viskit's working ClassLoader
-            Thread.currentThread().setContextClassLoader(lastLoaderNoReset);
+//            Thread.currentThread().setContextClassLoader(lastLoaderNoReset);
 
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | InstantiationException | ClassNotFoundException ex) {
             LOG.error(ex);
@@ -400,7 +400,7 @@ public class InternalAssemblyRunner implements PropertyChangeListener {
 
                 if (assemblyInstance != null) {
 
-                    Thread.currentThread().setContextClassLoader(lastLoaderWithReset);
+//                    Thread.currentThread().setContextClassLoader(lastLoaderWithReset);
 
                     Method setStopRun = assemblyClass.getMethod("setStopRun", boolean.class);
                     setStopRun.invoke(assemblyInstance, true);

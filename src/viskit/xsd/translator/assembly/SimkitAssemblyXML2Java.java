@@ -275,7 +275,7 @@ public class SimkitAssemblyXML2Java {
      * @param pw the PrintWriter to write out Java source
      */
     void printImports(PrintWriter pw) {
-        SortedSet<String> list = Collections.synchronizedSortedSet(new TreeSet<String>());
+        SortedSet<String> list = Collections.synchronizedSortedSet(new TreeSet<>());
         List<SimEntity> r = this.root.getSimEntity();
 
         for (SimEntity se : r) {
@@ -411,7 +411,7 @@ public class SimkitAssemblyXML2Java {
             pw.println(sp8 + rp + sc);
         }
 
-        if ( this.root.getSimEventListenerConnection().size() > 0 ) {
+        if ( !this.root.getSimEventListenerConnection().isEmpty() ) {
             pw.println();
         }
 
@@ -420,7 +420,7 @@ public class SimkitAssemblyXML2Java {
             pw.println(cm + sp + qu + sect.getSource() + qu + rp + sc);
         }
 
-        if ( this.root.getAdapter().size() > 0 ) {
+        if ( !this.root.getAdapter().isEmpty() ) {
             pw.println();
         }
 
@@ -607,7 +607,7 @@ public class SimkitAssemblyXML2Java {
             pw.println(sp8 + "addPropertyChangeListener" + lp + qu + pcl.getName() + qu + cm);
             pw.print(sp12 + nw + sp + pcl.getType() + lp);
 
-            if (pl.size() > 0) {
+            if (!pl.isEmpty()) {
                 pw.println();
                 for (Object o : pl) {
                     doParameter(pl, o, sp12, pw);
@@ -677,7 +677,7 @@ public class SimkitAssemblyXML2Java {
             pw.println(sp8 + "addDesignPointStats" + lp + qu + propChangeListener + qu + cm);
             pw.print(sp12 + nw + sp + pcl.getType() + lp);
 
-            if (pl.size() > 0) {
+            if (!pl.isEmpty()) {
                 pw.println();
                 for (Object o : pl) {
                     doParameter(pl, o, sp12, pw);

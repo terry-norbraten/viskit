@@ -84,7 +84,7 @@ public class RunnerPanel2 extends JPanel {
     /**
      * Create an Assembly Runner panel
      * @param title the title of this panel
-     * @param skipCloseButt if ture, don't supply rewind or pause buttons on VCR,
+     * @param skipCloseButt if true, don't supply rewind or pause buttons on VCR,
      * not hooked up, or working right.  A false will enable all VCR buttons.
      * Currently, only start and stop work
      * @param analystReportPanelVisible if true, will enable the analyst report check box
@@ -166,17 +166,12 @@ public class RunnerPanel2 extends JPanel {
         flowPan.add(labTF);
 
         numRepsTF = new JTextField(10);
-        numRepsTF.addActionListener(
-            new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int numReps = Integer.parseInt(numRepsTF.getText().trim());
-                    if (numReps < 1) {
-                        numRepsTF.setText("1");
-                    }
-                }
-            });
+        numRepsTF.addActionListener((ActionEvent e) -> {
+            int numReps = Integer.parseInt(numRepsTF.getText().trim());
+            if (numReps < 1) {
+                numRepsTF.setText("1");
+            }
+        });
         VStatics.clampSize(numRepsTF, numRepsTF, numRepsTF);
         JLabel numRepsLab = new JLabel("# replications: ");
         labTF = new JPanel();

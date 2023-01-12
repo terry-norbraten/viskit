@@ -878,7 +878,7 @@ public class SimkitXML2Java {
             }
         }
 
-        if (liLocalV.size() > 0) {
+        if (!liLocalV.isEmpty()) {
             pw.println();
         }
 

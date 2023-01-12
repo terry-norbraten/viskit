@@ -85,7 +85,7 @@
         <pathelement location="${dir.build.classes}"/>
         <pathelement location="${dir.lib}/batik-ext.jar"/>
         <pathelement location="${jcommon.jar}"/>
-        <pathelement location="${dir.lib}/commons-beanutils-1.8.3.jar"/>
+        <pathelement location="${dir.lib}/commons-beanutils-1.9.4.jar"/>
         <pathelement location="${dir.lib}/commons-collections-3.2.1.jar"/>
         <pathelement location="${dir.lib}/commons-digester-2.1.jar"/>
         <pathelement location="${dir.lib}/commons-jxpath-1.3.jar"/>
@@ -550,7 +550,7 @@ their descpritions.
             <fileset file="${dist.jar}"/>
             <fileset dir="${dir.lib}">
                 <include name="bsh-2.0b4.jar"/>
-                <include name="commons-beanutils-1.8.3.jar"/>
+                <include name="commons-beanutils-1.9.4.jar"/>
                 <include name="commons-codec-1.3.jar"/>
                 <include name="commons-collections-3.2.1.jar"/>
                 <include name="commons-configuration-1.7.jar"/>

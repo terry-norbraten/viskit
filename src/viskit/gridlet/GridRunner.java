@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.valueOf;
-import static java.lang.Long.parseLong;
 import static java.lang.Runtime.getRuntime;
 import static java.lang.System.gc;
 import static java.lang.System.getProperty;
@@ -84,7 +83,7 @@ public class GridRunner /* compliments DoeRunDriver*/ {
     int port;
     static Logger log = getLogger(GridRunner.class);
     Vector<String> eventGraphs;
-    Hashtable<String, Object> thirdPartyJars;
+    Map<String, Object> thirdPartyJars;
     File experimentFile;
     // This SimkitAssembly is used to set up
     // the experiment. Read in by the setAssembly()
@@ -258,7 +257,7 @@ public class GridRunner /* compliments DoeRunDriver*/ {
     // its own Boot class loader
     public Vector<String> getJars() {
         Vector<String> ret = new Vector<>();
-        Enumeration<Object> e = thirdPartyJars.elements();
+        Enumeration<Object> e = ((Hashtable<String, Object>)thirdPartyJars).elements();
         while ( e.hasMoreElements() ) {
             ret.add(e.nextElement().toString());
         }
@@ -381,10 +380,10 @@ public class GridRunner /* compliments DoeRunDriver*/ {
     }
 
     // Hashtable returned is name keyed to String of xml
-    public synchronized Hashtable<String, String> getDesignPointStats(int sampleIndex, int designPtIndex) {
+    public synchronized Map<String, String> getDesignPointStats(int sampleIndex, int designPtIndex) {
         Sample s = root.getExperiment().getSample().get(sampleIndex);
         DesignPoint dp = s.getDesignPoint().get(designPtIndex);
-        Hashtable<String, String> ret = new Hashtable<>();
+        Map<String, String> ret = new Hashtable<>();
         List<JAXBElement<?>> stats = dp.getStatistics();
         int index = sampleIndex*designPointCount + designPtIndex;
         Boolean notifier = designPointStatsNotifiers.get(index);
@@ -419,11 +418,11 @@ public class GridRunner /* compliments DoeRunDriver*/ {
     }
 
     // Hashtable returned is name keyed to String of xml
-    public synchronized Hashtable<String, String> getReplicationStats(int sampleIndex, int designPtIndex, int replicationIndex) {
+    public synchronized Map<String, String> getReplicationStats(int sampleIndex, int designPtIndex, int replicationIndex) {
         Sample s = root.getExperiment().getSample().get(sampleIndex);
         DesignPoint dp = s.getDesignPoint().get(designPtIndex);
         Replication rp = dp.getReplication().get(replicationIndex);
-        Hashtable<String, String> ret = new Hashtable<>();
+        Map<String, String> ret = new Hashtable<>();
         List<JAXBElement<?>> stats = rp.getStatistics();
         int index = ((sampleIndex*designPointCount + designPtIndex) * replicationsPerDesignPoint) + replicationIndex;
         Boolean notifier = replicationStatsNotifiers.get(index);
@@ -947,11 +946,7 @@ public class GridRunner /* compliments DoeRunDriver*/ {
 
         List<TerminalParameter> params = root.getDesignParameters();
         Map<TerminalParameter, Object> values = new HashMap<>();
-        Iterator<TerminalParameter> it = params.iterator();
-
-        while (it.hasNext()) {
-
-            TerminalParameter t = it.next();
+        for (TerminalParameter t : params) {
             log.debug("Batch Mode " + t);
             JAXBElement<ValueRange> range = t.getValueRange();
             Object returns;
@@ -968,9 +963,8 @@ public class GridRunner /* compliments DoeRunDriver*/ {
             }
 
             values.put(t,returns);
-
         }
-        if (values.size() > 0) {
+        if (!values.isEmpty()) {
             iterate(values,values.size()-1);
         }
     }

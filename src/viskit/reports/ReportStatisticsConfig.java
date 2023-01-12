@@ -103,7 +103,7 @@ public class ReportStatisticsConfig {
         entityIndex = new String[keyValues.size()];
         propertyIndex = new String[keyValues.size()];
 
-        if (keyValues.size() > 0) {
+        if (!keyValues.isEmpty()) {
             System.out.println("Replication Statistic(s) created");
             System.out.println("--------------------------------");
             int seperator;
@@ -226,9 +226,9 @@ public class ReportStatisticsConfig {
 
         FileWriter writer = null;
         try {
-            XMLOutputter outputter = new XMLOutputter();
             Format fmt = Format.getPrettyFormat();
-            outputter.setFormat(fmt);
+            fmt.setOmitDeclaration(false);
+            XMLOutputter outputter = new XMLOutputter(fmt);
 
             // Create a unique file name for each DTG/Location Pair
             ViskitProject vkp = VGlobals.instance().getCurrentViskitProject();

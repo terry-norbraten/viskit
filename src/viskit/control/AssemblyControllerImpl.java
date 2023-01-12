@@ -418,13 +418,9 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
     }
 
     /** Here we are informed of open Event Graphs */
-    DirectoryWatch.DirectoryChangeListener egListener = new DirectoryWatch.DirectoryChangeListener() {
-
-        @Override
-        public void fileChanged(File file, int action, DirectoryWatch source) {
-            // Do nothing.  The DirectoryWatch still tracks temp EGs, but we
-            // don't need anything special from this method, yet....
-        }
+    DirectoryWatch.DirectoryChangeListener egListener = (File file, int action, DirectoryWatch source) -> {
+        // Do nothing.  The DirectoryWatch still tracks temp EGs, but we
+        // don't need anything special from this method, yet....
     };
 
     @Override
@@ -809,7 +805,7 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
         }
     }
 
-    private Point nextPoint = new Point(25, 25);
+    private final Point nextPoint = new Point(25, 25);
     private Point getNextPoint() {
         nextPoint.x = nextPoint.x >= 200 ? 25 : nextPoint.x + 25;
         nextPoint.y = nextPoint.y >= 200 ? 25 : nextPoint.y + 25;
@@ -1636,11 +1632,7 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
             String clNam = f.getName().substring(0, f.getName().indexOf('.'));
             clNam = paf.pkg + "." + clNam;
 
-            // no longer necessary since we don't invoke
-            // Runtime.exec to compile anymore
-            String classPath = "";
-
-            execStrings = buildExecStrings(clNam, classPath);
+            execStrings = buildExecStrings(clNam);
         } else {
             execStrings = null;
         }
@@ -1656,12 +1648,8 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
         }
 
         // Prevent double clicking which will cause potential ClassLoader issues
-        Runnable r = new Runnable() {
-
-            @Override
-            public void run() {
-                ((AssemblyViewFrame) getView()).runButt.setEnabled(false);
-            }
+        Runnable r = () -> {
+            ((AssemblyViewFrame) getView()).runButt.setEnabled(false);
         };
         if (SwingUtilities.isEventDispatchThread())
             SwingUtilities.invokeLater(r);
@@ -1731,50 +1719,21 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
         worker.execute();
     }
 
-    // No longer invoking a Runtime.Exec for compilation
-//    public static final int EXEC_JAVACMD = 0;
-//    public static final int EXEC_VMARG0 = 1;
-//    public static final int EXEC_VMARG1 = 2;
-//    public static final int EXEC_VMARG3 = 3;
-//    public static final int EXEC_DASH_CP = 4;
-//    public static final int EXEC_CLASSPATH = 5;
-    public static final int EXEC_TARGET_CLASS_NAME = 6;
-    public static final int EXEC_VERBOSE_SWITCH = 7;
-    public static final int EXEC_STOPTIME_SWITCH = 8;
-//    public static final int EXEC_FIRST_ENTITY_NAME = 9;
+    public static final int EXEC_TARGET_CLASS_NAME = 0;
+    public static final int EXEC_VERBOSE_SWITCH = 1;
+    public static final int EXEC_STOPTIME_SWITCH = 2;;
 
-    /** Prepare for the compilation of the loaded assembly file from java source.
-     * Maintain the above statics to match the order below.
+    /** Prepare for running the loaded assembly file from java source.
+     * Maintain the above statics indicies to match the order used.
      * @param className the name of the Assembly file to compile
-     * @param classPath the current ClassLoader context
-     * @return os exec array
+     * @return a parameter array
      */
-    private String[] buildExecStrings(String className, String classPath) {
-        Vector<String> v = new Vector<>();
-        String fsep = VStatics.getFileSeparator();
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(System.getProperty("java.home"));
-        sb.append(fsep);
-        sb.append("bin");
-        sb.append(fsep);
-        sb.append("java");
-        v.add(sb.toString());        // 0
-
-        v.add("-Xss2m");             // 1
-        v.add("-Xincgc");            // 2
-        v.add("-Xmx512m");           // 3
-        v.add("-cp");                // 4
-        v.add(classPath);            // 5
-        v.add(className);            // 6
-
-        v.add("" + ((AssemblyModel) getModel()).getMetaData().verbose); // 7
-        v.add(((AssemblyModel) getModel()).getMetaData().stopTime);     // 8
-
-        Vector<String> vec = ((AssemblyModel) getModel()).getDetailedOutputEntityNames();
-        for (String s : vec) {
-            v.add(s);                                                   // 9+
-        }
+    private String[] buildExecStrings(String className) {
+        List<String> v = new ArrayList<>();
+        
+        v.add(className);                                               // 0
+        v.add("" + ((AssemblyModel) getModel()).getMetaData().verbose); // 1
+        v.add(((AssemblyModel) getModel()).getMetaData().stopTime);     // 2
 
         String[] ra = new String[v.size()];
         return v.toArray(ra);
@@ -1873,12 +1832,8 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
                 frame.pack();
                 frame.setLocationRelativeTo((Component) getView());
 
-                Runnable r = new Runnable() {
-
-                    @Override
-                    public void run() {
-                        frame.setVisible(true);
-                    }
+                Runnable r = () -> {
+                    frame.setVisible(true);
                 };
                 SwingUtilities.invokeLater(r);
             }
@@ -1901,7 +1856,6 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
         try {
             List<File> eGFiles = EventGraphCache.instance().getEventGraphFilesList();
             for (File file : eGFiles) {
-
                 tempFile = file;
 
                 // _doOpen checks if a tab is already opened

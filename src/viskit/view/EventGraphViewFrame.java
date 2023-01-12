@@ -263,20 +263,12 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
         vp.addPlusListener(ActionIntrospector.getAction(getController(), "newStateVariable"));
 
         // Introspector can't handle a param to the method....?
-        vp.addMinusListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                ((EventGraphController) getController()).deleteStateVariable((vStateVariable) event.getSource());
-            }
+        vp.addMinusListener((ActionEvent event) -> {
+            ((EventGraphController) getController()).deleteStateVariable((vStateVariable) event.getSource());
         });
 
-        vp.addDoubleClickedListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                ((EventGraphController) getController()).stateVariableEdit((vStateVariable) event.getSource());
-            }
+        vp.addDoubleClickedListener((ActionEvent event) -> {
+            ((EventGraphController) getController()).stateVariableEdit((vStateVariable) event.getSource());
         });
 
         // Event jGraph parameters area
@@ -326,19 +318,11 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
         pp.addPlusListener(ActionIntrospector.getAction(getController(), "newSimParameter"));
 
         // Introspector can't handle a param to the method....?
-        pp.addMinusListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                ((EventGraphController) getController()).deleteSimParameter((vParameter) event.getSource());
-            }
+        pp.addMinusListener((ActionEvent event) -> {
+            ((EventGraphController) getController()).deleteSimParameter((vParameter) event.getSource());
         });
-        pp.addDoubleClickedListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                ((EventGraphController) getController()).simParameterEdit((vParameter) event.getSource());
-            }
+        pp.addDoubleClickedListener((ActionEvent event) -> {
+            ((EventGraphController) getController()).simParameterEdit((vParameter) event.getSource());
         });
 
         parametersPanel.add(pp);
@@ -367,14 +351,10 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
 
     private CodeBlockPanel buildCodeBlockPanel() {
         CodeBlockPanel cbp = new CodeBlockPanel(this, true, "Event Graph Code Block");
-        cbp.addUpdateListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String s = (String) e.getSource();
-                if (s != null) {
-                    ((EventGraphController) getController()).codeBlockEdit(s);
-                }
+        cbp.addUpdateListener((ActionEvent e) -> {
+            String s = (String) e.getSource();
+            if (s != null) {
+                ((EventGraphController) getController()).codeBlockEdit(s);
             }
         });
         return cbp;
@@ -458,11 +438,8 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
         tabbedPane.setSelectedComponent(graphPane.drawingSplitPane);
 
         // Now expose the EventGraph toolbar
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                getToolBar().setVisible(true);
-            }
+        Runnable r = () -> {
+            getToolBar().setVisible(true);
         };
         SwingUtilities.invokeLater(r);
     }
@@ -479,11 +456,8 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
 
                 // Don't allow operation of tools with no Event Graph tab in view (NPEs)
                 if (tabbedPane.getTabCount() == 0) {
-                    Runnable r = new Runnable() {
-                        @Override
-                        public void run() {
-                            getToolBar().setVisible(false);
-                        }
+                    Runnable r = () -> {
+                        getToolBar().setVisible(false);
                     };
                     SwingUtilities.invokeLater(r);
                 }
@@ -556,7 +530,7 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
                 mi.setToolTipText(fullPath.getPath());
                 openRecentEGMenu.add(mi);
             }
-            if (lis.size() > 0) {
+            if (!lis.isEmpty()) {
                 openRecentEGMenu.add(new JSeparator());
                 Action act = new ParameterizedAction("clear");
                 act.putValue(VStatics.FULL_PATH, VStatics.CLEAR_PATH_FLAG);  // flag
@@ -846,19 +820,11 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
         // Let the opening of EGs make this visible
         getToolBar().setVisible(false);
 
-        zoomIn.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getCurrentVgcw().setScale(getCurrentVgcw().getScale() + 0.1d);
-            }
+        zoomIn.addActionListener((ActionEvent e) -> {
+            getCurrentVgcw().setScale(getCurrentVgcw().getScale() + 0.1d);
         });
-        zoomOut.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getCurrentVgcw().setScale(Math.max(getCurrentVgcw().getScale() - 0.1d, 0.1d));
-            }
+        zoomOut.addActionListener((ActionEvent e) -> {
+            getCurrentVgcw().setScale(Math.max(getCurrentVgcw().getScale() - 0.1d, 0.1d));
         });
 
         TransferHandler th = new TransferHandler("text");
@@ -874,26 +840,14 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
         // not under control of the application controller (EventGraphControllerImpl.java).  Small, simple anonymous inner classes
         // such as these have been certified by the Surgeon General to be only minimally detrimental to code health.
 
-        selectMode.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getCurrentVgcw().setPortsVisible(false);
-            }
+        selectMode.addActionListener((ActionEvent e) -> {
+            getCurrentVgcw().setPortsVisible(false);
         });
-        arcMode.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getCurrentVgcw().setPortsVisible(true);
-            }
+        arcMode.addActionListener((ActionEvent e) -> {
+            getCurrentVgcw().setPortsVisible(true);
         });
-        cancelArcMode.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getCurrentVgcw().setPortsVisible(true);
-            }
+        cancelArcMode.addActionListener((ActionEvent e) -> {
+            getCurrentVgcw().setPortsVisible(true);
         });
 
     }

@@ -37,15 +37,11 @@ import edu.nps.util.LogUtils;
 import java.awt.Desktop;
 
 import java.awt.EventQueue;
-import java.awt.Image;
 import java.awt.Taskbar;
 
 import java.io.File;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -101,7 +97,7 @@ public class EventGraphAssemblyComboMain {
                 // If we encounter this case, then uncomment printStackTrace() to
                 // drill down on the cause.  Easier than setting a breakpoint and
                 // debugging!
-                e.printStackTrace();
+                e.printStackTrace(System.err);
             }
 
             try {
