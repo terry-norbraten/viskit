@@ -44,8 +44,6 @@
 
     <property description="Event Graph utilities" location="${dir.src}/viskit/xsd/sge" name="dir.src.sge.util"/>
 
-    <property description="Simevg utility" location="${dir.src}/viskit/xsd/translator" name="dir.src.simevg.util"/>
-
     <property description="where the help source sits" location="${dir.src}/viskit/javahelp" name="javahelp"/>
 
     <property description="where the generated and copied help files go" location="${dir.build.classes}/viskit/javahelp" name="build.javahelp"/>
@@ -314,47 +312,48 @@ their descpritions.
 
     <!--  === TARGET: jar === -->
     <target name="jar" depends="compile">
+        <manifest file="MANIFEST.MF">
+            <attribute name="Built-By" value="${my.name} ${my.email}"/>
+            <attribute name="Specification-Title"
+                       value="${product.Name}"/>
+            <attribute name="Specification-Version"
+                       value="${product.version.major}.${product.version.minor}"/>
+            <attribute name="Specification-Vendor"
+                       value="${spec.vendor}"/>
+            <attribute name="Implementation-Title"
+                       value="${impl.title}"/>
+            <attribute name="Implementation-Version"
+                       value="${product.Version} built on ${TODAY} at ${TSTAMP} hrs"/>
+            <attribute name="Implementation-Vendor"
+                       value="${nps}, ${moves.institute}, ${savage.research.group}"/>
+            <attribute name="Implementation-URL"
+                       value="${Savage.url}"/>
+
+            <section name="edu.nps.util"/>
+            <section name="viskit"/>
+            <section name="viskit.assembly"/>
+            <section name="viskit.control"/>
+            <section name="viskit.doe"/>
+            <section name="viskit.gridlet"/>
+            <section name="viskit.images"/>
+            <section name="viskit.jgraph"/>
+            <section name="viskit.model"/>
+            <section name="viskit.mvc"/>
+            <section name="viskit.util"/>
+            <section name="viskit.view"/>
+            <section name="viskit.view.dialog"/>
+            <section name="viskit.xsd.bindings.assembly"/>
+            <section name="viskit.xsd.bindings.assembly.stats"/>
+            <section name="viskit.xsd.bindings.cli"/>
+            <section name="viskit.xsd.bindings.eventgraph"/>
+            <section name="viskit.xsd.cli"/>
+            <section name="viskit.xsd.translator.assembly"/>
+            <section name="viskit.xsd.translator.eventgraph"/>
+        </manifest>
         <jar basedir="${dir.build.classes}"
              compress="false"
-             destfile="${dist.jar}">
-            <manifest>
-                <attribute name="Built-By" value="${my.name}"/>
-                <attribute name="Specification-Title"
-                           value="${product.Name}"/>
-                <attribute name="Specification-Version"
-                           value="${product.version.major}.${product.version.minor}"/>
-                <attribute name="Specification-Vendor"
-                           value="${spec.vendor}"/>
-                <attribute name="Implementation-Title"
-                           value="${impl.title}"/>
-                <attribute name="Implementation-Version"
-                           value="${product.Version} built on ${TODAY} at ${TSTAMP} hrs"/>
-                <attribute name="Implementation-Vendor"
-                           value="${nps}, ${moves.institute}, ${savage.research.group}"/>
-                <attribute name="Implementation-URL"
-                           value="${Savage.url}"/>
-
-                <section name="edu.nps.util"/>
-                <section name="viskit"/>
-                <section name="viskit.assembly"/>
-                <section name="viskit.control"/>
-                <section name="viskit.doe"/>
-                <section name="viskit.gridlet"/>
-                <section name="viskit.images"/>
-                <section name="viskit.jgraph"/>
-                <section name="viskit.model"/>
-                <section name="viskit.mvc"/>
-                <section name="viskit.util"/>
-                <section name="viskit.view"/>
-                <section name="viskit.view.dialog"/>
-                <section name="viskit.xsd.bindings.assembly"/>
-                <section name="viskit.xsd.bindings.assembly.stats"/>
-                <section name="viskit.xsd.bindings.cli"/>
-                <section name="viskit.xsd.bindings.eventgraph"/>
-                <section name="viskit.xsd.cli"/>
-                <section name="viskit.xsd.translator.assembly"/>
-                <section name="viskit.xsd.translator.eventgraph"/>
-            </manifest>
+             destfile="${dist.jar}"
+             manifest="MANIFEST.MF">
             <metainf file="license/lgpl.txt"/>
             <metainf file="license/license.txt"/>
         </jar>
@@ -399,48 +398,13 @@ their descpritions.
 
         <jar basedir="${dir.build.classes}"
              compress="false"
-             destfile="${dist.exe.jar}">
+             destfile="${dist.exe.jar}"
+             manifest="MANIFEST.MF">
             <manifest>
-                <attribute name="Built-By" value="${my.name}"/>
-                <attribute name="Specification-Title"
-                           value="${product.Name}"/>
-                <attribute name="Specification-Version"
-                           value="${product.version.major}.${product.version.minor}"/>
-                <attribute name="Specification-Vendor"
-                           value="${spec.vendor}"/>
-                <attribute name="Implementation-Title"
-                           value="${impl.title}"/>
-                <attribute name="Implementation-Version"
-                           value="${product.Version} built on ${TODAY} at ${TSTAMP} hrs"/>
-                <attribute name="Implementation-Vendor"
-                           value="${nps}, ${moves.institute}, ${savage.research.group}"/>
-                <attribute name="Implementation-URL"
-                           value="${Savage.url}"/>
 
                 <!-- used by native launcher, see launch4j -->
                 <attribute name="Main-Class" value="viskit.Splash2" />
                 <attribute name="Class-Path" value="${launcher.classpath}" />
-
-                <section name="edu.nps.util"/>
-                <section name="viskit"/>
-                <section name="viskit.assembly"/>
-                <section name="viskit.control"/>
-                <section name="viskit.doe"/>
-                <section name="viskit.gridlet"/>
-                <section name="viskit.images"/>
-                <section name="viskit.jgraph"/>
-                <section name="viskit.model"/>
-                <section name="viskit.mvc"/>
-                <section name="viskit.util"/>
-                <section name="viskit.view"/>
-                <section name="viskit.view.dialog"/>
-                <section name="viskit.xsd.bindings.assembly"/>
-                <section name="viskit.xsd.bindings.assembly.stats"/>
-                <section name="viskit.xsd.bindings.cli"/>
-                <section name="viskit.xsd.bindings.eventgraph"/>
-                <section name="viskit.xsd.cli"/>
-                <section name="viskit.xsd.translator.assembly"/>
-                <section name="viskit.xsd.translator.eventgraph"/>
             </manifest>
             <metainf file="license/lgpl.txt"/>
             <metainf file="license/license.txt"/>
