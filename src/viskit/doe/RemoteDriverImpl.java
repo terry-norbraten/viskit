@@ -45,15 +45,19 @@ public class RemoteDriverImpl implements DoeDriver {
         if (rpc == null) throw new DoeException("Can't connect to Gridkit service at "+host+":"+port);
 
         login(user,password);
-
+        Runtime.getRuntime().addShutdownHook(new Cleanup());
     }
+    
+    /** Replacement for Object.finalize() */
+    class Cleanup extends Thread {
 
-    @Override
-    protected void finalize() {
-        try {
-            logout();
-            super.finalize();
-        } catch (Throwable e) {
+        @Override
+        public void run() {
+            try {
+                logout();
+            } catch (DoeException e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 
