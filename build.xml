@@ -562,9 +562,7 @@ their descpritions.
                 <include name="simkit.jar"/>
                 <include name="xmlrpc-2.0.jar"/>
             </fileset>
-            <fileset dir="${dir.lib.ext}">
-                <include name="*.jar"/>
-            </fileset>
+            <fileset dir="${dir.lib.ext}" includes="*.jar"/>
             <fileset refid="jaxb.classes"/>
         </copy>
 
