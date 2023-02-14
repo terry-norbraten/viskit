@@ -71,6 +71,9 @@ Release: 1.0.16(December 13, 2022)
 -----------------------------------
 Major changes since 1.0.15
 
+    Fixed not being able to select a scheduling or cancelling edge to invoke its
+    inspector (editor). Event clicks were not happening in the EDT.
+
     Fixed NPE from version attempting to read SVN strings, which are no longer
     relevant since switching to git.
 
