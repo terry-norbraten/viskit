@@ -1,6 +1,7 @@
 package viskit.jgraph;
 
 import java.awt.event.MouseEvent;
+import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.jgraph.plaf.basic.BasicGraphUI;
 import viskit.VGlobals;
@@ -38,7 +39,10 @@ public class vGraphUI extends BasicGraphUI {
 
         // We'll use our own editors here
         if (graph.isCellEditable(cell)) {
-            createEditDialog(cell);
+            Runnable r = () -> {
+                createEditDialog(cell);
+            };
+            SwingUtilities.invokeLater(r);
         }
 
         return false; // any returned boolean does nothing in JGraph v.5.14.0

@@ -223,7 +223,7 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
             setModel((mvcModel) myVgcw.model);    // hold on locally
             getController().setModel(getModel());  // tell controller
 
-            adjustMenus((Model) getModel()); // enable/disable menu items based on new EG
+//            adjustMenus((Model) getModel()); // enable/disable menu items based on new EG
 
             GraphMetaData gmd = ((Model) getModel()).getMetaData();
             if (gmd != null) {
@@ -508,9 +508,9 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
      * Do menu layout work here
      * @param mod the current model of our EG view
      */
-    private void adjustMenus(Model mod) {
-        //todo
-    }
+//    private void adjustMenus(Model mod) {
+//        //todo
+//    }
 
     class RecentEgFileListener implements mvcRecentFileListener {
 
@@ -558,7 +558,7 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
             else
                 fullPath = (File) obj;
 
-            if (fullPath.getPath().equals(VStatics.CLEAR_PATH_FLAG)) {
+            if (fullPath != null && fullPath.getPath().equals(VStatics.CLEAR_PATH_FLAG)) {
                 vcontroller.clearRecentEGFileSet();
             } else {
                 vcontroller.openRecentEventGraph(fullPath);
@@ -978,6 +978,9 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
         @Override
         public void mouseEntered(MouseEvent e) {
             switch (getCurrentMode()) {
+                case SELECT_MODE:
+                    getCurrentVgcw().setCursor(select);
+                    break;
                 case ARC_MODE:
                     getCurrentVgcw().setCursor(arc);
                     break;
@@ -986,6 +989,7 @@ public class EventGraphViewFrame extends mvcAbstractJFrameView implements EventG
                     break;
                 default:
                     getCurrentVgcw().setCursor(select);
+                    break;
             }
         }
     }

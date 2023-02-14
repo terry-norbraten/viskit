@@ -4,7 +4,6 @@ import edu.nps.util.LogUtils;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.*;
-//import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -201,34 +200,25 @@ public class EventInspectorDialog extends JDialog {
 
         arguments.addPlusListener(myChangeListener);
         arguments.addMinusListener(myChangeListener);
-        arguments.addDoubleClickedListener(new ActionListener() {
-
-            // EventArgumentDialog: Event arguments
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                EventArgument ea = (EventArgument) e.getSource();
-                boolean modified = EventArgumentDialog.showDialog(frame, ea);
-                if (modified) {
-                    arguments.updateRow(ea);
-                    setModified(modified);
-                }
+        arguments.addDoubleClickedListener((ActionEvent e) -> {
+            EventArgument ea = (EventArgument) e.getSource();
+            boolean modified1 = EventArgumentDialog.showDialog(frame, ea);
+            if (modified1) {
+                arguments.updateRow(ea);
+                setModified(modified1);
             }
-        });
+        }); // EventArgumentDialog: Event arguments
 
         codeBlock.addUpdateListener(myChangeListener);
 
         localVariables.addPlusListener(myChangeListener);
         localVariables.addMinusListener(myChangeListener);
-        localVariables.addDoubleClickedListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                EventLocalVariable elv = (EventLocalVariable) e.getSource();
-                boolean modified = LocalVariableDialog.showDialog(frame, elv);
-                if (modified) {
-                    localVariables.updateRow(elv);
-                    setModified(modified);
-                }
+        localVariables.addDoubleClickedListener((ActionEvent e) -> {
+            EventLocalVariable elv = (EventLocalVariable) e.getSource();
+            boolean modified1 = LocalVariableDialog.showDialog(frame, elv);
+            if (modified1) {
+                localVariables.updateRow(elv);
+                setModified(modified1);
             }
         });
 
