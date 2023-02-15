@@ -23,7 +23,7 @@ public class PropChangListenerImageIcon extends ImageIcon {
         h = height;
 
         // This is so the Image obj can be extracted from this obj for dragging purposes
-        BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+        Image bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         Graphics g = bi.getGraphics();
         paintIcon(null, g, 0, 0);
         setImage(bi);
