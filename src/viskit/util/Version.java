@@ -45,29 +45,38 @@ public class Version {
 
     public Version(String fileName) {
         
-        InputStream stream = null;
+        InputStream stream;
         
         versionProperties = new Properties();
         
         // version.txt is in the same package as VGlobals
         URL versionURL = VGlobals.class.getResource(fileName);
         
-        if (versionURL.getProtocol().equals("jar"))
-            stream = VGlobals.class.getResourceAsStream(fileName);
-        else {
-            try {
-                stream = versionURL.openStream();
-            } catch (IOException ex) {
-                LOG.error("Problem reading {} due to {}: ", fileName, ex);
+        if (versionURL != null)
+            if (versionURL.getProtocol().equals("jar"))
+                stream = VGlobals.class.getResourceAsStream(fileName);
+            else {
+                try {
+                    stream = versionURL.openStream();
+                } catch (IOException ex) {
+                    LOG.error("Problem reading {} due to {}: ", fileName, ex);
+                    return;
+                }
             }
+        else {
+            LOG.error("Problem reading {} due to {}: ", fileName, versionURL);
+            return;
         }
         try {
             if (stream != null)
                 versionProperties.load(stream);
-            else
-                LOG.error("Problem reading {} due to {}: ", fileName, null);
+            else {
+                LOG.error("Problem reading {} due to {}: ", fileName, stream);
+                return;
+            }
         } catch (IOException ex) {
             LOG.error(ex);
+            return;
         }
         
         Version.this.parseInputFile(versionURL);
@@ -84,7 +93,7 @@ public class Version {
 
     protected void parseInputFile(URL versionURL) {
         
-        Path versionPath = null;
+        Path versionPath;
         
         try {
             
@@ -100,7 +109,7 @@ public class Version {
             ZonedDateTime zoneDateTime = instant.atZone(ZoneId.systemDefault());
             lastModified = zoneDateTime.toLocalDate();
         } catch (IOException | URISyntaxException ex) {
-            LOG.error("Problem reading {} due to {}: ", versionPath, ex);
+            LOG.error(ex);
         }
     }
 
