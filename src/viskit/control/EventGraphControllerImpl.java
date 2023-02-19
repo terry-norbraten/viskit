@@ -75,7 +75,10 @@ public class EventGraphControllerImpl extends mvcAbstractController implements E
 
             // Open whatever EG were marked open on last closing
             for (File f : lis) {
-                _doOpen(f);
+                
+                // Prevent project mismatch
+                if (f.exists())
+                    _doOpen(f);
             }
 
         } else {
