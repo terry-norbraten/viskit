@@ -129,7 +129,10 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
             LOG.debug("Inside begin() and lis.size() is: " + lis.size());
 
             for (File f : lis) {
-                _doOpen(f);
+                
+                // Prevent project mismatch
+                if (f.exists())
+                    _doOpen(f);
             }
         }
 
