@@ -1,5 +1,5 @@
 /*
-Copyright (c) 1995-2022 held by the author(s).  All rights reserved.
+Copyright (c) 1995-2023 held by the author(s).  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -33,73 +33,40 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 package edu.nps.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Properties;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.logging.log4j.core.config.DefaultConfiguration;
 
 /**
- * Log4j Logging utilities.
- * <br>
- * For the time being, this class has log4j utilities, but it may be changed
- * to java.log.util in the future!
+ * Log4j Logging utilities for Log4J2 v19+.
  *
- * @author suleyman <br>
- * @version $Id: LogUtils.java 4921 2008-11-19 00:44:23Z tnorbraten $
+ * @author <a href="mailto:tdnorbra@nps.edu?subject=edu.nps.util.LogUtils">Terry Norbraten, NPS MOVES</a>
  */
 public class LogUtils {
-    private static final Logger LOG = LogManager.getLogger(LogUtils.class);
+    
+    private static final Logger LOG;
 
     static {
-        configureLog4j("configuration/log4j.properties");
-    }
-
-    /**<p>
-     * This is a utility to configure the Log4j logger.
-     * </p>
-     * If requested configuration file can not be read, the default behavior
-     * will be to use BasicConfigurator and set the debug level to INFO.
-     *
-     * @param configFileFname The file name to configure the logger with.
-     * @return true if successful, false if failed to find/use the file
-     */
-    public static boolean configureLog4j(String configFileFname) {
-        return configureLog4j(configFileFname, false);
+        configureLog4j("configuration/log4j2.properties");
+        LOG = getLogger(LogUtils.class);
     }
 
     /**<p>
      * This is a utility to configure the Log4J logger.
      * </p>
      * If requested configuration file can not be read, the default behavior
-     * will be to use BasicConfigurator and set the debug level to INFO.
+     * will be to use a DefaultConfigurator and set the debug level to INFO.
      *
-     * @param configFileFname The file name to configure the logger with.
-     * @param watch           not used
+     * @param configFile The file name to configure the logger with.
      * @return true if successful, false if failed to find/use the file
      */
-    public static boolean configureLog4j(String configFileFname, boolean watch) {
+    public static boolean configureLog4j(String configFile) {
+        
+        if (!configFile.isEmpty()) {
 
-        if (!configFileFname.isEmpty()) {
-            Properties props = new Properties();
-
-            // Use the class loader to find the path in a jar file
-            try {
-                props.load(ClassLoader.getSystemResourceAsStream(configFileFname));
-            } catch (IOException e) {
-                LOG.error(e);
-            }
-
-            LoggerContext context = (LoggerContext) LogManager.getContext(false);
-            File file = new File(configFileFname);
-
-
-            // this will force a reconfiguration
-            context.setConfigLocation(file.toURI());
+            Configurator.initialize(null, ClassLoader.getPlatformClassLoader(), configFile);
 
             return true;
         } else {
@@ -111,8 +78,7 @@ public class LogUtils {
             // The following is useful early on when developers are starting to
             // use log4j to know what is going on. We can remove this printout
             // in the future, or turn it into a log4j message!
-            LOG.warn("Failed to read " + configFileFname + ". " +
-                    "Assuming INFO level and Console appender.");
+            LOG.warn("Failed to read {}. Assuming INFO level and Console appender.", configFile);
 
             return false;
         }
