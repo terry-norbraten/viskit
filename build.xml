@@ -80,7 +80,7 @@
     </path>
 
     <path id="runtime.classpath">
-        <pathelement location="${dir.build.classes}"/>
+        <pathelement location="${dist.jar}"/>
         <pathelement location="${dir.lib}/batik-ext.jar"/>
         <pathelement location="${dir.lib}/commons-beanutils-1.9.4.jar"/>
         <pathelement location="${dir.lib}/commons-collections-3.2.1.jar"/>
@@ -279,7 +279,7 @@ their descpritions.
                 <include name="viskit/images/*.jpg"/>
             </fileset>
             <fileset dir="${basedir}">
-                <include name="${configuration.dir}/log4j.properties"/>
+                <include name="${configuration.dir}/log4j2.properties"/>
                 <include name="${license.dir}/*"/>
                 <include name="${analyst.report.stylesheet}"/>
             </fileset>
@@ -522,7 +522,7 @@ their descpritions.
                 <include name="commons-lang-2.6.jar"/>
                 <include name="commons-logging-1.1.1.jar"/>
                 <include name="jdom.jar"/>
-                <include name="log4j.jar"/>
+                <include name="${log4j.jars}"/>
                 <include name="simkit.jar"/>
                 <include name="xmlrpc-2.0.jar"/>
             </fileset>
