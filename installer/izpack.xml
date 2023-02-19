@@ -76,17 +76,6 @@
         <panel classname="InstallPanel"       id="panel.install"/>
         <panel classname="SimpleFinishPanel"  id="SimpleFinishPanel"/>
     </panels>
-<!--    <listeners>
-        <listener classname="AntActionInstallerListener" stage="install"/>
-        <listener classname="ConfigurationInstallerListener" stage="install"/>
-        <listener classname="SummaryLoggerInstallerListener" stage="install"/>
-        <listener classname="RegistryInstallerListener" stage="install" >
-            <os family="windows"/>
-        </listener>
-        <listener classname="RegistryUninstallerListener" stage="uninstall" >
-            <os family="windows"/>
-        </listener>
-    </listeners>-->
     <listeners>
         <listener classname="SummaryLoggerInstallerListener" stage="install">
             <os family="windows"/>
@@ -142,14 +131,6 @@
             </executable>
         </pack>
     </packs>
-
-    <!-- we are not supporting 32-bit any more 
-    <native type="izpack" name="ShellLink.dll">
-        <os family="windows"/>
-    </native>
-    <native type="3rdparty" name="COIOSHelper.dll" stage="both">
-        <os family="windows"/>
-    </native> -->
 
     <!-- Don't forget 64 bit Windows O/Ss -->
     <native type="izpack" name="ShellLink_x64.dll" uninstaller="true">
