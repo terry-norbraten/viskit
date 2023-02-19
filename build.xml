@@ -279,11 +279,11 @@ their descpritions.
                 <include name="viskit/images/*.jpg"/>
             </fileset>
             <fileset dir="${basedir}">
-                <include name="${configuration.dir}/log4j2.properties"/>
                 <include name="${license.dir}/*"/>
                 <include name="${analyst.report.stylesheet}"/>
             </fileset>
         </copy>
+        <copy file="${configuration.dir}/log4j2.properties" todir="${dir.build.classes}"/>
 
         <!-- For some reason, viskit.doe.package-info.java makes its own directory in build/classes -->
         <delete dir="${dir.build.classes}/doe"/>
