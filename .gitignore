@@ -15,3 +15,5 @@
 /nbproject/private
 /MANIFEST.MF
 **/.DS_Store
+/installer/stage/
+/installer/build/
