@@ -77,7 +77,7 @@
                 <string>$JAVAROOT/jcommon.jar</string>
                 <string>$JAVAROOT/jdom.jar</string>
                 <string>$JAVAROOT/jfreechart.jar</string>
-                <string>$JAVAROOT/jgraph.jar</string>
+                <string>$JAVAROOT/jgraph5.jar</string>
                 <string>$JAVAROOT/jhall.jar</string>
                 <string>$JAVAROOT/log4j-api-2.19.0.jar</string>
                 <string>$JAVAROOT/log4j-core-2.19.0.jar</string>

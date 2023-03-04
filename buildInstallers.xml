@@ -150,9 +150,13 @@
             <fileset dir="${basedir}">
                 <include name="RELEASE_NOTES*"/>
             </fileset>
+        </copy>
+        <copy todir="${installers.dir}/stage/doc">
             <fileset dir="${basedir}/doc">
                 <include name="ViskitOperation.txt"/>
+                <include name="Viskit-overview.pdf"/>
                 <include name="NB-Project-Creation.txt"/>
+                <include name="references/Discrete Event Simulation Modeling.pdf"/>
             </fileset>
         </copy>
     </target>

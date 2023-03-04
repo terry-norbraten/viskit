@@ -89,12 +89,14 @@
               <include name="configuration/**"/>
               <exclude name="configuration/c_gui.xml"/>
               <exclude name="configuration/AnalystReportXMLtoHTML.xslt"/>
+              <include name="doc/**"/>
               <include name="images/**"/>
               <exclude name="images/american-flag.gif"/>
               <include name="license/**"/>
               <include name="viskit/**"/>
               <include name="RELEASE_NOTES*"/>
               <include name="ViskitOperation.txt"/>
+              <include name="Viskit-overview.docx"/>
               <include name="NB-Project-Creation.txt"/>
           </fileset>
 
