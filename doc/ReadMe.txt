@@ -29,9 +29,14 @@ work w/ ssh keys. Test by:
 If no keys are loaded, then:
 
 > eval "$(ssh-agent -s)"
+> ssh-add ~/.ssh/id_gitlab_rsa
 > ssh-add ~/.ssh/id_github_rsa
 
 Remember to:
 > git lfs push/pull
 
 if any of the binaries have changed when in LFS mode
+
+To push:
+git push origin master <- GitLab
+git push github master <- GitHub mirror
