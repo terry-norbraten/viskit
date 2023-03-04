@@ -72,7 +72,7 @@
         <pathelement location="${jaxb-api.jar}"/>
         <pathelement location="${dir.lib}/jdom.jar"/>
         <pathelement location="${jfreechart.jar}"/>
-        <pathelement location="${dir.lib}/jgraph.jar"/>
+        <pathelement location="${dir.lib}/jgraph5.jar"/>
         <pathelement location="${dir.lib}/jhall.jar"/>
         <pathelement path="${log4j.jars}"/>
         <pathelement location="${dir.lib}/simkit.jar"/>

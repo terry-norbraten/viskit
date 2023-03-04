@@ -155,13 +155,7 @@ public class BeanshellErrorDialog extends JDialog {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (selectedButt == cb) {// need to turn it off
-                SwingUtilities.invokeLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        nullCB.setSelected(true);
-                    }
-                });
+                nullCB.setSelected(true);
                 selectedButt = nullCB;
             } else {
                 selectedButt = cb;

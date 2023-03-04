@@ -144,12 +144,8 @@ public class DoeMainFrame extends JFrame implements DoeEvents {
 
         @Override
         public void windowClosing(WindowEvent e) {
-            SwingUtilities.invokeLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    controller.actionPerformed(EXIT_APP);
-                }
+            SwingUtilities.invokeLater(() -> {
+                controller.actionPerformed(EXIT_APP);
             });
         }
     }

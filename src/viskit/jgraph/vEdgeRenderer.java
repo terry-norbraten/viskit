@@ -27,27 +27,23 @@ public class vEdgeRenderer extends EdgeRenderer {
 
     double[] coo = new double[6];
 
-    /**
-     * Override only to use a different way of positioning the label on the edge.
-     * The default method doesn't do such a good job on quadratic edges.
-     * @param view EdgeView for this edge
-     * @return center point of label
-     */
+    // Override only to use a different way of positioning the label on the edge
     @Override
     public Point2D getLabelPosition(EdgeView view) {
 
         setView(view);
 
         Shape s = view.sharedPath;
-        Point2D src = null;
-        Point2D aim;
+        Point2D src = null, aim;
+        int ret;
+        double theta, newX, newY;
 
         if (s == null) {
             return super.getLabelPosition(view);
         }
 
         for (PathIterator pi = s.getPathIterator(null); !pi.isDone();) {
-            int ret = pi.currentSegment(coo);
+            ret = pi.currentSegment(coo);
             if (ret == PathIterator.SEG_MOVETO) {
                 src = new Point2D.Double(coo[0], coo[1]);
             }
@@ -55,10 +51,12 @@ public class vEdgeRenderer extends EdgeRenderer {
             if (ret == PathIterator.SEG_CUBICTO) {
                 aim = new Point2D.Double(coo[4], coo[5]);
 
-                double theta = Math.atan2(aim.getY() - src.getY(), aim.getX() - src.getX());
-                double newX = src.getX() + (Math.cos(theta) * 25);
-                double newY = src.getY() + (Math.sin(theta) * 25);
-                return new Point2D.Double(newX, newY);
+                if (src != null) {
+                    theta = Math.atan2(aim.getY() - src.getY(), aim.getX() - src.getX());
+                    newX = src.getX() + (Math.cos(theta) * 25);
+                    newY = src.getY() + (Math.sin(theta) * 25);
+                    return new Point2D.Double(newX, newY);
+                }
             }
 
             pi.next();
@@ -68,6 +66,13 @@ public class vEdgeRenderer extends EdgeRenderer {
         return new Point2D.Double(tr.getCenterX(), tr.getCenterY()); // just use the center of the clip
     }
 
+    /**
+     * Sets view to work with, caching necessary values until the next call of
+     * this method or until some other methods with explicitly specified
+     * different view.
+     * 
+     * @param value the CellView the working view
+     */
     void setView(CellView value) {
         if (value instanceof EdgeView) {
             view = (EdgeView) value;
@@ -77,22 +82,20 @@ public class vEdgeRenderer extends EdgeRenderer {
         }
     }
 
-    /**
-     * Returns the shape that represents the current edge in the context of the
-     * current graph. This method sets the global beginShape, lineShape and
-     * endShape variables as a side-effect.
-     * @return shape object for this edge
-     */
+    // Returns the shape that represents the current edge in the context of the
+    // current graph
     @Override
     protected Shape createShape() {
         int n = view.getPointCount();
         if (n > 1) {
-			// Following block may modify static vars as side effect (Flyweight
+			
+            // Following block may modify static vars as side effect (Flyweight
             // Design)
+            Point2D pt;
             EdgeView tmp = view;
             Point2D[] p = new Point2D[n];
             for (int i = 0; i < n; i++) {
-                Point2D pt = tmp.getPoint(i);
+                pt = tmp.getPoint(i);
                 if (pt == null) {
                     return null; // exit
                 }
@@ -146,13 +149,14 @@ public class vEdgeRenderer extends EdgeRenderer {
             if (lineStyle == GraphConstants.STYLE_BEZIER && n > 2) {
                 Point2D[] b = bezier.getPoints();
                 view.sharedPath.quadTo((float) b[0].getX(),
-                        (float) b[0].getY(), (float) p1.getX(), (float) p1
-                        .getY());
+                        (float) b[0].getY(), (float) p1.getX(), (float) p1.getY());
+                
+                Point2D b0, b1;
                 for (int i = 2; i < n - 1; i++) {
-                    Point2D b0 = b[2 * i - 3];
-                    Point2D b1 = b[2 * i - 2];
-                    view.sharedPath.curveTo((float) b0.getX(), (float) b0
-                            .getY(), (float) b1.getX(), (float) b1.getY(),
+                    b0 = b[2 * i - 3];
+                    b1 = b[2 * i - 2];
+                    view.sharedPath.curveTo((float) b0.getX(), (float) b0.getY(), 
+                            (float) b1.getX(), (float) b1.getY(), 
                             (float) p[i].getX(), (float) p[i].getY());
                 }
                 // Had to regenerate the sharedPath as it was going null here (TDN)
@@ -163,15 +167,16 @@ public class vEdgeRenderer extends EdgeRenderer {
                         (float) b[b.length - 1].getY(),
                         (float) p[n - 1].getX(), (float) p[n - 1].getY());
             } else if (lineStyle == GraphConstants.STYLE_SPLINE && n > 2) {
+                
+                double[] xy;
                 for (double t = 0; t <= 1; t += 0.0125) {
-                    double[] xy = spline.getPoint(t);
+                    xy = spline.getPoint(t);
                     view.sharedPath.lineTo((float) xy[0], (float) xy[1]);
                 }
             } /* END */
             else {
                 for (int i = 1; i < n - 1; i++) {
-                    view.sharedPath.lineTo((float) p[i].getX(), (float) p[i]
-                            .getY());
+                    view.sharedPath.lineTo((float) p[i].getX(), (float) p[i].getY());
                 }
 
                 // Had to regenerate the sharedPath as it was going null here (TDN)

@@ -80,7 +80,7 @@ import viskit.xsd.translator.assembly.SimkitAssemblyXML2Java;
 public class JobLauncherTab2 extends JPanel implements Runnable, OpenAssembly.AssyChangeListener {
 
     DoeRunDriver doe;
-    Map statsGraphs;
+//    Map statsGraphs;
     BlockingQueue<DesignPointStatsWrapper> bQ;
     String inputFileString;
     File inputFile;
@@ -716,27 +716,22 @@ public class JobLauncherTab2 extends JPanel implements Runnable, OpenAssembly.As
         writeStatus("Stopping run.");
         hideClusterStatus();
 
-        Thread jobKiller = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                if (thread != null) {
-                    Thread t = thread;
-                    thread = null;
-                    t.interrupt();
-                    try {
-                        t.join(1_000);
-                    } catch (InterruptedException e) {
-                        System.err.println("join exception");
-                    }
-                }
+        Thread jobKiller = new Thread(() -> {
+            if (thread != null) {
+                Thread t = thread;
+                thread = null;
+                t.interrupt();
                 try {
-                    doe.clear();
-                    doe = null; // will cause doe to logout() on GC if it's a grid run
-                } catch (DoeException e) {
-                    System.err.println("DoeException: " + e.getMessage());
+                    t.join(1_000);
+                } catch (InterruptedException e) {
+                    System.err.println("join exception");
                 }
-
+            }
+            try {
+                doe.clear();
+                doe = null; // will cause doe to logout() on GC if it's a grid run
+            } catch (DoeException e) {
+                System.err.println("DoeException: " + e.getMessage());
             }
         }, "JobKiller");
         jobKiller.setPriority(Thread.NORM_PRIORITY);
@@ -744,13 +739,9 @@ public class JobLauncherTab2 extends JPanel implements Runnable, OpenAssembly.As
     }
 
     void writeStatus(final String s) {
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                statusTextArea.append(s);
-                statusTextArea.append("\n");
-            }
+        SwingUtilities.invokeLater(() -> {
+            statusTextArea.append(s);
+            statusTextArea.append("\n");
         });
     }
 
@@ -1142,11 +1133,8 @@ public class JobLauncherTab2 extends JPanel implements Runnable, OpenAssembly.As
         frR.y = r.y; //chartter.getLocation().y + chartter.getSize().height;
         clusterStatusFrame.setBounds(frR);
 
-        Runnable rn = new Runnable() {
-            @Override
-            public void run() {
-                clusterStatusFrame.setVisible(true);
-            }
+        Runnable rn = () -> {
+            clusterStatusFrame.setVisible(true);
         };
         SwingUtilities.invokeLater(rn);
 
@@ -1215,13 +1203,9 @@ public class JobLauncherTab2 extends JPanel implements Runnable, OpenAssembly.As
                     editorPane.setCaretPosition(editorPane.getDocument().getLength());
                     //int hm = hbar.getMaximum();
                     //int vm = vbar.getMaximum();
-                    SwingUtilities.invokeLater(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            hbar.setValue(50);
-                            vbar.setValue(50); //vbar.getMaximum());
-                        }
+                    SwingUtilities.invokeLater(() -> {
+                        hbar.setValue(50);
+                        vbar.setValue(50); //vbar.getMaximum());
                     });
                 } catch (IOException | InterruptedException e) {
                     System.out.println("statusUpdater kill: " + e.getMessage());

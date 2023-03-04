@@ -1,7 +1,6 @@
 package viskit.jgraph;
 
 import java.awt.event.MouseEvent;
-import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.jgraph.plaf.basic.BasicGraphUI;
 import viskit.VGlobals;
@@ -22,10 +21,10 @@ import viskit.model.SchedulingEdge;
  * @author Mike Bailey
  * @since Mar 8, 2004
  * @since 3:17:59 PM
- * @version $Id$
  */
 public class vGraphUI extends BasicGraphUI {
 
+    /** Default constructor */
     public vGraphUI() {
         super();
     }
@@ -33,16 +32,14 @@ public class vGraphUI extends BasicGraphUI {
     @Override
     protected boolean startEditing(Object cell, MouseEvent event) {
 
-        // We're not concerned with the MouseEvent here
+        // We're not concerned with the MouseEvent here, but we can be assured
+        // we're here on the EDT
 
         completeEditing();
 
         // We'll use our own editors here
         if (graph.isCellEditable(cell)) {
-            Runnable r = () -> {
-                createEditDialog(cell);
-            };
-            SwingUtilities.invokeLater(r);
+            createEditDialog(cell);
         }
 
         return false; // any returned boolean does nothing in JGraph v.5.14.0
@@ -57,12 +54,12 @@ public class vGraphUI extends BasicGraphUI {
         EventGraphController cntl = (EventGraphController) VGlobals.instance().getEventGraphController();
         if (cell instanceof vEdgeCell) {
             Edge e = (Edge) ((DefaultMutableTreeNode) cell).getUserObject();
-            if (e instanceof SchedulingEdge) {
+            
+            if (e instanceof SchedulingEdge)
                 cntl.schedulingArcEdit(e);
-            } else
-            {
+            else
                 cntl.cancellingArcEdit(e);
-            }
+            
         } else if (cell instanceof CircleCell) {
             EventNode en = (EventNode) ((DefaultMutableTreeNode) cell).getUserObject();
             cntl.nodeEdit(en);

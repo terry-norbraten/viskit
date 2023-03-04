@@ -50,12 +50,9 @@ import viskit.mvc.mvcController;
  * we're only using this to (dis)able the cut and copy menu items, it could be
  * argued that this functionality should be internal to the View, and the
  * controller needn't be involved. Nevertheless, the round trip through the
- * controller remains in place.  We also implement undo/redo.
+ * controller remains in place. We also implement undo/redo.
  *
- * @author
- * <a href="mailto:tdnorbra@nps.edu?subject=viskit.jgraph.vUndoableEditListener">Terry
- * Norbraten, NPS MOVES</a>
- * @version $Id$
+ * @author <a href="mailto:tdnorbra@nps.edu?subject=viskit.jgraph.vUndoableEditListener">Terry Norbraten, NPS MOVES</a>
  */
 public class vGraphUndoManager extends GraphUndoManager implements GraphSelectionListener {
 

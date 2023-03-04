@@ -36,7 +36,6 @@ package viskit;
 import edu.nps.util.LogUtils;
 import java.awt.Desktop;
 
-import java.awt.EventQueue;
 import java.awt.Taskbar;
 
 import java.io.File;
@@ -73,17 +72,11 @@ public class EventGraphAssemblyComboMain {
         try {
 //            throw new InvocationTargetException(new Throwable("mail this error"));
 
-            if (!EventQueue.isDispatchThread()) {
-                SwingUtilities.invokeAndWait(() -> {
-                    createGUI(args);
-                });
-            } else {
-                SwingUtilities.invokeLater(() -> {
-                    createGUI(args);
-                });
-            }
+            SwingUtilities.invokeLater(() -> {
+                createGUI(args);
+            });
 
-        } catch (InterruptedException | InvocationTargetException e) {
+        } catch (Exception e) {
             LogUtils.getLogger(EventGraphAssemblyComboMain.class).error(e);
 
             if (e instanceof InvocationTargetException) {

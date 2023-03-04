@@ -259,7 +259,7 @@ public class AssemblyViewFrame extends mvcAbstractJFrameView implements Assembly
             }).forEachOrdered(mi -> {
                 openRecentAssyMenu.add(mi);
             });
-            if (lis.size() > 0) {
+            if (!lis.isEmpty()) {
                 openRecentAssyMenu.add(new JSeparator());
                 Action act = new ParameterizedAssyAction("clear");
                 act.putValue(FULLPATH, CLEARPATHFLAG);  // flag

@@ -1,7 +1,6 @@
 package viskit.view;
 
 import javax.swing.*;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.*;
 import java.awt.*;
@@ -123,8 +122,11 @@ public class XTree extends JTree {
                     node.add(dmt);
                 }
             } else {
-                DefaultMutableTreeNode dmt = new DefaultMutableTreeNode(o.toString());
-                node.add(dmt);
+                
+                if (o != null) {
+                    DefaultMutableTreeNode dmt = new DefaultMutableTreeNode(o.toString());
+                    node.add(dmt);
+                }
             }
         }
 
@@ -223,8 +225,8 @@ public class XTree extends JTree {
         //return super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
         }
     }
-    static int wrapSiz = 50;//100;
-    static String nl = System.getProperty("line.separator");
+//    static int wrapSiz = 50;//100;
+//    static String nl = System.getProperty("line.separator");
     static boolean isWindows = VStatics.OPERATING_SYSTEM.toLowerCase().contains("windows");
 
     static private String wrap(String s) {
@@ -260,40 +262,39 @@ public class XTree extends JTree {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                JFrame f = new JFrame("XML Tree Widget Test");
-
-                JFileChooser jfc = new JFileChooser();
-                jfc.showOpenDialog(f);
-                File fil = jfc.getSelectedFile();
-                if (fil == null) {
-                    VGlobals.instance().sysExit(0);
-                }
-
-                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                Container c = f.getContentPane();
-                c.setLayout(new BorderLayout());
-
-                //XTree xt = new XTree(fil);
-                //c.add(new JScrollPane(xt), BorderLayout.CENTER);
-                XTreePanel p = null;
-                try {
-                    p = XTree.getTreeInPanel(fil);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                System.out.println(p.xtree.getXML());
-                c.add(p, BorderLayout.CENTER);
-                f.setSize(500, 400);
-                f.setLocation(300, 300);
-                f.setVisible(true);
-
-            // xt.setFile(fil);
-
+        SwingUtilities.invokeLater(() -> {
+            
+            JFrame f = new JFrame("XML Tree Widget Test");
+            
+            JFileChooser jfc = new JFileChooser();
+            jfc.showOpenDialog(f);
+            File fil = jfc.getSelectedFile();
+            if (fil == null) {
+                VGlobals.instance().sysExit(0);
             }
+            
+            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Container c = f.getContentPane();
+            c.setLayout(new BorderLayout());
+            
+            //XTree xt = new XTree(fil);
+            //c.add(new JScrollPane(xt), BorderLayout.CENTER);
+            XTreePanel p = null;
+            try {
+                p = XTree.getTreeInPanel(fil);
+            } catch (Exception e) {
+                e.printStackTrace(System.err);
+            }
+            
+            if (p != null)
+                System.out.println(p.xtree.getXML());
+            
+            c.add(p, BorderLayout.CENTER);
+            f.setSize(500, 400);
+            f.setLocation(300, 300);
+            f.setVisible(true);
+            
+            // xt.setFile(fil);
         });
     }
 
@@ -348,18 +349,14 @@ class XTreePanel extends JPanel {
         add(jspt);
         add(Box.createVerticalGlue());
 
-        xtree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
-
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode dmt = (DefaultMutableTreeNode) xtree.getLastSelectedPathComponent();
-                if (dmt == null) {
-                    return;
-                }
-                srcXML.setText(getElementText(dmt));
-                srcXML.revalidate();
-                srcXML.setCaretPosition(0);
+        xtree.getSelectionModel().addTreeSelectionListener((TreeSelectionEvent e) -> {
+            DefaultMutableTreeNode dmt = (DefaultMutableTreeNode) xtree.getLastSelectedPathComponent();
+            if (dmt == null) {
+                return;
             }
+            srcXML.setText(getElementText(dmt));
+            srcXML.revalidate();
+            srcXML.setCaretPosition(0);
         });
     }
 

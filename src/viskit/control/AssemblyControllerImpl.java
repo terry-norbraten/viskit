@@ -23,7 +23,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -1166,21 +1165,22 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
         if (copyVector.isEmpty()) {
             return;
         }
-        int x = 100, y = 100;
-        int offset = 20;
+        int x = 100, y = 100, offset = 20;
+        Point2D p;
+        String nm, typ;
         for (Object o : copyVector) {
             if (o instanceof AssemblyEdge) {
                 continue;
             }
 
-            Point2D p = new Point(x + (offset * copyCount), y + (offset * copyCount));
+            p = new Point(x + (offset * copyCount), y + (offset * copyCount));
             if (o instanceof EvGraphNode) {
-                String nm = ((ViskitElement) o).getName();
-                String typ = ((ViskitElement) o).getType();
+                nm = ((ViskitElement) o).getName();
+                typ = ((ViskitElement) o).getType();
                 ((AssemblyModel) getModel()).newEventGraph(nm + "-copy" + copyCount, typ, p);
             } else if (o instanceof PropChangeListenerNode) {
-                String nm = ((ViskitElement) o).getName();
-                String typ = ((ViskitElement) o).getType();
+                nm = ((ViskitElement) o).getName();
+                typ = ((ViskitElement) o).getType();
                 ((AssemblyModel) getModel()).newPropChangeListener(nm + "-copy" + copyCount, typ, p);
             }
             copyCount++;
@@ -1191,21 +1191,22 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
     @SuppressWarnings("unchecked")
     private void delete() {
         Vector<Object> v = (Vector<Object>) selectionVector.clone();   // avoid concurrent update
+        AssemblyNode en;
         for (Object elem : v) {
             if (elem instanceof AssemblyEdge) {
                 removeEdge((AssemblyEdge) elem);
             } else if (elem instanceof EvGraphNode) {
-                EvGraphNode en = (EvGraphNode) elem;
+                en = (EvGraphNode) elem;
                 for (AssemblyEdge ed : en.getConnections()) {
                     removeEdge(ed);
                 }
-                ((AssemblyModel) getModel()).deleteEvGraphNode(en);
+                ((AssemblyModel) getModel()).deleteEvGraphNode((EvGraphNode) en);
             } else if (elem instanceof PropChangeListenerNode) {
-                PropChangeListenerNode en = (PropChangeListenerNode) elem;
+                en = (PropChangeListenerNode) elem;
                 for (AssemblyEdge ed : en.getConnections()) {
                     removeEdge(ed);
                 }
-                ((AssemblyModel) getModel()).deletePropChangeListener(en);
+                ((AssemblyModel) getModel()).deletePropChangeListener((PropChangeListenerNode) en);
             }
         }
 
@@ -1654,14 +1655,11 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
         Runnable r = () -> {
             ((AssemblyViewFrame) getView()).runButt.setEnabled(false);
         };
-        if (SwingUtilities.isEventDispatchThread())
+        
+        try {
             SwingUtilities.invokeLater(r);
-        else {
-            try {
-                SwingUtilities.invokeAndWait(r);
-            } catch (InvocationTargetException | InterruptedException e) {
-                LOG.error(e);
-            }
+        } catch (Exception e) {
+            LOG.error(e);
         }
 
         SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
@@ -1852,6 +1850,7 @@ public class AssemblyControllerImpl extends mvcAbstractController implements Ass
     }
 
     /** Opens each EG associated with this Assembly
+     * 
      * @param f the Assembly File to open EventGraphs for (not used)
      */
     private void openEventGraphs(File f) {

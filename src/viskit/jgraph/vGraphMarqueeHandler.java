@@ -56,10 +56,7 @@ import org.jgraph.graph.PortView;
 /**
  * Custom MarqueeHandler that Connects Vertices
  *
- * @author
- * <a href="mailto:tdnorbra@nps.edu?subject=viskit.jgraph.vGraphMarqueeHandler">Terry
- * Norbraten, NPS MOVES</a>
- * @version $Id$
+ * @author <a href="mailto:tdnorbra@nps.edu?subject=viskit.jgraph.vGraphMarqueeHandler">Terry Norbraten, NPS MOVES</a>
  */
 public class vGraphMarqueeHandler extends BasicMarqueeHandler {
 
@@ -77,18 +74,16 @@ public class vGraphMarqueeHandler extends BasicMarqueeHandler {
 
     private JGraph graph;
 
+    /** Default constructor to provide custom vertex connections
+     * 
+     * @param graph JGraph component (our canvas)
+     */
     public vGraphMarqueeHandler(JGraph graph) {
 
         this.graph = graph;
 
         // Configures the panel for highlighting ports
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                highlight = createHighlight();
-            }
-        };
-        SwingUtilities.invokeLater(r);
+        highlight = createHighlight();
     }
 
     /**
@@ -109,14 +104,18 @@ public class vGraphMarqueeHandler extends BasicMarqueeHandler {
     // Override to Gain Control (for PopupMenu and ConnectMode)
     @Override
     public boolean isForceMarqueeEvent(MouseEvent e) {
+        
+        // Not working for macOS
         if (e.isShiftDown()) {
             return false;
         }
+        
         // If Right Mouse Button we want to Display the PopupMenu
         if (SwingUtilities.isRightMouseButton(e)) // Return Immediately
         {
             return true;
         }
+        
         // Find and Remember Port
         port = getSourcePortAt(e.getPoint());
         // If Port Found and in ConnectMode (=Ports Visible)
@@ -124,13 +123,14 @@ public class vGraphMarqueeHandler extends BasicMarqueeHandler {
         {
             return true;
         }
+        
         // Else Call Superclass
         return super.isForceMarqueeEvent(e);
     }
 
     // Display PopupMenu or Remember Start Location and First Port
     @Override
-    public void mousePressed(final MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
         if (port != null && graph.isPortsVisible()) {
             // Remember Start Location
             start = graph.toScreen(port.getLocation());
@@ -205,19 +205,22 @@ public class vGraphMarqueeHandler extends BasicMarqueeHandler {
                 ((vGraphAssemblyComponent)graph).connect((Port) firstPort.getCell(), (Port) port.getCell());
             }
             e.consume();
-            // Else Repaint the Graph
+            
+        // Else Repaint the Graph
         } else {
             GraphModel mod = graph.getModel();
             if (mod instanceof vGraphModel) {
                 ((vGraphModel)mod).reDrawNodes();
-            } else {
+            } else if (mod instanceof vGraphAssemblyModel) {
                 ((vGraphAssemblyModel)mod).reDrawNodes();
             }
         }
+        
         // Reset Global Vars
         firstPort = port = null;
         start = current = null;
-        // Call Superclass
+        
+        // Pass off to Superclass
         super.mouseReleased(e);
     }
 
@@ -233,9 +236,9 @@ public class vGraphMarqueeHandler extends BasicMarqueeHandler {
             // Note: This is to signal the BasicGraphUI's
             // MouseHandle to stop further event processing.
             e.consume();
-        } else // Call Superclass
+        } else // Pass off to Superclass
         {
-            super.mouseMoved(e);
+            super.mouseMoved(e); // does nothing in super
         }
     }
 
@@ -264,7 +267,7 @@ public class vGraphMarqueeHandler extends BasicMarqueeHandler {
         }
     }
 
-	// Overrides parent method to paint connector if
+    // Overrides parent method to paint connector if
     // XOR painting is disabled in the graph
     @Override
     public void paint(JGraph graph, Graphics g) {
@@ -291,8 +294,7 @@ public class vGraphMarqueeHandler extends BasicMarqueeHandler {
             // If Not Floating Port...
             boolean o = (GraphConstants.getOffset(port.getAllAttributes()) != null);
             // ...Then use Parent's Bounds
-            Rectangle2D r = (o) ? port.getBounds() : port.getParentView()
-                    .getBounds();
+            Rectangle2D r = (o) ? port.getBounds() : port.getParentView().getBounds();
             // Scale from Model to Screen
             r = graph.toScreen((Rectangle2D) r.clone());
             // Add Space For the Highlight Border
@@ -310,27 +312,20 @@ public class vGraphMarqueeHandler extends BasicMarqueeHandler {
      * @param graph the JGraph panel
      * @param cellView the view to highlight
      */
-    protected void highlight(final JGraph graph, final CellView cellView) {
-        Runnable r = new Runnable() {
+    protected void highlight(JGraph graph, CellView cellView) {
+        if (cellView != null) {
+            highlight.setBounds(getHighlightBounds(graph, cellView));
 
-            @Override
-            public void run() {
-                if (cellView != null) {
-                    highlight.setBounds(getHighlightBounds(graph, cellView));
-
-                    if (highlight.getParent() == null) {
-                        graph.add(highlight);
-                        highlight.setVisible(true);
-                    }
-                } else {
-                    if (highlight.getParent() != null) {
-                        highlight.setVisible(false);
-                        highlight.getParent().remove(highlight);
-                    }
-                }
+            if (highlight.getParent() == null) {
+                graph.add(highlight);
+                highlight.setVisible(true);
             }
-        };
-        SwingUtilities.invokeLater(r);
+        } else {
+            if (highlight.getParent() != null) {
+                highlight.setVisible(false);
+                highlight.getParent().remove(highlight);
+            }
+        }
     }
 
     /**

@@ -56,7 +56,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Vector;
@@ -131,7 +130,6 @@ public class VGlobals {
     /* routines to manage the singleton-aspect of the views. */
     mvcAbstractJFrameView avf;
     mvcController acont;
-    boolean assyFirstRun = false;
 
     /**
      * Get a reference to the assembly editor view.
@@ -335,7 +333,7 @@ public class VGlobals {
         // Then, parse.
 
         // Lose the new lines
-        String noCRs = interpretString.replace('\n', ' ');
+//        String noCRs = interpretString.replace('\n', ' ');
 
         String name;
         String type;
@@ -895,11 +893,11 @@ public class VGlobals {
             LOG.debug("Frame count in Viskit: " + (++count));
             
             /* Prevent non-viskit created components from disposing if
-            * launched from another application.  SwingUtilities is a
-            * little "ify" though as it's not Viskit specific.  Viskit,
-            * however, spawns a lot of anonymous Runnables with
-            * SwingUtilities
-            */
+             * launched from another application.  SwingUtilities is a
+             * little "ify" though as it's not Viskit specific.  Viskit,
+             * however, spawns a lot of anonymous Runnables with
+             * SwingUtilities
+             */
             if (f.toString().toLowerCase().contains("viskit")) {
                 LOG.debug("Frame is: " + f);
                 f.dispose();
@@ -1021,15 +1019,11 @@ public class VGlobals {
                         if (cb.isShowing())
                             popup.show(cb, 0, 0);
                     };
-
-                    if (SwingUtilities.isEventDispatchThread()) {
+                    
+                    try {
                         SwingUtilities.invokeLater(r);
-                    } else {
-                        try {
-                            SwingUtilities.invokeAndWait(r);
-                        } catch (InterruptedException | InvocationTargetException ex) {
-                            LOG.error(ex);
-                        }
+                    } catch (Exception ex) {
+                        LOG.error(ex);
                     }
                 }
             } else {

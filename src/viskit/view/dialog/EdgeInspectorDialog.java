@@ -65,15 +65,16 @@ public class EdgeInspectorDialog extends JDialog {
     private JLabel dotLabel;
 
     /**
-     * Set up and show the dialog.  The first Component argument
+     * Set up and show the dialog. The first Component argument
      * determines which frame the dialog depends on; it should be
      * a component in the dialog's controlling frame. The second
      * Component argument should be null if you want the dialog
      * to come up with its left corner in the center of the screen;
-     * otherwise, it should be the component on top of which the
-     * dialog should appear.
+     * otherwise, it should be centered on top of the main visible component.
+     * 
      * @param f the frame to orient this dialog
      * @param edge the Edge node to edit
+     * 
      * @return an indication of success
      */
     public static boolean showDialog(JFrame f, Edge edge) {
@@ -655,31 +656,16 @@ public class EdgeInspectorDialog extends JDialog {
         }
     }
 
-    private void hideShowConditionals(final boolean show) {
-        Runnable r = new Runnable() {
-
-            @Override
-            public void run() {
-                conditionalExpressionPanel.showConditions(show);
-                addConditionalButton.setVisible(!show);
-                pack();
-            }
-        };
-        SwingUtilities.invokeLater(r);
+    private void hideShowConditionals(boolean show) {
+        conditionalExpressionPanel.showConditions(show);
+        addConditionalButton.setVisible(!show);
+        pack();
     }
 
-    private void hideShowDescription(final boolean show) {
-
-        Runnable r = new Runnable() {
-
-            @Override
-            public void run() {
-                showDescription(show);
-                addDescriptionButton.setVisible(!show);
-                pack();
-            }
-        };
-        SwingUtilities.invokeLater(r);
+    private void hideShowDescription(boolean show) {
+        showDescription(show);
+        addDescriptionButton.setVisible(!show);
+        pack();
     }
 
     class addHideButtonListener implements ActionListener {

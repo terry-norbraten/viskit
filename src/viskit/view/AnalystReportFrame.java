@@ -159,12 +159,9 @@ public class AnalystReportFrame extends mvcAbstractJFrameView implements OpenAss
     public void fillLayout() {
 
         // We don't always come in on the swing thread.
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                _fillLayout();
-            }
-         });
+        SwingUtilities.invokeLater(() -> {
+            _fillLayout();
+        });
     }
 
     private void _fillLayout() {

@@ -225,7 +225,7 @@ public class JobLauncher extends JFrame implements Runnable, DirectoryWatch.Dire
         try {
             getParams();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
         doTitle(title);
     }
@@ -360,7 +360,7 @@ public class JobLauncher extends JFrame implements Runnable, DirectoryWatch.Dire
                                 fw.write(ta.getText());
                             }
                                 } catch (IOException e1) {
-                                    e1.printStackTrace();
+                                    e1.printStackTrace(System.err);
                                 }
                             }
                         }
@@ -409,30 +409,25 @@ public class JobLauncher extends JFrame implements Runnable, DirectoryWatch.Dire
         writeStatus("Stopping run.");
         hideClusterStatus();
 
-        Thread jobKiller = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                if (thread != null) {
-                    Thread t = thread;
-                    thread = null;
-                    t.interrupt();
-                    try {
-                        t.join(1_000);
-                    } catch (InterruptedException e) {
-                        System.out.println("join exception");
-                    }
-
-                }
+        Thread jobKiller = new Thread(() -> {
+            if (thread != null) {
+                Thread t = thread;
+                thread = null;
+                t.interrupt();
                 try {
-                    Vector parms = new Vector();
-                    //o = rpc.execute("experiment.flushQueue",parms);
-                    Object o = rpc.execute("experiment.clear", parms);
-                //writeStatus("flushQueue = " + o);
-                } catch (XmlRpcException | IOException e) {
-                    e.printStackTrace();
+                    t.join(1_000);
+                } catch (InterruptedException e) {
+                    System.out.println("join exception");
                 }
 
+            }
+            try {
+                Vector parms = new Vector();
+                //o = rpc.execute("experiment.flushQueue",parms);
+                Object o = rpc.execute("experiment.clear", parms);
+                //writeStatus("flushQueue = " + o);
+            } catch (XmlRpcException | IOException e) {
+                e.printStackTrace(System.err);
             }
         }, "JobKiller");
         jobKiller.setPriority(Thread.NORM_PRIORITY);
@@ -440,13 +435,9 @@ public class JobLauncher extends JFrame implements Runnable, DirectoryWatch.Dire
     }
 
     private void writeStatus(final String s) {
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                ta.append(s);
-                ta.append("\n");
-            }
+        SwingUtilities.invokeLater(() -> {
+            ta.append(s);
+            ta.append("\n");
         });
     }
     StringWriter data;
@@ -705,11 +696,8 @@ public class JobLauncher extends JFrame implements Runnable, DirectoryWatch.Dire
         frR.y = r.y; //chartter.getLocation().y + chartter.getSize().height;
         clusterStatusFrame.setBounds(frR);
 
-        Runnable rn = new Runnable() {
-            @Override
-            public void run() {
-                clusterStatusFrame.setVisible(true);
-            }
+        Runnable rn = () -> {
+            clusterStatusFrame.setVisible(true);
         };
         SwingUtilities.invokeLater(rn);
 
@@ -774,16 +762,12 @@ public class JobLauncher extends JFrame implements Runnable, DirectoryWatch.Dire
                     editorPane.setCaretPosition(editorPane.getDocument().getLength());
                     int hm = hbar.getMaximum();
                     int vm = vbar.getMaximum();
-                    SwingUtilities.invokeLater(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            hbar.setValue(50);
-                            vbar.setValue(50); //vbar.getMaximum());
-                        }
+                    SwingUtilities.invokeLater(() -> {
+                        hbar.setValue(50);
+                        vbar.setValue(50); //vbar.getMaximum());
                     });
                 } catch (InterruptedException | IOException e) {
-                    System.out.println("statusUpdater kill: " + e.getMessage());
+                    System.err.println("statusUpdater kill: " + e.getMessage());
                 }
             }
         }
@@ -794,11 +778,8 @@ public class JobLauncher extends JFrame implements Runnable, DirectoryWatch.Dire
             System.out.println("Give .xml file as argument");
         } else {
 
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    new JobLauncher(false, args[0], args[0], null);
-                }
+            Runnable r = () -> {
+                new JobLauncher(false, args[0], args[0], null);
             };
             SwingUtilities.invokeLater(r);
         }

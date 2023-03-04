@@ -35,7 +35,7 @@ public class StateVariableDialog extends ViskitSmallDialog {
     private JComboBox stateVarTypeCombo;    // Editable combo box that lets us select a type
     private JLabel arrSizeLab;
     private vStateVariable stVar;
-    private JButton okButt,  canButt;
+    private JButton okButt, canButt;
     public static String newName,  newType,  newComment;
     private myFocusListener focList;
     private Component myTyperComponent;       // i.e., the editor of the type JComboBox
@@ -224,23 +224,6 @@ public class StateVariableDialog extends ViskitSmallDialog {
         return (typ.contains("<K,V>") || typ.contains("<E>"));
     }
 
-    // Little runnables to move the focus around
-    private Runnable sizeFieldFocus = new Runnable() {
-
-        @Override
-        public void run() {
-            arraySizeField.requestFocus();
-        }
-    };
-
-    private Runnable commentFieldFocus = new Runnable() {
-
-        @Override
-        public void run() {
-            commentField.requestFocus();
-        }
-    };
-
     class myFocusListener extends FocusAdapter {
 
         @Override
@@ -262,9 +245,9 @@ public class StateVariableDialog extends ViskitSmallDialog {
 
             // Do this this way to shake out all the pending focus events before twiddling focus.
             if (isAr) {
-                SwingUtilities.invokeLater(sizeFieldFocus);
+                arraySizeField.requestFocus();
             } else {
-                SwingUtilities.invokeLater(commentFieldFocus);
+                commentField.requestFocus();
             }
         }
 

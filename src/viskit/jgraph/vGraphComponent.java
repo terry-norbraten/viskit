@@ -306,7 +306,7 @@ public class vGraphComponent extends JGraph implements GraphModelListener {
 
                     }
 
-                    if (se.conditionalDescription != null) {
+                    if (se != null && se.conditionalDescription != null) {
                         String cmt = se.conditionalDescription.trim();
                         if (cmt.length() > 0) {
                             sb.append("<br><u>description</u><br>");
@@ -315,7 +315,7 @@ public class vGraphComponent extends JGraph implements GraphModelListener {
                         }
                     }
 
-                    if (se.conditional != null) {
+                    if (se != null && se.conditional != null) {
                         String cond = se.conditional.trim();
                         if (cond.length() > 0) {
                             sb.append("<u>condition</u><br>&nbsp;if( ");

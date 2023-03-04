@@ -1201,12 +1201,8 @@ public class EventGraphControllerImpl extends mvcAbstractController implements E
                 frame.pack();
                 frame.setLocationRelativeTo((Component) getView());
 
-                Runnable r = new Runnable() {
-
-                    @Override
-                    public void run() {
-                        frame.setVisible(true);
-                    }
+                Runnable r = () -> {
+                    frame.setVisible(true);
                 };
                 SwingUtilities.invokeLater(r);
             }

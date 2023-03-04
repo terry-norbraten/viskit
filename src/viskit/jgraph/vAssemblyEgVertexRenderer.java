@@ -490,11 +490,7 @@ public class vAssemblyEgVertexRenderer
             byte newValue) {
     }
 
-    /**
-     * Overridden for performance reasons.
-     * See the <a href="#override">Implementation Note</a>
-     * for more information.
-     */
+    // Overridden for performance reasons
     @Override
     public void firePropertyChange(
             String propertyName,

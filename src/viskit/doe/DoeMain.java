@@ -110,12 +110,8 @@ public class DoeMain implements DoeEvents {
         mainFrame.setBounds(100, 100, 800, 600);
 
         // Make frame visible in GUI thread to be strictly legal
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                mainFrame.setVisible(true);
-            }
+        SwingUtilities.invokeLater(() -> {
+            mainFrame.setVisible(true);
         });
     }
 
